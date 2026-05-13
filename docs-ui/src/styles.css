@@ -1,0 +1,300 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;600;700;800&display=swap');
+
+:root {
+  color: #1f2b28;
+  background: #f7f9f5;
+  font-family: "Manrope", "Trebuchet MS", sans-serif;
+  --ink: #1f2b28;
+  --muted: #5d6c66;
+  --line: #d9e1db;
+  --paper: #ffffff;
+  --green: #196b5b;
+  --teal: #0f8a92;
+  --red: #b44736;
+  --yellow: #d6a328;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    linear-gradient(135deg, rgba(15, 138, 146, 0.12), transparent 34%),
+    linear-gradient(315deg, rgba(180, 71, 54, 0.10), transparent 36%),
+    var(--paper);
+}
+
+main {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 28px 0 56px;
+}
+
+.rail {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  gap: 6px;
+  padding: 10px 0;
+  backdrop-filter: blur(14px);
+}
+
+.rail a {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 700;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.hero {
+  min-height: 520px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 430px);
+  align-items: center;
+  gap: 32px;
+  border-bottom: 1px solid var(--line);
+}
+
+.eyebrow,
+.sectionHead {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--green);
+  font-weight: 800;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: clamp(64px, 10vw, 148px);
+  line-height: 0.86;
+  letter-spacing: 0;
+  max-width: 820px;
+  margin: 18px 0;
+}
+
+h2 {
+  font-size: 28px;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+p {
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.65;
+  max-width: 690px;
+}
+
+.heroPanel {
+  display: grid;
+  gap: 24px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 22px 70px rgba(31, 43, 40, 0.14);
+}
+
+.heroPanel div {
+  display: grid;
+  gap: 6px;
+}
+
+.heroPanel span,
+.apiTable span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.heroPanel strong {
+  font-size: 32px;
+}
+
+.band,
+.split {
+  padding: 56px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 460px);
+  gap: 28px;
+  align-items: start;
+}
+
+.packageGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.packageCard,
+.apiTable,
+.checks,
+.calendarGrid,
+.nepali-date-picker {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.packageCard {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+}
+
+code,
+pre {
+  font-family: "SFMono-Regular", "Cascadia Code", monospace;
+}
+
+code {
+  overflow-wrap: anywhere;
+  color: var(--red);
+}
+
+pre {
+  margin: 22px 0 0;
+  padding: 20px;
+  overflow-x: auto;
+  color: #f3fbf6;
+  background: #19302b;
+}
+
+.apiTable,
+.checks {
+  display: grid;
+  gap: 1px;
+  overflow: hidden;
+}
+
+.apiTable div,
+.checks span {
+  display: grid;
+  gap: 6px;
+  padding: 14px 16px;
+  background: var(--paper);
+}
+
+.checks span {
+  grid-template-columns: 18px 1fr;
+  align-items: center;
+  font-weight: 800;
+}
+
+.datepickerLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(310px, 390px);
+  gap: 24px;
+  margin-top: 22px;
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(34px, 1fr));
+  gap: 6px;
+  padding: 14px;
+}
+
+.day {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  font-weight: 800;
+}
+
+.day.muted {
+  color: #8d9a95;
+  background: #f2f5f1;
+}
+
+.day.selected {
+  color: #fff;
+  background: var(--green);
+}
+
+.day.today {
+  border-color: var(--yellow);
+}
+
+.nepali-date-picker {
+  padding: 14px;
+  overflow-x: auto;
+}
+
+.nepali-date-picker table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+
+.nepali-date-picker td {
+  padding: 3px;
+}
+
+button {
+  min-width: 34px;
+  min-height: 34px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+footer {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding-top: 24px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+@media (max-width: 820px) {
+  main {
+    width: min(100% - 22px, 1180px);
+  }
+
+  .rail {
+    overflow-x: auto;
+  }
+
+  .hero,
+  .split,
+  .datepickerLayout,
+  .packageGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 60px 0 38px;
+  }
+}

@@ -1,0 +1,79 @@
+.npdl-picker {
+  --npdl-ink: #1f2b28;
+  --npdl-muted: #718078;
+  --npdl-line: #d9e1db;
+  --npdl-bg: #ffffff;
+  --npdl-accent: #196b5b;
+  display: inline-grid;
+  gap: 12px;
+  min-width: 280px;
+  padding: 14px;
+  color: var(--npdl-ink);
+  background: var(--npdl-bg);
+  border: 1px solid var(--npdl-line);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+.npdl-picker__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.npdl-picker__month {
+  font-weight: 700;
+}
+
+.npdl-picker__nav,
+.npdl-picker__day {
+  min-width: 34px;
+  min-height: 34px;
+  border: 1px solid var(--npdl-line);
+  color: var(--npdl-ink);
+  background: #fff;
+  cursor: pointer;
+}
+
+.npdl-picker__nav:hover,
+.npdl-picker__day:hover {
+  border-color: var(--npdl-accent);
+}
+
+.npdl-picker__grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(32px, 1fr));
+  gap: 6px;
+}
+
+.npdl-picker__weekday {
+  color: var(--npdl-muted);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.npdl-picker__day {
+  display: grid;
+  place-items: center;
+  font: inherit;
+}
+
+.npdl-picker__day--muted {
+  color: var(--npdl-muted);
+}
+
+.npdl-picker__day--selected {
+  color: #fff;
+  background: var(--npdl-accent);
+  border-color: var(--npdl-accent);
+}
+
+.npdl-picker__day--today {
+  box-shadow: inset 0 0 0 2px rgba(25, 107, 91, 0.25);
+}
+
+.npdl-picker__day:disabled {
+  cursor: not-allowed;
+  opacity: 0.38;
+}

@@ -1,0 +1,62 @@
+name: Test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  core:
+    name: Core on Node ${{ matrix.node-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x, 22.x]
+    defaults:
+      run:
+        working-directory: ./js
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+          cache-dependency-path: js/package-lock.json
+      - run: npm ci
+      - run: npm test
+      - run: npm run verify:references
+
+  packages:
+    name: Build ${{ matrix.package }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package: [vanilla, react, vue, docs-ui]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+          cache-dependency-path: |
+            js/package-lock.json
+            vanilla/package-lock.json
+            react/package-lock.json
+            vue/package-lock.json
+            docs-ui/package-lock.json
+      - name: Build core first
+        working-directory: ./js
+        run: |
+          npm ci
+          npm run build
+      - name: Build React first for docs
+        if: matrix.package == 'docs-ui'
+        working-directory: ./react
+        run: |
+          npm ci
+          npm run build
+      - name: Install package
+        working-directory: ./${{ matrix.package }}
+        run: npm ci
+      - name: Build package
+        working-directory: ./${{ matrix.package }}
+        run: npm run build

@@ -1,0 +1,12 @@
+/temp_scripts/
+/*.log
+/.idea
+
+# JavaScript package output
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+.vite/
+coverage/
+*.tsbuildinfo

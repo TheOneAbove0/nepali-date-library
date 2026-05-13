@@ -1,0 +1,30 @@
+{
+  "name": "nepali-date-library-vanilla",
+  "version": "0.1.0",
+  "description": "Framework-free Nepali date picker adapter for nepali-date-library.",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "style": "dist/styles.css",
+  "sideEffects": [
+    "*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "scripts": {
+    "build": "tsup && cp src/styles.css dist/styles.css"
+  },
+  "dependencies": {
+    "nepali-date-library": "file:../js"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  }
+}

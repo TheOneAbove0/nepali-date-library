@@ -1,0 +1,98 @@
+{
+  "name": "nepali-date-library",
+  "version": "1.8.0",
+  "description": "Lightweight TypeScript utilities for Nepali BS and Gregorian date conversion, validation, and datepicker state.",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "sideEffects": false,
+  "typesVersions": {
+    "*": {
+      "parsers": [
+        "dist/parsers.d.ts"
+      ],
+      "validators": [
+        "dist/validators.d.ts"
+      ],
+      "conversion": [
+        "dist/conversion.d.ts"
+      ],
+      "formatting": [
+        "dist/formatting.d.ts"
+      ],
+      "manipulation": [
+        "dist/manipulation.d.ts"
+      ],
+      "datepicker-core": [
+        "dist/datepicker-core.d.ts"
+      ],
+      "*": [
+        "dist/index.d.ts"
+      ]
+    }
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./parsers": {
+      "types": "./dist/parsers.d.ts",
+      "import": "./dist/parsers.mjs",
+      "require": "./dist/parsers.cjs"
+    },
+    "./validators": {
+      "types": "./dist/validators.d.ts",
+      "import": "./dist/validators.mjs",
+      "require": "./dist/validators.cjs"
+    },
+    "./conversion": {
+      "types": "./dist/conversion.d.ts",
+      "import": "./dist/conversion.mjs",
+      "require": "./dist/conversion.cjs"
+    },
+    "./formatting": {
+      "types": "./dist/formatting.d.ts",
+      "import": "./dist/formatting.mjs",
+      "require": "./dist/formatting.cjs"
+    },
+    "./manipulation": {
+      "types": "./dist/manipulation.d.ts",
+      "import": "./dist/manipulation.mjs",
+      "require": "./dist/manipulation.cjs"
+    },
+    "./datepicker-core": {
+      "types": "./dist/datepicker-core.d.ts",
+      "import": "./dist/datepicker-core.mjs",
+      "require": "./dist/datepicker-core.cjs"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "npm run build && node --test test/*.js",
+    "verify:references": "npm run build && node ../scripts/validate-reference-dates.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/TheOneAbove0/nepali-date-library.git"
+  },
+  "keywords": [
+    "bikram",
+    "sambat",
+    "vikram",
+    "samvat",
+    "nepali",
+    "calendar"
+  ],
+  "author": "alxndrsn",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/TheOneAbove0/nepali-date-library/issues"
+  },
+  "homepage": "https://github.com/TheOneAbove0/nepali-date-library#readme",
+  "devDependencies": {
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  }
+}
