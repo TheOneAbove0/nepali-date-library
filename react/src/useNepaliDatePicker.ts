@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   createDatePickerState,
   generateMonthGrid,
@@ -40,6 +40,7 @@ export function useNepaliDatePickerState(options: UseNepaliDatePickerOptions): U
     max: options.max,
     isDisabled: options.isDateDisabled,
   }), [options.min, options.max, options.isDateDisabled]);
+  const weekStartsOn = options.weekStartsOn ?? 0;
 
   const initialValue = options.value ?? options.defaultValue ?? undefined;
 
@@ -47,8 +48,16 @@ export function useNepaliDatePickerState(options: UseNepaliDatePickerOptions): U
     selectedDate: initialValue ?? undefined,
     focusedDate: initialValue ?? undefined,
     constraints,
-    weekStartsOn: options.weekStartsOn,
+    weekStartsOn,
   }));
+
+  useEffect(() => {
+    setState((previous: DatePickerState) => ({
+      ...previous,
+      constraints,
+      weekStartsOn,
+    }));
+  }, [constraints, weekStartsOn]);
 
   const grid = useMemo(() => generateMonthGrid(state.viewYear, state.viewMonth, {
     weekStartsOn: state.weekStartsOn,
