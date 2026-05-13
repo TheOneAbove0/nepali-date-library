@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   createDatePickerState,
   generateMonthGrid,
@@ -66,7 +66,7 @@ export function useNepaliDatePickerState(options: UseNepaliDatePickerOptions): U
     focusedDate: state.focusedDate,
   }), [state]);
 
-  const setValue = (value: BsDateInput | null): void => {
+  const setValue = useCallback((value: BsDateInput | null): void => {
     setState((previous: DatePickerState) => {
       if (value === null) {
         return { ...previous, selectedDate: null };
@@ -81,9 +81,9 @@ export function useNepaliDatePickerState(options: UseNepaliDatePickerOptions): U
         viewMonth: selected.month,
       };
     });
-  };
+  }, []);
 
-  const focusDate = (value: BsDateInput): void => {
+  const focusDate = useCallback((value: BsDateInput): void => {
     const focused = parseBsDate(value);
     setState((previous: DatePickerState) => ({
       ...previous,
@@ -91,21 +91,21 @@ export function useNepaliDatePickerState(options: UseNepaliDatePickerOptions): U
       viewYear: focused.year,
       viewMonth: focused.month,
     }));
-  };
+  }, []);
 
-  const navigate = (key: DatePickerKey, navOptions?: { shiftKey?: boolean }): void => {
+  const navigate = useCallback((key: DatePickerKey, navOptions?: { shiftKey?: boolean }): void => {
     setState((previous: DatePickerState) => navigateByKey(previous, key, navOptions));
-  };
+  }, []);
 
-  const goToPreviousMonth = (): void => {
+  const goToPreviousMonth = useCallback((): void => {
     setState((previous: DatePickerState) => navigateByKey(previous, 'PageUp'));
-  };
+  }, []);
 
-  const goToNextMonth = (): void => {
+  const goToNextMonth = useCallback((): void => {
     setState((previous: DatePickerState) => navigateByKey(previous, 'PageDown'));
-  };
+  }, []);
 
-  return {
+  return useMemo(() => ({
     state,
     grid,
     setValue,
@@ -113,5 +113,5 @@ export function useNepaliDatePickerState(options: UseNepaliDatePickerOptions): U
     navigate,
     goToPreviousMonth,
     goToNextMonth,
-  };
+  }), [focusDate, goToNextMonth, goToPreviousMonth, grid, navigate, setValue, state]);
 }
