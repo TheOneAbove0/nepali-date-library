@@ -9,7 +9,9 @@ import './styles.css';
 
 export function App() {
   const { theme, setTheme } = useDocsTheme();
-  const { activeSection, setActiveSection } = useActiveDocsSection(sections.map((section) => section.id));
+  const { activeSection, setActiveSection } = useActiveDocsSection(
+    sections.map((section) => section.id),
+  );
 
   return (
     <main className="docsShell" data-theme={theme}>
@@ -39,14 +41,21 @@ export function App() {
             <p className="eyebrow">Crafted for Bikram Sambat interfaces</p>
             <h1>Dates</h1>
             <p className="lede">
-              Simple day, month, and year pickers for BS date workflows. The calendar engine stays shared, while the docs
-              now focus on quieter inputs, cleaner dropdowns, and more breathing room.
+              Simple day, month, and year pickers for BS date workflows. The calendar engine stays
+              shared, while the docs now focus on quieter inputs, cleaner dropdowns, and more
+              breathing room.
             </p>
           </div>
           <div className="headerMeta">
-            <span><PackageCheck size={14} /> React package</span>
-            <span><Check size={14} /> Day, month, year pickers</span>
-            <span><Code2 size={14} /> Styling API documented</span>
+            <span>
+              <PackageCheck size={14} /> React package
+            </span>
+            <span>
+              <Check size={14} /> Day, month, year pickers
+            </span>
+            <span>
+              <Code2 size={14} /> Styling API documented
+            </span>
             <button
               aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
               className="themeToggle"

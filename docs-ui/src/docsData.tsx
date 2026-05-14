@@ -40,16 +40,21 @@ export const sections: DocSection[] = [
         <div className="calloutGrid">
           <article>
             <h3>Install with Yarn</h3>
-            <pre className="inlineCode"><code>yarn add nepali-date-library nepali-date-library-react</code></pre>
+            <pre className="inlineCode">
+              <code>yarn add nepali-date-library nepali-date-library-react</code>
+            </pre>
           </article>
           <article>
             <h3>Install with npm</h3>
-            <pre className="inlineCode"><code>npm install nepali-date-library nepali-date-library-react</code></pre>
+            <pre className="inlineCode">
+              <code>npm install nepali-date-library nepali-date-library-react</code>
+            </pre>
           </article>
         </div>
         <div className="calloutNote">
-          Start with the shipped day, month, and year picker variants, then override visuals with `variables`, `styles`,
-          `classNames`, `dayClassName`, and `holidays` when you need a branded surface.
+          Start with the shipped day, month, and year picker variants, then override visuals with
+          `variables`, `styles`, `classNames`, `dayClassName`, and `holidays` when you need a
+          branded surface.
         </div>
       </>
     ),
@@ -82,7 +87,8 @@ function Demo() {
   {
     id: 'date-input',
     title: 'DateInput',
-    summary: 'Input-first alias with the same dropdown calendar surface and clearable value support.',
+    summary:
+      'Input-first alias with the same dropdown calendar surface and clearable value support.',
     Demo: DateInputDemo,
     code: `import { DateInput } from 'nepali-date-library-react';
 
@@ -135,7 +141,8 @@ function Demo() {
   {
     id: 'date-range',
     title: 'Dates range',
-    summary: 'Set \`type="range"\` to allow users to pick a start and end date from the same calendar.',
+    summary:
+      'Set \`type="range"\` to allow users to pick a start and end date from the same calendar.',
     Demo: DateRangeDemo,
     code: `import { useState } from 'react';
 import { DatePicker } from 'nepali-date-library-react';
@@ -247,7 +254,8 @@ function Demo() {
   {
     id: 'weekend-holidays',
     title: 'Weekend holidays',
-    summary: 'Style every Sunday or Saturday like a holiday by targeting the weekday column with a calendar class.',
+    summary:
+      'Style every Sunday or Saturday like a holiday by targeting the weekday column with a calendar class.',
     Demo: WeekendHolidayDemo,
     code: `import { DatePickerInput } from 'nepali-date-library-react';
 
@@ -280,7 +288,8 @@ function Demo() {
   {
     id: 'constraints',
     title: 'Constraints',
-    summary: 'Limit the selectable window with \`min\`, \`max\`, \`excludeDates\`, or a custom filter.',
+    summary:
+      'Limit the selectable window with \`min\`, \`max\`, \`excludeDates\`, or a custom filter.',
     Demo: ConstraintsDemo,
     code: `import { DatePickerInput } from 'nepali-date-library-react';
 
@@ -300,7 +309,8 @@ function Demo() {
   {
     id: 'nepali-numerals',
     title: 'Nepali numerals',
-    summary: 'Set \`numeralSystem="nepali"\` to render input values, headers, year lists, and day numbers with Nepali digits.',
+    summary:
+      'Set \`numeralSystem="nepali"\` to render input values, headers, year lists, and day numbers with Nepali digits.',
     Demo: NepaliNumeralsDemo,
     code: `import { DatePickerInput } from 'nepali-date-library-react';
 
@@ -317,7 +327,8 @@ function Demo() {
   {
     id: 'styling',
     title: 'Styling',
-    summary: 'Use CSS variables for color and radius, \`styles\` for slot spacing, and \`classNames\` for state-aware custom CSS.',
+    summary:
+      'Use CSS variables for color and radius, \`styles\` for slot spacing, and \`classNames\` for state-aware custom CSS.',
     Demo: StylingDemo,
     code: `import { DatePickerInput } from 'nepali-date-library-react';
 
@@ -354,7 +365,8 @@ function Demo() {
   {
     id: 'size',
     title: 'Size',
-    summary: 'Control calendar scale directly from props with preset sizes or a numeric scale value.',
+    summary:
+      'Control calendar scale directly from props with preset sizes or a numeric scale value.',
     Demo: SizeDemo,
     code: `import { DatePicker } from 'nepali-date-library-react';
 
@@ -406,7 +418,8 @@ function Demo() {
   {
     id: 'day-class-name',
     title: 'Day class name',
-    summary: 'Style specific dates with \`dayClassName\` while keeping the base picker layout intact.',
+    summary:
+      'Style specific dates with \`dayClassName\` while keeping the base picker layout intact.',
     Demo: DayClassDemo,
     code: `import { DatePicker } from 'nepali-date-library-react';
 

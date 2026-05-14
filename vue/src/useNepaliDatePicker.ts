@@ -9,11 +9,7 @@ import {
   type DatePickerState,
   type WeekdayIndex,
 } from 'nepali-date-library/datepicker-core';
-import {
-  parseBsDate,
-  type BsDate,
-  type BsDateInput,
-} from 'nepali-date-library';
+import { parseBsDate, type BsDate, type BsDateInput } from 'nepali-date-library';
 
 export interface UseNepaliDatePickerOptions {
   modelValue?: BsDateInput | null;
@@ -33,21 +29,27 @@ export interface UseNepaliDatePickerResult {
   goToNextMonth: () => void;
 }
 
-export function useNepaliDatePicker(options: UseNepaliDatePickerOptions): UseNepaliDatePickerResult {
-  const constraints = computed(() => normalizeConstraints({
-    min: options.min,
-    max: options.max,
-    isDisabled: options.isDateDisabled,
-  }));
+export function useNepaliDatePicker(
+  options: UseNepaliDatePickerOptions,
+): UseNepaliDatePickerResult {
+  const constraints = computed(() =>
+    normalizeConstraints({
+      min: options.min,
+      max: options.max,
+      isDisabled: options.isDateDisabled,
+    }),
+  );
 
   const initialValue = options.modelValue ?? options.defaultValue ?? undefined;
 
-  const state = ref(createDatePickerState({
-    selectedDate: initialValue ?? undefined,
-    focusedDate: initialValue ?? undefined,
-    constraints: constraints.value,
-    weekStartsOn: options.weekStartsOn,
-  }));
+  const state = ref(
+    createDatePickerState({
+      selectedDate: initialValue ?? undefined,
+      focusedDate: initialValue ?? undefined,
+      constraints: constraints.value,
+      weekStartsOn: options.weekStartsOn,
+    }),
+  );
 
   watch(constraints, (nextConstraints) => {
     state.value = createDatePickerState({
@@ -61,31 +63,36 @@ export function useNepaliDatePicker(options: UseNepaliDatePickerOptions): UseNep
   });
 
   if (typeof options.modelValue !== 'undefined') {
-    watch(() => options.modelValue, (next) => {
-      if (next === null) {
-        state.value = { ...state.value, selectedDate: null };
-        return;
-      }
+    watch(
+      () => options.modelValue,
+      (next) => {
+        if (next === null) {
+          state.value = { ...state.value, selectedDate: null };
+          return;
+        }
 
-      if (typeof next !== 'undefined') {
-        const parsed = parseBsDate(next);
-        state.value = {
-          ...state.value,
-          selectedDate: parsed,
-          focusedDate: parsed,
-          viewYear: parsed.year,
-          viewMonth: parsed.month,
-        };
-      }
-    });
+        if (typeof next !== 'undefined') {
+          const parsed = parseBsDate(next);
+          state.value = {
+            ...state.value,
+            selectedDate: parsed,
+            focusedDate: parsed,
+            viewYear: parsed.year,
+            viewMonth: parsed.month,
+          };
+        }
+      },
+    );
   }
 
-  const grid = computed<MonthGrid>(() => generateMonthGrid(state.value.viewYear, state.value.viewMonth, {
-    weekStartsOn: state.value.weekStartsOn,
-    constraints: state.value.constraints,
-    selectedDate: state.value.selectedDate,
-    focusedDate: state.value.focusedDate,
-  }));
+  const grid = computed<MonthGrid>(() =>
+    generateMonthGrid(state.value.viewYear, state.value.viewMonth, {
+      weekStartsOn: state.value.weekStartsOn,
+      constraints: state.value.constraints,
+      selectedDate: state.value.selectedDate,
+      focusedDate: state.value.focusedDate,
+    }),
+  );
 
   const setValue = (value: BsDateInput | null): void => {
     if (value === null) {

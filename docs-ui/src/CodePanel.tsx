@@ -32,10 +32,18 @@ export function CodePanel({ code }: { code: string }) {
           title={copyState === 'error' ? 'Clipboard copy failed' : 'Copy code'}
           type="button"
         >
-          {copyState === 'copied' ? <Check size={15} /> : copyState === 'error' ? <TriangleAlert size={15} /> : <Clipboard size={15} />}
+          {copyState === 'copied' ? (
+            <Check size={15} />
+          ) : copyState === 'error' ? (
+            <TriangleAlert size={15} />
+          ) : (
+            <Clipboard size={15} />
+          )}
         </button>
       </div>
-      <pre><code>{code}</code></pre>
+      <pre>
+        <code>{code}</code>
+      </pre>
     </div>
   );
 }

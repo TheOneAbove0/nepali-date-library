@@ -19,14 +19,14 @@ if (!bsEpoch) {
   process.exit(1);
 }
 
-const processMonth = decimal => {
+const processMonth = (decimal) => {
   const delta = decimal - 29;
   const binary = delta.toString(2);
   const padded = binary.length === 1 ? '0' + binary : binary;
   return padded;
 };
 
-const processYear = months => {
+const processYear = (months) => {
   const binary = months.map(processMonth);
   const combined = binary.reverse().join('');
   const decimal = parseInt(combined, 2);

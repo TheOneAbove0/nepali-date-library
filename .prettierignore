@@ -1,0 +1,18 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+coverage
+
+# Python venv
+.venv
+
+# Git and editor folders
+.git
+
+# Package manager lockfiles in package subprojects
+**/package-lock.json
+
+# Generated reports
+reports

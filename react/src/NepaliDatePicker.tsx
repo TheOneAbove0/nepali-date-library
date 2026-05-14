@@ -79,7 +79,13 @@ export function NepaliDatePicker(props: NepaliDatePickerProps) {
   if (controller.inline) {
     return (
       <div
-        className={getSlotClassName(props, 'root', 'nepali-date-picker', 'nepali-date-picker--inline', props.className)}
+        className={getSlotClassName(
+          props,
+          'root',
+          'nepali-date-picker',
+          'nepali-date-picker--inline',
+          props.className,
+        )}
         data-inline="true"
         data-picker-type={controller.pickerType}
         data-selection-type={controller.selectionType}
@@ -87,12 +93,18 @@ export function NepaliDatePicker(props: NepaliDatePickerProps) {
         style={getRootStyle(props)}
       >
         {props.label && (
-          <div className={getSlotClassName(props, 'label', 'nepali-date-picker__label')} style={getSlotStyle(props, 'label')}>
+          <div
+            className={getSlotClassName(props, 'label', 'nepali-date-picker__label')}
+            style={getSlotStyle(props, 'label')}
+          >
             {props.label}
           </div>
         )}
         {props.description && (
-          <div className={getSlotClassName(props, 'description', 'nepali-date-picker__description')} style={getSlotStyle(props, 'description')}>
+          <div
+            className={getSlotClassName(props, 'description', 'nepali-date-picker__description')}
+            style={getSlotStyle(props, 'description')}
+          >
             {props.description}
           </div>
         )}
@@ -112,16 +124,25 @@ export function NepaliDatePicker(props: NepaliDatePickerProps) {
       style={getRootStyle(props)}
     >
       {props.label && (
-        <label className={getSlotClassName(props, 'label', 'nepali-date-picker__label')} style={getSlotStyle(props, 'label')}>
+        <label
+          className={getSlotClassName(props, 'label', 'nepali-date-picker__label')}
+          style={getSlotStyle(props, 'label')}
+        >
           {props.label}
         </label>
       )}
       {props.description && (
-        <div className={getSlotClassName(props, 'description', 'nepali-date-picker__description')} style={getSlotStyle(props, 'description')}>
+        <div
+          className={getSlotClassName(props, 'description', 'nepali-date-picker__description')}
+          style={getSlotStyle(props, 'description')}
+        >
           {props.description}
         </div>
       )}
-      <div className={getSlotClassName(props, 'inputShell', 'nepali-date-picker__input-shell')} style={getSlotStyle(props, 'inputShell')}>
+      <div
+        className={getSlotClassName(props, 'inputShell', 'nepali-date-picker__input-shell')}
+        style={getSlotStyle(props, 'inputShell')}
+      >
         <PickerInputControl
           inputValue={controller.inputValue}
           isInputTypeable={controller.isInputTypeable}
@@ -136,11 +157,17 @@ export function NepaliDatePicker(props: NepaliDatePickerProps) {
             aria-label="Open calendar"
             className={getSlotClassName(props, 'iconButton', 'nepali-date-picker__icon-button')}
             disabled={props.disabled || props.readOnly}
-            onClick={props.toggleCalendarOnIconClick ? controller.toggleCalendar : controller.openCalendar}
+            onClick={
+              props.toggleCalendarOnIconClick ? controller.toggleCalendar : controller.openCalendar
+            }
             style={getSlotStyle(props, 'iconButton')}
             type="button"
           >
-            {typeof props.icon === 'string' ? <span aria-hidden="true" className={props.icon} /> : props.icon ?? <ChevronDownIcon />}
+            {typeof props.icon === 'string' ? (
+              <span aria-hidden="true" className={props.icon} />
+            ) : (
+              (props.icon ?? <ChevronDownIcon />)
+            )}
           </button>
         )}
         {controller.isClearable && controller.selectedDate && (
@@ -158,7 +185,12 @@ export function NepaliDatePicker(props: NepaliDatePickerProps) {
       </div>
       {controller.isOpen && (
         <div
-          className={getSlotClassName(props, 'popper', 'nepali-date-picker__popper', props.popperClassName)}
+          className={getSlotClassName(
+            props,
+            'popper',
+            'nepali-date-picker__popper',
+            props.popperClassName,
+          )}
           id={controller.calendarId}
           style={getSlotStyle(props, 'popper')}
         >

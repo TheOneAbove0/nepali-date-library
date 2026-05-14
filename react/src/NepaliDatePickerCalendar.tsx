@@ -89,12 +89,22 @@ export function CalendarView({
   return (
     <div
       aria-disabled={disabled || undefined}
-      className={getSlotClassName(props, 'calendar', 'nepali-date-picker__calendar', props.calendarClassName)}
+      className={getSlotClassName(
+        props,
+        'calendar',
+        'nepali-date-picker__calendar',
+        props.calendarClassName,
+      )}
       id={calendarId}
       style={getSlotStyle(props, 'calendar')}
     >
-      {renderHeader ? renderHeader(headerProps) : (
-        <div className={getSlotClassName(props, 'header', 'nepali-date-picker__header')} style={getSlotStyle(props, 'header')}>
+      {renderHeader ? (
+        renderHeader(headerProps)
+      ) : (
+        <div
+          className={getSlotClassName(props, 'header', 'nepali-date-picker__header')}
+          style={getSlotStyle(props, 'header')}
+        >
           <button
             aria-label="Previous period"
             className={getSlotClassName(props, 'navButton', 'nepali-date-picker__nav-button')}
@@ -136,7 +146,10 @@ export function CalendarView({
       )}
 
       {calendarLevel === 'day' && (
-        <table className={getSlotClassName(props, 'table', 'nepali-date-picker__table')} style={getSlotStyle(props, 'table')}>
+        <table
+          className={getSlotClassName(props, 'table', 'nepali-date-picker__table')}
+          style={getSlotStyle(props, 'table')}
+        >
           <thead>
             <tr>
               {orderedWeekdays.map((day, index) => {
@@ -149,12 +162,17 @@ export function CalendarView({
 
                 return (
                   <th
-                    className={joinClassNames(getSlotClassName(props, 'weekday', 'nepali-date-picker__weekday'), props.weekDayClassName?.(day))}
+                    className={joinClassNames(
+                      getSlotClassName(props, 'weekday', 'nepali-date-picker__weekday'),
+                      props.weekDayClassName?.(day),
+                    )}
                     key={day}
                     scope="col"
                     style={getSlotStyle(props, 'weekday')}
                   >
-                    {props.renderCustomDayName ? props.renderCustomDayName(dayNameProps) : dayNameProps.shortName}
+                    {props.renderCustomDayName
+                      ? props.renderCustomDayName(dayNameProps)
+                      : dayNameProps.shortName}
                   </th>
                 );
               })}
@@ -165,10 +183,14 @@ export function CalendarView({
               <tr key={weekIndex}>
                 {week.map((cell) => {
                   const holiday = holidays.get(formatBsDate(cell.date));
-                  const isRangeStart = selectionType === 'range' && isSameDate(rangeValue[0], cell.date);
-                  const isRangeEnd = selectionType === 'range' && isSameDate(rangeValue[1], cell.date);
-                  const isInRange = selectionType === 'range' && isDateWithinRange(cell.date, rangeValue);
-                  const isSelected = selectionType === 'range' ? isRangeStart || isRangeEnd : cell.isSelected;
+                  const isRangeStart =
+                    selectionType === 'range' && isSameDate(rangeValue[0], cell.date);
+                  const isRangeEnd =
+                    selectionType === 'range' && isSameDate(rangeValue[1], cell.date);
+                  const isInRange =
+                    selectionType === 'range' && isDateWithinRange(cell.date, rangeValue);
+                  const isSelected =
+                    selectionType === 'range' ? isRangeStart || isRangeEnd : cell.isSelected;
 
                   return (
                     <td
@@ -181,7 +203,9 @@ export function CalendarView({
                         aria-pressed={isSelected}
                         className={joinClassNames(
                           getSlotClassName(props, 'day', 'nepali-date-picker__day'),
-                          cell.inCurrentMonth ? 'nepali-date-picker__day--current-month' : 'nepali-date-picker__day--outside-month',
+                          cell.inCurrentMonth
+                            ? 'nepali-date-picker__day--current-month'
+                            : 'nepali-date-picker__day--outside-month',
                           isSelected && 'nepali-date-picker__day--selected',
                           isRangeStart && 'nepali-date-picker__day--range-start',
                           isRangeEnd && 'nepali-date-picker__day--range-end',
@@ -223,7 +247,12 @@ export function CalendarView({
 
       {calendarLevel === 'month' && (
         <div
-          className={getSlotClassName(props, 'monthGrid', 'nepali-date-picker__grid', 'nepali-date-picker__grid--month')}
+          className={getSlotClassName(
+            props,
+            'monthGrid',
+            'nepali-date-picker__grid',
+            'nepali-date-picker__grid--month',
+          )}
           style={getSlotStyle(props, 'monthGrid')}
         >
           {monthNames.map((monthName, index) => {
@@ -244,7 +273,17 @@ export function CalendarView({
                 data-selected={isSelected || undefined}
                 disabled={disabled || monthDisabled}
                 key={month}
-                onClick={() => handleMonthPick({ picker, pickerType, year: value.year, month: value.month, isDateDisabled, onSelectDate, onChangeLevel })}
+                onClick={() =>
+                  handleMonthPick({
+                    picker,
+                    pickerType,
+                    year: value.year,
+                    month: value.month,
+                    isDateDisabled,
+                    onSelectDate,
+                    onChangeLevel,
+                  })
+                }
                 style={getSlotStyle(props, 'tile')}
                 type="button"
               >
@@ -257,7 +296,12 @@ export function CalendarView({
 
       {calendarLevel === 'year' && (
         <div
-          className={getSlotClassName(props, 'yearGrid', 'nepali-date-picker__grid', 'nepali-date-picker__grid--year')}
+          className={getSlotClassName(
+            props,
+            'yearGrid',
+            'nepali-date-picker__grid',
+            'nepali-date-picker__grid--year',
+          )}
           style={getSlotStyle(props, 'yearGrid')}
         >
           {createDecadeYears(picker.state.viewYear).map((year) => {
@@ -276,7 +320,16 @@ export function CalendarView({
                 data-selected={isSelected || undefined}
                 disabled={disabled || yearDisabled}
                 key={year}
-                onClick={() => handleYearPick({ picker, pickerType, year, isDateDisabled, onSelectDate, onChangeLevel })}
+                onClick={() =>
+                  handleYearPick({
+                    picker,
+                    pickerType,
+                    year,
+                    isDateDisabled,
+                    onSelectDate,
+                    onChangeLevel,
+                  })
+                }
                 style={getSlotStyle(props, 'tile')}
                 type="button"
               >
@@ -288,7 +341,10 @@ export function CalendarView({
       )}
 
       {props.children && (
-        <div className={getSlotClassName(props, 'children', 'nepali-date-picker__children')} style={getSlotStyle(props, 'children')}>
+        <div
+          className={getSlotClassName(props, 'children', 'nepali-date-picker__children')}
+          style={getSlotStyle(props, 'children')}
+        >
           {props.children}
         </div>
       )}
@@ -330,8 +386,18 @@ function createHeaderProps({
       viewMonth: picker.state.viewMonth,
       monthName,
       decadeLabel,
-      decrease: () => picker.focusDate({ year: picker.state.viewYear - 1, month: picker.state.viewMonth, day: 1 }),
-      increase: () => picker.focusDate({ year: picker.state.viewYear + 1, month: picker.state.viewMonth, day: 1 }),
+      decrease: () =>
+        picker.focusDate({
+          year: picker.state.viewYear - 1,
+          month: picker.state.viewMonth,
+          day: 1,
+        }),
+      increase: () =>
+        picker.focusDate({
+          year: picker.state.viewYear + 1,
+          month: picker.state.viewMonth,
+          day: 1,
+        }),
       openMonthLevel: () => onChangeLevel('month'),
       openYearLevel: () => onChangeLevel('year'),
       changeYear: (year) => picker.focusDate({ year, month: picker.state.viewMonth, day: 1 }),
@@ -351,14 +417,26 @@ function createHeaderProps({
       viewMonth: picker.state.viewMonth,
       monthName,
       decadeLabel,
-      decrease: () => picker.focusDate({ year: picker.state.viewYear - DEFAULT_DECADE_SIZE, month: picker.state.viewMonth, day: 1 }),
-      increase: () => picker.focusDate({ year: picker.state.viewYear + DEFAULT_DECADE_SIZE, month: picker.state.viewMonth, day: 1 }),
+      decrease: () =>
+        picker.focusDate({
+          year: picker.state.viewYear - DEFAULT_DECADE_SIZE,
+          month: picker.state.viewMonth,
+          day: 1,
+        }),
+      increase: () =>
+        picker.focusDate({
+          year: picker.state.viewYear + DEFAULT_DECADE_SIZE,
+          month: picker.state.viewMonth,
+          day: 1,
+        }),
       openMonthLevel: () => onChangeLevel('month'),
       openYearLevel: () => onChangeLevel('year'),
       changeYear: (year) => picker.focusDate({ year, month: picker.state.viewMonth, day: 1 }),
       changeMonth: (month) => picker.focusDate({ year: picker.state.viewYear, month, day: 1 }),
-      prevButtonDisabled: disabled || isDecadeOutsideRange(decade.start - DEFAULT_DECADE_SIZE, isDateDisabled),
-      nextButtonDisabled: disabled || isDecadeOutsideRange(decade.start + DEFAULT_DECADE_SIZE, isDateDisabled),
+      prevButtonDisabled:
+        disabled || isDecadeOutsideRange(decade.start - DEFAULT_DECADE_SIZE, isDateDisabled),
+      nextButtonDisabled:
+        disabled || isDecadeOutsideRange(decade.start + DEFAULT_DECADE_SIZE, isDateDisabled),
     };
   }
 
@@ -375,18 +453,24 @@ function createHeaderProps({
     increase: picker.goToNextMonth,
     openMonthLevel: () => (pickerType === 'year' ? onChangeLevel('year') : onChangeLevel('month')),
     openYearLevel: () => onChangeLevel('year'),
-    changeYear: (year) => picker.focusDate({
-      year,
-      month: picker.state.viewMonth,
-      day: Math.min(picker.state.focusedDate.day, daysInMonth(year, picker.state.viewMonth)),
-    }),
-    changeMonth: (month) => picker.focusDate({
-      year: picker.state.viewYear,
-      month,
-      day: Math.min(picker.state.focusedDate.day, daysInMonth(picker.state.viewYear, month)),
-    }),
-    prevButtonDisabled: disabled || isMonthOutsideRange(picker.state.viewYear, picker.state.viewMonth - 1, isDateDisabled),
-    nextButtonDisabled: disabled || isMonthOutsideRange(picker.state.viewYear, picker.state.viewMonth + 1, isDateDisabled),
+    changeYear: (year) =>
+      picker.focusDate({
+        year,
+        month: picker.state.viewMonth,
+        day: Math.min(picker.state.focusedDate.day, daysInMonth(year, picker.state.viewMonth)),
+      }),
+    changeMonth: (month) =>
+      picker.focusDate({
+        year: picker.state.viewYear,
+        month,
+        day: Math.min(picker.state.focusedDate.day, daysInMonth(picker.state.viewYear, month)),
+      }),
+    prevButtonDisabled:
+      disabled ||
+      isMonthOutsideRange(picker.state.viewYear, picker.state.viewMonth - 1, isDateDisabled),
+    nextButtonDisabled:
+      disabled ||
+      isMonthOutsideRange(picker.state.viewYear, picker.state.viewMonth + 1, isDateDisabled),
   };
 }
 
@@ -445,7 +529,9 @@ function handleYearPick({
   }
 
   const month = picker.state.viewMonth;
-  const candidate = findFirstSelectableDateInMonth(year, month, isDateDisabled) ?? findFirstSelectableDateInYear(year, isDateDisabled);
+  const candidate =
+    findFirstSelectableDateInMonth(year, month, isDateDisabled) ??
+    findFirstSelectableDateInYear(year, isDateDisabled);
   if (!candidate) {
     return;
   }
@@ -462,7 +548,16 @@ function handleDayKeyDown(
 ): void {
   const key = event.key;
 
-  if (key === 'ArrowLeft' || key === 'ArrowRight' || key === 'ArrowUp' || key === 'ArrowDown' || key === 'Home' || key === 'End' || key === 'PageUp' || key === 'PageDown') {
+  if (
+    key === 'ArrowLeft' ||
+    key === 'ArrowRight' ||
+    key === 'ArrowUp' ||
+    key === 'ArrowDown' ||
+    key === 'Home' ||
+    key === 'End' ||
+    key === 'PageUp' ||
+    key === 'PageDown'
+  ) {
     event.preventDefault();
     picker.navigate(key, { shiftKey: event.shiftKey });
   }

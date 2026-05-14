@@ -1,17 +1,6 @@
 import { parseBsDate, type BsDate } from 'nepali-date-library';
-import {
-  useCallback,
-  useEffect,
-  useId,
-  useMemo,
-  useRef,
-  useState,
-  type RefObject,
-} from 'react';
-import type {
-  NepaliDatePickerLevel,
-  NepaliDatePickerProps,
-} from './NepaliDatePicker.types';
+import { useCallback, useEffect, useId, useMemo, useRef, useState, type RefObject } from 'react';
+import type { NepaliDatePickerLevel, NepaliDatePickerProps } from './NepaliDatePicker.types';
 import {
   formatPickerValue,
   formatRangeValue,
@@ -38,14 +27,14 @@ export interface UseNepaliDatePickerControllerResult {
   isDateDisabled: (date: BsDate) => boolean;
   isOpen: boolean;
   inputValue: string;
-  numeralSystem: NonNullable<NepaliDatePickerProps["numeralSystem"]>;
+  numeralSystem: NonNullable<NepaliDatePickerProps['numeralSystem']>;
   picker: ReturnType<typeof useNepaliDatePickerState>;
-  pickerType: NonNullable<NepaliDatePickerProps["pickerType"]>;
+  pickerType: NonNullable<NepaliDatePickerProps['pickerType']>;
   rangeDraft: [BsDate | null, BsDate | null];
   readOnly: boolean;
   rootRef: RefObject<HTMLDivElement | null>;
   selectedDate: BsDate | null;
-  selectionType: NonNullable<NepaliDatePickerProps["type"]>;
+  selectionType: NonNullable<NepaliDatePickerProps['type']>;
   clearValue: () => void;
   openCalendar: () => void;
   closeCalendar: () => void;
@@ -67,8 +56,7 @@ export function useNepaliDatePickerController(
   const disabled = Boolean(props.disabled);
   const readOnly = Boolean(props.readOnly);
   const inline = Boolean(props.inline);
-  const controlledValue =
-    typeof props.value !== 'undefined' ? props.value : props.selected;
+  const controlledValue = typeof props.value !== 'undefined' ? props.value : props.selected;
   const min = props.min ?? props.minDate;
   const max = props.max ?? props.maxDate;
   const weekStartsOn = props.weekStartsOn ?? props.calendarStartDay;
@@ -80,18 +68,9 @@ export function useNepaliDatePickerController(
   const rootRef = useRef<HTMLDivElement>(null);
   const calendarId = useId();
 
-  const includeDateKeys = useMemo(
-    () => toDateKeySet(props.includeDates),
-    [props.includeDates],
-  );
-  const excludeDateKeys = useMemo(
-    () => toDateKeySet(props.excludeDates),
-    [props.excludeDates],
-  );
-  const holidays = useMemo(
-    () => toHolidayMap(props.holidays),
-    [props.holidays],
-  );
+  const includeDateKeys = useMemo(() => toDateKeySet(props.includeDates), [props.includeDates]);
+  const excludeDateKeys = useMemo(() => toDateKeySet(props.excludeDates), [props.excludeDates]);
+  const holidays = useMemo(() => toHolidayMap(props.holidays), [props.holidays]);
 
   const isDateDisabled = useCallback(
     (date: BsDate): boolean => {
@@ -115,13 +94,7 @@ export function useNepaliDatePickerController(
 
       return Boolean(props.isDateDisabled?.(date));
     },
-    [
-      excludeDateKeys,
-      holidays,
-      includeDateKeys,
-      props.filterDate,
-      props.isDateDisabled,
-    ],
+    [excludeDateKeys, holidays, includeDateKeys, props.filterDate, props.isDateDisabled],
   );
 
   const rangeValue = useMemo(
@@ -130,7 +103,7 @@ export function useNepaliDatePickerController(
   );
   const singleValue = useMemo(
     () =>
-      selectionType === "range"
+      selectionType === 'range'
         ? (rangeValue[1] ?? rangeValue[0])
         : parseSingleValue(controlledValue ?? props.defaultValue),
     [controlledValue, props.defaultValue, rangeValue, selectionType],
@@ -152,41 +125,18 @@ export function useNepaliDatePickerController(
   const [rangeDraft, setRangeDraft] = useState(rangeValue);
 
   const selectedDate =
-    selectionType === 'range'
-      ? (rangeDraft[1] ?? rangeDraft[0])
-      : picker.state.selectedDate;
+    selectionType === 'range' ? (rangeDraft[1] ?? rangeDraft[0]) : picker.state.selectedDate;
   const displayValue = useMemo(
     () =>
       selectionType === 'range'
-        ? formatRangeValue(
-            rangeDraft,
-            pickerType,
-            props.dateFormat,
-            numeralSystem,
-          )
+        ? formatRangeValue(rangeDraft, pickerType, props.dateFormat, numeralSystem)
         : selectedDate
-          ? formatPickerValue(
-              selectedDate,
-              pickerType,
-              props.dateFormat,
-              numeralSystem,
-            )
-          : "",
-    [
-      numeralSystem,
-      pickerType,
-      props.dateFormat,
-      rangeDraft,
-      selectedDate,
-      selectionType,
-    ],
+          ? formatPickerValue(selectedDate, pickerType, props.dateFormat, numeralSystem)
+          : '',
+    [numeralSystem, pickerType, props.dateFormat, rangeDraft, selectedDate, selectionType],
   );
   const isInputTypeable =
-    Boolean(props.typeable) &&
-    selectionType === 'default' &&
-    !inline &&
-    !disabled &&
-    !readOnly;
+    Boolean(props.typeable) && selectionType === 'default' && !inline && !disabled && !readOnly;
 
   useEffect(() => {
     setCalendarLevel(getDefaultLevel(pickerType));
@@ -304,12 +254,7 @@ export function useNepaliDatePickerController(
     picker.setValue(null);
     props.onChange?.(null);
   }, [disabled, picker, props.onChange, readOnly, selectionType]);
-  const {
-    inputValue,
-    onInputBlur,
-    onInputKeyDown,
-    onInputValueChange,
-  } = useTypeableDateInput({
+  const { inputValue, onInputBlur, onInputKeyDown, onInputValueChange } = useTypeableDateInput({
     enabled: isInputTypeable,
     disabled,
     readOnly,

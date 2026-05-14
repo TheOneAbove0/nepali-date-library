@@ -1,7 +1,7 @@
 .docsShell {
   color: #18211d;
   background: #f6f8f4;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --ink: #18211d;
   --muted: #69756f;
   --line: #d7ddd7;
@@ -16,17 +16,8 @@
   --red-soft: #fff0f0;
   --shadow: 0 18px 40px rgba(24, 33, 29, 0.08);
   --shell-bg:
-    linear-gradient(
-      90deg,
-      rgba(28, 126, 214, 0.05) 0 1px,
-      transparent 1px 100%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(28, 126, 214, 0.04) 0 1px,
-      transparent 1px 100%
-    ),
-    #ffffff;
+    linear-gradient(90deg, rgba(28, 126, 214, 0.05) 0 1px, transparent 1px 100%),
+    linear-gradient(180deg, rgba(28, 126, 214, 0.04) 0 1px, transparent 1px 100%), #ffffff;
   --sidebar-bg: rgba(255, 255, 255, 0.92);
   --panel-bg: rgba(255, 255, 255, 0.96);
   --demo-bg: #ffffff;
@@ -41,7 +32,7 @@
   --header-pill-bg: rgba(255, 255, 255, 0.92);
 }
 
-.docsShell[data-theme="dark"] {
+.docsShell[data-theme='dark'] {
   color: #e8eeea;
   background: #0f1513;
   --ink: #e8eeea;
@@ -58,16 +49,8 @@
   --red-soft: rgba(255, 127, 127, 0.15);
   --shadow: 0 22px 44px rgba(0, 0, 0, 0.34);
   --shell-bg:
-    linear-gradient(
-      90deg,
-      rgba(88, 166, 255, 0.06) 0 1px,
-      transparent 1px 100%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(88, 166, 255, 0.05) 0 1px,
-      transparent 1px 100%
-    ),
+    linear-gradient(90deg, rgba(88, 166, 255, 0.06) 0 1px, transparent 1px 100%),
+    linear-gradient(180deg, rgba(88, 166, 255, 0.05) 0 1px, transparent 1px 100%),
     linear-gradient(180deg, #0f1513 0%, #131b18 100%);
   --sidebar-bg: rgba(18, 24, 22, 0.92);
   --panel-bg: rgba(21, 28, 25, 0.96);
@@ -312,17 +295,8 @@ p {
   gap: 20px;
   padding: 34px;
   background:
-    linear-gradient(
-      90deg,
-      rgba(28, 126, 214, 0.04) 0 1px,
-      transparent 1px 100%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(28, 126, 214, 0.03) 0 1px,
-      transparent 1px 100%
-    ),
-    var(--demo-bg);
+    linear-gradient(90deg, rgba(28, 126, 214, 0.04) 0 1px, transparent 1px 100%),
+    linear-gradient(180deg, rgba(28, 126, 214, 0.03) 0 1px, transparent 1px 100%), var(--demo-bg);
   background-size:
     36px 36px,
     36px 36px,
@@ -371,7 +345,7 @@ pre {
   padding: 22px 24px 24px;
   overflow-x: auto;
   color: var(--code-text);
-  font-family: "SFMono-Regular", "Cascadia Code", "Liberation Mono", monospace;
+  font-family: 'SFMono-Regular', 'Cascadia Code', 'Liberation Mono', monospace;
   font-size: 13px;
   line-height: 1.7;
   white-space: pre-wrap;
@@ -506,10 +480,7 @@ pre {
   position: relative;
   width: min(
     100%,
-    calc(
-      var(--nepali-date-picker-base-inline-width) *
-        var(--nepali-date-picker-scale)
-    )
+    calc(var(--nepali-date-picker-base-inline-width) * var(--nepali-date-picker-scale))
   );
   color: var(--ink);
   --nepali-date-picker-scale: 1;
@@ -539,10 +510,7 @@ pre {
 .nepali-date-picker--inline {
   width: min(
     100%,
-    calc(
-      var(--nepali-date-picker-base-inline-width) *
-        var(--nepali-date-picker-scale)
-    )
+    calc(var(--nepali-date-picker-base-inline-width) * var(--nepali-date-picker-scale))
   );
 }
 
@@ -619,10 +587,7 @@ pre {
   left: 0;
   width: min(
     100vw - 48px,
-    calc(
-      var(--nepali-date-picker-base-popover-width) *
-        var(--nepali-date-picker-scale)
-    )
+    calc(var(--nepali-date-picker-base-popover-width) * var(--nepali-date-picker-scale))
   );
 }
 
@@ -642,8 +607,7 @@ pre {
     calc(34px * var(--nepali-date-picker-scale));
   align-items: center;
   gap: calc(10px * var(--nepali-date-picker-scale));
-  padding: calc(16px * var(--nepali-date-picker-scale))
-    calc(18px * var(--nepali-date-picker-scale))
+  padding: calc(16px * var(--nepali-date-picker-scale)) calc(18px * var(--nepali-date-picker-scale))
     calc(8px * var(--nepali-date-picker-scale));
 }
 
@@ -766,8 +730,7 @@ pre {
 .nepali-date-picker__grid {
   display: grid;
   gap: calc(10px * var(--nepali-date-picker-scale));
-  padding: calc(14px * var(--nepali-date-picker-scale))
-    calc(18px * var(--nepali-date-picker-scale))
+  padding: calc(14px * var(--nepali-date-picker-scale)) calc(18px * var(--nepali-date-picker-scale))
     calc(20px * var(--nepali-date-picker-scale));
 }
 
@@ -823,12 +786,8 @@ pre {
   color: #cf3f34;
 }
 
-.docsWeekendHolidayCalendar
-  td:nth-child(1)
-  .nepali-date-picker__day:hover:not(:disabled),
-.docsWeekendHolidayCalendar
-  td:nth-child(7)
-  .nepali-date-picker__day:hover:not(:disabled) {
+.docsWeekendHolidayCalendar td:nth-child(1) .nepali-date-picker__day:hover:not(:disabled),
+.docsWeekendHolidayCalendar td:nth-child(7) .nepali-date-picker__day:hover:not(:disabled) {
   color: #cf3f34;
   background: #ffe8e2;
   box-shadow: inset 0 0 0 1px #f0a497;
@@ -843,12 +802,8 @@ pre {
 
 .docsWeekendHolidayCalendar td:nth-child(1) .nepali-date-picker__day--selected,
 .docsWeekendHolidayCalendar td:nth-child(7) .nepali-date-picker__day--selected,
-.docsWeekendHolidayCalendar
-  td:nth-child(1)
-  .nepali-date-picker__day--selected:hover,
-.docsWeekendHolidayCalendar
-  td:nth-child(7)
-  .nepali-date-picker__day--selected:hover {
+.docsWeekendHolidayCalendar td:nth-child(1) .nepali-date-picker__day--selected:hover,
+.docsWeekendHolidayCalendar td:nth-child(7) .nepali-date-picker__day--selected:hover {
   color: #ffffff;
   background: #cf3f34;
   box-shadow: inset 0 0 0 1px #cf3f34;
@@ -856,11 +811,7 @@ pre {
 
 .docsStyledCalendar {
   background:
-    linear-gradient(
-      180deg,
-      rgba(255, 249, 241, 0.92),
-      rgba(255, 253, 248, 0.96)
-    ),
+    linear-gradient(180deg, rgba(255, 249, 241, 0.92), rgba(255, 253, 248, 0.96)),
     var(--nepali-date-picker-calendar-bg);
 }
 
@@ -868,15 +819,15 @@ pre {
   letter-spacing: 0.01em;
 }
 
-.docsStyledDay[data-holiday="true"] {
+.docsStyledDay[data-holiday='true'] {
   font-weight: 700;
 }
 
-.docsStyledDay[data-in-range="true"] {
+.docsStyledDay[data-in-range='true'] {
   background: color-mix(in srgb, var(--nepali-date-picker-accent) 16%, white);
 }
 
-.docsStyledDay[data-selected="true"] {
+.docsStyledDay[data-selected='true'] {
   box-shadow: 0 10px 22px rgba(201, 112, 18, 0.22);
 }
 

@@ -11,10 +11,15 @@ export function zPad(value: number): string {
 }
 
 export function toDevanagari(value: string | number): string {
-  return String(value).replace(/\d/g, (digit) => String.fromCharCode(DEVANAGARI_ZERO + Number(digit)));
+  return String(value).replace(/\d/g, (digit) =>
+    String.fromCharCode(DEVANAGARI_ZERO + Number(digit)),
+  );
 }
 
-export function parseYmdString(input: string, label: string): { year: number; month: number; day: number } {
+export function parseYmdString(
+  input: string,
+  label: string,
+): { year: number; month: number; day: number } {
   const match = /^\s*(\d{4})-(\d{1,2})-(\d{1,2})\s*$/.exec(input);
   if (!match) {
     throw new Error(`Invalid ${label} format ${input}. Use YYYY-MM-DD.`);

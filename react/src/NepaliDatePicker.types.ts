@@ -5,88 +5,70 @@ import type {
   KeyboardEventHandler,
   ReactElement,
   ReactNode,
-} from "react";
-import type {
-  BsDate,
-  BsDateFormat,
-  BsDateInput,
-  WeekdayIndex,
-} from "nepali-date-library";
-import type { MonthGridCell } from "nepali-date-library/datepicker-core";
+} from 'react';
+import type { BsDate, BsDateFormat, BsDateInput, WeekdayIndex } from 'nepali-date-library';
+import type { MonthGridCell } from 'nepali-date-library/datepicker-core';
 
 export const MONTH_NAMES = [
-  "बैशाख",
-  "जेठ",
-  "असार",
-  "साउन",
-  "भदौ",
-  "असोज",
-  "कार्तिक",
-  "मंसिर",
-  "पौष",
-  "माघ",
-  "फाल्गुन",
-  "चैत",
+  'बैशाख',
+  'जेठ',
+  'असार',
+  'साउन',
+  'भदौ',
+  'असोज',
+  'कार्तिक',
+  'मंसिर',
+  'पौष',
+  'माघ',
+  'फाल्गुन',
+  'चैत',
 ] as const;
 export const WEEKDAY_NAMES = [
-  "आइतबार",
-  "सोमबार",
-  "मंगलबार",
-  "बुधबार",
-  "बिहीबार",
-  "शुक्रबार",
-  "शनिबार",
+  'आइतबार',
+  'सोमबार',
+  'मंगलबार',
+  'बुधबार',
+  'बिहीबार',
+  'शुक्रबार',
+  'शनिबार',
 ] as const;
-export const WEEKDAY_SHORT_NAMES = [
-  "आ",
-  "सो",
-  "मं",
-  "बु",
-  "बि",
-  "शु",
-  "श",
-] as const;
+export const WEEKDAY_SHORT_NAMES = ['आ', 'सो', 'मं', 'बु', 'बि', 'शु', 'श'] as const;
 export const DEFAULT_DECADE_SIZE = 10;
 
-export type NepaliDatePickerType = "date" | "month" | "year";
-export type NepaliDatePickerLevel = "day" | "month" | "year";
-export type NepaliDatePickerSelectionType = "default" | "range";
-export type NepaliNumeralSystem = "latin" | "nepali";
-export type NepaliDatePickerSize = "sm" | "md" | "lg" | "xl" | number;
+export type NepaliDatePickerType = 'date' | 'month' | 'year';
+export type NepaliDatePickerLevel = 'day' | 'month' | 'year';
+export type NepaliDatePickerSelectionType = 'default' | 'range';
+export type NepaliNumeralSystem = 'latin' | 'nepali';
+export type NepaliDatePickerSize = 'sm' | 'md' | 'lg' | 'xl' | number;
 export type NepaliDatePickerSlot =
-  | "root"
-  | "label"
-  | "description"
-  | "inputShell"
-  | "input"
-  | "iconButton"
-  | "clearButton"
-  | "popper"
-  | "calendar"
-  | "header"
-  | "navButton"
-  | "headerLabel"
-  | "table"
-  | "weekday"
-  | "cell"
-  | "day"
-  | "monthGrid"
-  | "yearGrid"
-  | "tile"
-  | "children";
+  | 'root'
+  | 'label'
+  | 'description'
+  | 'inputShell'
+  | 'input'
+  | 'iconButton'
+  | 'clearButton'
+  | 'popper'
+  | 'calendar'
+  | 'header'
+  | 'navButton'
+  | 'headerLabel'
+  | 'table'
+  | 'weekday'
+  | 'cell'
+  | 'day'
+  | 'monthGrid'
+  | 'yearGrid'
+  | 'tile'
+  | 'children';
 
 export type DateFormatter = BsDateFormat | ((date: BsDate) => string);
 export type RangeInputValue = [BsDateInput | null, BsDateInput | null];
 export type RangeValue = [BsDate | null, BsDate | null];
-export type StyleObject = CSSProperties &
-  Record<`--${string}`, string | number>;
+export type StyleObject = CSSProperties & Record<`--${string}`, string | number>;
 export type NepaliDatePickerValue = BsDate | RangeValue | null;
-export type NepaliDatePickerClassNames = Partial<
-  Record<NepaliDatePickerSlot, string>
->;
-export type NepaliDatePickerStyles = Partial<
-  Record<NepaliDatePickerSlot, StyleObject>
->;
+export type NepaliDatePickerClassNames = Partial<Record<NepaliDatePickerSlot, string>>;
+export type NepaliDatePickerStyles = Partial<Record<NepaliDatePickerSlot, StyleObject>>;
 export type NepaliDatePickerVariables = Record<`--${string}`, string | number>;
 
 export interface NepaliDatePickerCustomInputProps {
@@ -188,49 +170,21 @@ export interface NepaliDatePickerProps {
   nextMonthLabel?: ReactNode;
   renderCustomHeader?: (props: NepaliDatePickerHeaderProps) => ReactNode;
   renderHeader?: (props: NepaliDatePickerHeaderProps) => ReactNode;
-  renderDayContents?: (
-    day: number,
-    date: BsDate,
-    cell: MonthGridCell,
-  ) => ReactNode;
+  renderDayContents?: (day: number, date: BsDate, cell: MonthGridCell) => ReactNode;
   renderCustomDayName?: (props: NepaliDatePickerDayNameProps) => ReactNode;
   onCalendarOpen?: () => void;
   onCalendarClose?: () => void;
   children?: ReactNode;
 }
 
-export interface DatePickerInputProps extends Omit<
-  NepaliDatePickerProps,
-  "pickerType"
-> {}
-export interface DateInputProps extends Omit<
-  NepaliDatePickerProps,
-  "pickerType"
-> {}
-export interface DatePickerProps extends Omit<
-  NepaliDatePickerProps,
-  "pickerType"
-> {}
-export interface MonthPickerInputProps extends Omit<
-  NepaliDatePickerProps,
-  "pickerType"
-> {}
-export interface MonthPickerProps extends Omit<
-  NepaliDatePickerProps,
-  "pickerType"
-> {}
-export interface YearPickerInputProps extends Omit<
-  NepaliDatePickerProps,
-  "pickerType"
-> {}
-export interface YearPickerProps extends Omit<
-  NepaliDatePickerProps,
-  "pickerType"
-> {}
-export interface CalendarProps extends Omit<
-  NepaliDatePickerProps,
-  "pickerType"
-> {}
+export interface DatePickerInputProps extends Omit<NepaliDatePickerProps, 'pickerType'> {}
+export interface DateInputProps extends Omit<NepaliDatePickerProps, 'pickerType'> {}
+export interface DatePickerProps extends Omit<NepaliDatePickerProps, 'pickerType'> {}
+export interface MonthPickerInputProps extends Omit<NepaliDatePickerProps, 'pickerType'> {}
+export interface MonthPickerProps extends Omit<NepaliDatePickerProps, 'pickerType'> {}
+export interface YearPickerInputProps extends Omit<NepaliDatePickerProps, 'pickerType'> {}
+export interface YearPickerProps extends Omit<NepaliDatePickerProps, 'pickerType'> {}
+export interface CalendarProps extends Omit<NepaliDatePickerProps, 'pickerType'> {}
 
 export interface HolidayMeta {
   label?: string;

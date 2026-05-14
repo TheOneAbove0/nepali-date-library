@@ -34,7 +34,11 @@ interface UseTypeableDateInputResult {
   inputValue: string;
   onInputBlur: () => void;
   onInputKeyDown: (key: string) => void;
-  onInputValueChange: (nextValue: string, cursorPosition?: number | null, isDeleting?: boolean) => void;
+  onInputValueChange: (
+    nextValue: string,
+    cursorPosition?: number | null,
+    isDeleting?: boolean,
+  ) => void;
 }
 
 export function useTypeableDateInput({
@@ -62,98 +66,117 @@ export function useTypeableDateInput({
     setTypedInputValue(displayValue);
   }, [displayValue]);
 
-  const syncTypedInput = useCallback((candidateValue: string, cursorPosition?: number | null, isDeleting = false): void => {
-    if (!enabled || disabled || readOnly) {
-      return;
-    }
-
-    const rawValue = normalizeNumerals(candidateValue).trim();
-    if (!rawValue) {
-      setValue(null);
-      onChange?.(null);
-      setTypedInputValue('');
-      return;
-    }
-
-    const typedInput = parseTypedInputValue(rawValue, separator, numeralSystem, pickerType, cursorPosition);
-    if (!typedInput.digits) {
-      setTypedInputValue('');
-      return;
-    }
-
-    const baseDate = selectedDate ?? { year: viewYear, month: viewMonth, day: 1 };
-    const candidate = buildTypedCandidateDate({
-      digits: typedInput.digits,
-      parts: typedInput.parts,
-      isComplete: isDeleting ? false : typedInput.isComplete,
-      baseDate,
-      pickerType,
-    });
-
-    if (isDeleting) {
-      setTypedInputValue(formatTypedNumerals(rawValue, numeralSystem));
-      if (candidate) {
-        focusDate(candidate);
+  const syncTypedInput = useCallback(
+    (candidateValue: string, cursorPosition?: number | null, isDeleting = false): void => {
+      if (!enabled || disabled || readOnly) {
+        return;
       }
-      return;
-    }
 
-    setTypedInputValue(typedInput.displayValue);
-    if (!candidate) {
-      return;
-    }
+      const rawValue = normalizeNumerals(candidateValue).trim();
+      if (!rawValue) {
+        setValue(null);
+        onChange?.(null);
+        setTypedInputValue('');
+        return;
+      }
 
-    // Partial input should guide the calendar without committing a value yet.
-    if (!typedInput.isComplete) {
-      focusDate(candidate);
-      return;
-    }
+      const typedInput = parseTypedInputValue(
+        rawValue,
+        separator,
+        numeralSystem,
+        pickerType,
+        cursorPosition,
+      );
+      if (!typedInput.digits) {
+        setTypedInputValue('');
+        return;
+      }
 
-    if (isTypedCandidateOutOfRange(candidate, min, max) || isDateDisabled(candidate)) {
-      setTypedInputValue(displayValue);
-      return;
-    }
+      const baseDate = selectedDate ?? { year: viewYear, month: viewMonth, day: 1 };
+      const candidate = buildTypedCandidateDate({
+        digits: typedInput.digits,
+        parts: typedInput.parts,
+        isComplete: isDeleting ? false : typedInput.isComplete,
+        baseDate,
+        pickerType,
+      });
 
-    setValue(candidate);
-    onChange?.(candidate);
-    setTypedInputValue(formatPickerValue(candidate, pickerType, dateFormat, numeralSystem));
-  }, [
-    dateFormat,
-    disabled,
-    displayValue,
-    enabled,
-    focusDate,
-    isDateDisabled,
-    max,
-    min,
-    numeralSystem,
-    onChange,
-    pickerType,
-    readOnly,
-    selectedDate,
-    separator,
-    setValue,
-    viewMonth,
-    viewYear,
-  ]);
+      if (isDeleting) {
+        setTypedInputValue(formatTypedNumerals(rawValue, numeralSystem));
+        if (candidate) {
+          focusDate(candidate);
+        }
+        return;
+      }
 
-  const onInputValueChange = useCallback((nextValue: string, cursorPosition?: number | null, isDeleting = false): void => {
-    if (!enabled || disabled || readOnly) {
-      return;
-    }
+      setTypedInputValue(typedInput.displayValue);
+      if (!candidate) {
+        return;
+      }
 
-    syncTypedInput(nextValue, cursorPosition, isDeleting || nextValue.length < typedInputValue.length);
-  }, [disabled, enabled, readOnly, syncTypedInput, typedInputValue.length]);
+      // Partial input should guide the calendar without committing a value yet.
+      if (!typedInput.isComplete) {
+        focusDate(candidate);
+        return;
+      }
+
+      if (isTypedCandidateOutOfRange(candidate, min, max) || isDateDisabled(candidate)) {
+        setTypedInputValue(displayValue);
+        return;
+      }
+
+      setValue(candidate);
+      onChange?.(candidate);
+      setTypedInputValue(formatPickerValue(candidate, pickerType, dateFormat, numeralSystem));
+    },
+    [
+      dateFormat,
+      disabled,
+      displayValue,
+      enabled,
+      focusDate,
+      isDateDisabled,
+      max,
+      min,
+      numeralSystem,
+      onChange,
+      pickerType,
+      readOnly,
+      selectedDate,
+      separator,
+      setValue,
+      viewMonth,
+      viewYear,
+    ],
+  );
+
+  const onInputValueChange = useCallback(
+    (nextValue: string, cursorPosition?: number | null, isDeleting = false): void => {
+      if (!enabled || disabled || readOnly) {
+        return;
+      }
+
+      syncTypedInput(
+        nextValue,
+        cursorPosition,
+        isDeleting || nextValue.length < typedInputValue.length,
+      );
+    },
+    [disabled, enabled, readOnly, syncTypedInput, typedInputValue.length],
+  );
 
   const onInputBlur = useCallback((): void => {
     syncTypedInput(typedInputValue);
   }, [syncTypedInput, typedInputValue]);
 
-  const onInputKeyDown = useCallback((key: string): void => {
-    if (key === 'Enter') {
-      syncTypedInput(typedInputValue);
-    }
-  }, [syncTypedInput, typedInputValue]);
+  const onInputKeyDown = useCallback(
+    (key: string): void => {
+      if (key === 'Enter') {
+        syncTypedInput(typedInputValue);
+      }
+    },
+    [syncTypedInput, typedInputValue],
+  );
 
   return {
     inputValue: enabled ? typedInputValue : displayValue,

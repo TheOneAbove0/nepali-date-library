@@ -7,9 +7,31 @@ import {
   type DatePickerState,
 } from 'nepali-date-library/datepicker-core';
 
-const MONTH_NAMES = ['बैशाख', 'जेठ', 'असार', 'साउन', 'भदौ', 'असोज', 'कार्तिक', 'मंसिर', 'पौष', 'माघ', 'फाल्गुन', 'चैत'];
+const MONTH_NAMES = [
+  'बैशाख',
+  'जेठ',
+  'असार',
+  'साउन',
+  'भदौ',
+  'असोज',
+  'कार्तिक',
+  'मंसिर',
+  'पौष',
+  'माघ',
+  'फाल्गुन',
+  'चैत',
+];
 const WEEKDAY_NAMES = ['आइत', 'सोम', 'मंगल', 'बुध', 'बिही', 'शुक्र', 'शनि'];
-const NAVIGATION_KEYS = new Set<string>(['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown']);
+const NAVIGATION_KEYS = new Set<string>([
+  'ArrowLeft',
+  'ArrowRight',
+  'ArrowUp',
+  'ArrowDown',
+  'Home',
+  'End',
+  'PageUp',
+  'PageDown',
+]);
 
 export interface NepaliDatePickerOptions {
   value?: BsDateInput | null;
@@ -28,7 +50,8 @@ export class NepaliDatePicker {
   private state: DatePickerState;
 
   constructor(target: string | HTMLElement, options: NepaliDatePickerOptions = {}) {
-    const element = typeof target === 'string' ? document.querySelector<HTMLElement>(target) : target;
+    const element =
+      typeof target === 'string' ? document.querySelector<HTMLElement>(target) : target;
     if (!element) {
       throw new Error(`NepaliDatePicker target not found: ${String(target)}`);
     }
@@ -123,7 +146,9 @@ export class NepaliDatePicker {
         cell.inCurrentMonth ? '' : 'npdl-picker__day--muted',
         cell.isSelected ? 'npdl-picker__day--selected' : '',
         cell.isToday ? 'npdl-picker__day--today' : '',
-      ].filter(Boolean).join(' ');
+      ]
+        .filter(Boolean)
+        .join(' ');
       button.disabled = cell.isDisabled;
       button.textContent = String(cell.date.day);
       button.setAttribute('role', 'gridcell');
@@ -144,7 +169,11 @@ export class NepaliDatePicker {
     return label;
   }
 
-  private createNavButton(label: string, ariaLabel: string, onClick: () => void): HTMLButtonElement {
+  private createNavButton(
+    label: string,
+    ariaLabel: string,
+    onClick: () => void,
+  ): HTMLButtonElement {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'npdl-picker__nav';

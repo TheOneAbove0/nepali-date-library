@@ -51,7 +51,8 @@ export function parseTypedInputValue(
     };
   }
 
-  const cursor = typeof cursorPosition === 'number' ? getTypedCursorPart(value, cursorPosition) : null;
+  const cursor =
+    typeof cursorPosition === 'number' ? getTypedCursorPart(value, cursorPosition) : null;
   const partLengths = getTypeablePartLengths(pickerType);
   const parts = normalizeTypedParts(value.split(/[-/.]/), partLengths, cursor);
 
@@ -125,7 +126,11 @@ export function buildTypedCandidateDate({
   return { year, month, day: Math.min(typedDay, maxDay) };
 }
 
-export function isTypedCandidateOutOfRange(candidate: BsDate, min?: NepaliDatePickerProps['min'], max?: NepaliDatePickerProps['max']): boolean {
+export function isTypedCandidateOutOfRange(
+  candidate: BsDate,
+  min?: NepaliDatePickerProps['min'],
+  max?: NepaliDatePickerProps['max'],
+): boolean {
   return Boolean(
     (min && compareBsDate(candidate, parseBsDate(min)) < 0) ||
     (max && compareBsDate(candidate, parseBsDate(max)) > 0),
@@ -140,7 +145,10 @@ function extractDigits(value: string): string {
   return normalizeNumerals(value).replace(/\D/g, '');
 }
 
-function getTypedCursorPart(value: string, cursorPosition: number): { partIndex: number; digitOffset: number } {
+function getTypedCursorPart(
+  value: string,
+  cursorPosition: number,
+): { partIndex: number; digitOffset: number } {
   let partIndex = 0;
   let digitOffset = 0;
   const end = Math.min(Math.max(cursorPosition, 0), value.length);
@@ -194,7 +202,11 @@ function normalizeTypedParts(
       continue;
     }
 
-    parts[index] = trimTypedPart(digits, maxLength, cursor?.partIndex === index ? cursor.digitOffset : undefined);
+    parts[index] = trimTypedPart(
+      digits,
+      maxLength,
+      cursor?.partIndex === index ? cursor.digitOffset : undefined,
+    );
   }
 
   return parts;
@@ -224,7 +236,11 @@ function formatTypedInputValue(
   return formatTypedYearMonthDay(formattedDigits, separator);
 }
 
-function formatTypedParts(parts: string[], separator: string, numeralSystem: NumeralSystem): string {
+function formatTypedParts(
+  parts: string[],
+  separator: string,
+  numeralSystem: NumeralSystem,
+): string {
   return formatTypedNumerals(parts.join(separator), numeralSystem);
 }
 

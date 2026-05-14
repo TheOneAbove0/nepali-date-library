@@ -9,11 +9,7 @@ import {
   type MonthGrid,
   type WeekdayIndex,
 } from 'nepali-date-library/datepicker-core';
-import {
-  parseBsDate,
-  type BsDate,
-  type BsDateInput,
-} from 'nepali-date-library';
+import { parseBsDate, type BsDate, type BsDateInput } from 'nepali-date-library';
 
 export interface UseNepaliDatePickerOptions {
   value?: BsDateInput | null;
@@ -34,22 +30,30 @@ export interface UseNepaliDatePickerResult {
   goToNextMonth: () => void;
 }
 
-export function useNepaliDatePickerState(options: UseNepaliDatePickerOptions): UseNepaliDatePickerResult {
-  const constraints = useMemo(() => normalizeConstraints({
-    min: options.min,
-    max: options.max,
-    isDisabled: options.isDateDisabled,
-  }), [options.min, options.max, options.isDateDisabled]);
+export function useNepaliDatePickerState(
+  options: UseNepaliDatePickerOptions,
+): UseNepaliDatePickerResult {
+  const constraints = useMemo(
+    () =>
+      normalizeConstraints({
+        min: options.min,
+        max: options.max,
+        isDisabled: options.isDateDisabled,
+      }),
+    [options.min, options.max, options.isDateDisabled],
+  );
   const weekStartsOn = options.weekStartsOn ?? 0;
 
   const initialValue = options.value ?? options.defaultValue ?? undefined;
 
-  const [state, setState] = useState<DatePickerState>(() => createDatePickerState({
-    selectedDate: initialValue ?? undefined,
-    focusedDate: initialValue ?? undefined,
-    constraints,
-    weekStartsOn,
-  }));
+  const [state, setState] = useState<DatePickerState>(() =>
+    createDatePickerState({
+      selectedDate: initialValue ?? undefined,
+      focusedDate: initialValue ?? undefined,
+      constraints,
+      weekStartsOn,
+    }),
+  );
 
   useEffect(() => {
     setState((previous: DatePickerState) => ({
@@ -59,12 +63,16 @@ export function useNepaliDatePickerState(options: UseNepaliDatePickerOptions): U
     }));
   }, [constraints, weekStartsOn]);
 
-  const grid = useMemo(() => generateMonthGrid(state.viewYear, state.viewMonth, {
-    weekStartsOn: state.weekStartsOn,
-    constraints: state.constraints,
-    selectedDate: state.selectedDate,
-    focusedDate: state.focusedDate,
-  }), [state]);
+  const grid = useMemo(
+    () =>
+      generateMonthGrid(state.viewYear, state.viewMonth, {
+        weekStartsOn: state.weekStartsOn,
+        constraints: state.constraints,
+        selectedDate: state.selectedDate,
+        focusedDate: state.focusedDate,
+      }),
+    [state],
+  );
 
   const setValue = useCallback((value: BsDateInput | null): void => {
     setState((previous: DatePickerState) => {
@@ -105,13 +113,16 @@ export function useNepaliDatePickerState(options: UseNepaliDatePickerOptions): U
     setState((previous: DatePickerState) => navigateByKey(previous, 'PageDown'));
   }, []);
 
-  return useMemo(() => ({
-    state,
-    grid,
-    setValue,
-    focusDate,
-    navigate,
-    goToPreviousMonth,
-    goToNextMonth,
-  }), [focusDate, goToNextMonth, goToPreviousMonth, grid, navigate, setValue, state]);
+  return useMemo(
+    () => ({
+      state,
+      grid,
+      setValue,
+      focusDate,
+      navigate,
+      goToPreviousMonth,
+      goToNextMonth,
+    }),
+    [focusDate, goToNextMonth, goToPreviousMonth, grid, navigate, setValue, state],
+  );
 }

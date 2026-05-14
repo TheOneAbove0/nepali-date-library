@@ -6,7 +6,7 @@ import {
   type BsDate,
   type BsDateInput,
   type WeekdayIndex,
-} from "nepali-date-library";
+} from 'nepali-date-library';
 import type {
   DateFormatter,
   HolidayMeta,
@@ -21,8 +21,8 @@ import type {
   RangeInputValue,
   RangeValue,
   StyleObject,
-} from "./NepaliDatePicker.types";
-import { DEFAULT_DECADE_SIZE } from "./NepaliDatePicker.types";
+} from './NepaliDatePicker.types';
+import { DEFAULT_DECADE_SIZE } from './NepaliDatePicker.types';
 
 export function toDateKeySet(dates?: BsDateInput[]): Set<string> | undefined {
   return dates ? new Set(dates.map((date) => formatBsDate(date))) : undefined;
@@ -32,13 +32,11 @@ export function toDateKey(date: BsDateInput): string {
   return formatBsDate(date);
 }
 
-export function toHolidayMap(
-  holidays?: NepaliDateHolidayInput[],
-): Map<string, HolidayMeta> {
+export function toHolidayMap(holidays?: NepaliDateHolidayInput[]): Map<string, HolidayMeta> {
   const map = new Map<string, HolidayMeta>();
 
   holidays?.forEach((holiday) => {
-    if (typeof holiday === "string" || isBsDateObject(holiday)) {
+    if (typeof holiday === 'string' || isBsDateObject(holiday)) {
       map.set(formatBsDate(holiday), {});
       return;
     }
@@ -55,12 +53,12 @@ export function toHolidayMap(
 
 export function isBsDateObject(value: NepaliDateHolidayInput): value is BsDate {
   return (
-    typeof value === "object" &&
+    typeof value === 'object' &&
     value !== null &&
-    "year" in value &&
-    "month" in value &&
-    "day" in value &&
-    !("date" in value)
+    'year' in value &&
+    'month' in value &&
+    'day' in value &&
+    !('date' in value)
   );
 }
 
@@ -68,9 +66,9 @@ export function formatPickerValue(
   date: BsDate,
   pickerType: NepaliDatePickerType,
   dateFormat?: DateFormatter,
-  numeralSystem: NepaliNumeralSystem = "latin",
+  numeralSystem: NepaliNumeralSystem = 'latin',
 ): string {
-  if (typeof dateFormat === "function") {
+  if (typeof dateFormat === 'function') {
     return dateFormat(date);
   }
 
@@ -78,14 +76,11 @@ export function formatPickerValue(
     return formatNumericString(formatBsDate(date, dateFormat), numeralSystem);
   }
 
-  if (pickerType === "month") {
-    return formatNumericString(
-      `${date.year}-${pad(date.month)}`,
-      numeralSystem,
-    );
+  if (pickerType === 'month') {
+    return formatNumericString(`${date.year}-${pad(date.month)}`, numeralSystem);
   }
 
-  if (pickerType === "year") {
+  if (pickerType === 'year') {
     return formatNumericValue(date.year, numeralSystem);
   }
 
@@ -96,12 +91,12 @@ export function formatRangeValue(
   range: RangeValue,
   pickerType: NepaliDatePickerType,
   dateFormat?: DateFormatter,
-  numeralSystem: NepaliNumeralSystem = "latin",
+  numeralSystem: NepaliNumeralSystem = 'latin',
 ): string {
   const [start, end] = range;
 
   if (!start && !end) {
-    return "";
+    return '';
   }
 
   if (start && !end) {
@@ -109,24 +104,22 @@ export function formatRangeValue(
   }
 
   if (!start || !end) {
-    return "";
+    return '';
   }
 
   return `${formatPickerValue(start, pickerType, dateFormat, numeralSystem)} - ${formatPickerValue(end, pickerType, dateFormat, numeralSystem)}`;
 }
 
-export function getDefaultLevel(
-  pickerType: NepaliDatePickerType,
-): NepaliDatePickerLevel {
-  if (pickerType === "month") {
-    return "month";
+export function getDefaultLevel(pickerType: NepaliDatePickerType): NepaliDatePickerLevel {
+  if (pickerType === 'month') {
+    return 'month';
   }
 
-  if (pickerType === "year") {
-    return "year";
+  if (pickerType === 'year') {
+    return 'year';
   }
 
-  return "day";
+  return 'day';
 }
 
 export function parseSingleValue(
@@ -147,21 +140,15 @@ export function parseRangeValue(
   value: BsDateInput | RangeInputValue | null | undefined,
   selectionType: NepaliDatePickerSelectionType,
 ): RangeValue {
-  if (selectionType !== "range" || !Array.isArray(value)) {
+  if (selectionType !== 'range' || !Array.isArray(value)) {
     return [null, null];
   }
 
-  return [
-    value[0] ? parseBsDate(value[0]) : null,
-    value[1] ? parseBsDate(value[1]) : null,
-  ];
+  return [value[0] ? parseBsDate(value[0]) : null, value[1] ? parseBsDate(value[1]) : null];
 }
 
 // A fresh click restarts the range after both endpoints are already present.
-export function getNextRange(
-  currentRange: RangeValue,
-  nextDate: BsDate,
-): RangeValue {
+export function getNextRange(currentRange: RangeValue, nextDate: BsDate): RangeValue {
   const [start, end] = currentRange;
 
   if (!start || end) {
@@ -183,10 +170,7 @@ export function canSelectMonth(
   return Boolean(findFirstSelectableDateInMonth(year, month, isDateDisabled));
 }
 
-export function canSelectYear(
-  year: number,
-  isDateDisabled: (date: BsDate) => boolean,
-): boolean {
+export function canSelectYear(year: number, isDateDisabled: (date: BsDate) => boolean): boolean {
   return Boolean(findFirstSelectableDateInYear(year, isDateDisabled));
 }
 
@@ -239,17 +223,12 @@ export function isDecadeOutsideRange(
   startYear: number,
   isDateDisabled: (date: BsDate) => boolean,
 ): boolean {
-  return createDecadeYears(startYear).every(
-    (year) => !canSelectYear(year, isDateDisabled),
-  );
+  return createDecadeYears(startYear).every((year) => !canSelectYear(year, isDateDisabled));
 }
 
 export function createDecadeYears(viewYear: number): number[] {
   const decade = getDecadeBounds(viewYear);
-  return Array.from(
-    { length: DEFAULT_DECADE_SIZE },
-    (_, index) => decade.start + index,
-  );
+  return Array.from({ length: DEFAULT_DECADE_SIZE }, (_, index) => decade.start + index);
 }
 
 export function getDecadeBounds(year: number): { start: number; end: number } {
@@ -261,10 +240,7 @@ export function getDecadeBounds(year: number): { start: number; end: number } {
 }
 
 export function getOrderedWeekdays(weekStartsOn: WeekdayIndex): WeekdayIndex[] {
-  return Array.from(
-    { length: 7 },
-    (_, index) => ((weekStartsOn + index) % 7) as WeekdayIndex,
-  );
+  return Array.from({ length: 7 }, (_, index) => ((weekStartsOn + index) % 7) as WeekdayIndex);
 }
 
 export function createComparableValue(
@@ -272,11 +248,11 @@ export function createComparableValue(
   month: number,
   pickerType: NepaliDatePickerType,
 ): BsDate {
-  if (pickerType === "year") {
+  if (pickerType === 'year') {
     return { year, month: 1, day: 1 };
   }
 
-  if (pickerType === "month") {
+  if (pickerType === 'month') {
     return { year, month, day: 1 };
   }
 
@@ -289,37 +265,22 @@ export function isSameDate(left: BsDate | null, right: BsDate): boolean {
 
 export function isDateWithinRange(date: BsDate, range: RangeValue): boolean {
   const [start, end] = range;
-  return Boolean(
-    start &&
-    end &&
-    compareBsDate(date, start) > 0 &&
-    compareBsDate(date, end) < 0,
-  );
+  return Boolean(start && end && compareBsDate(date, start) > 0 && compareBsDate(date, end) < 0);
 }
 
-export function formatNumericValue(
-  value: number,
-  numeralSystem: NepaliNumeralSystem,
-): string {
+export function formatNumericValue(value: number, numeralSystem: NepaliNumeralSystem): string {
   return formatNumericString(String(value), numeralSystem);
 }
 
-export function formatNumericString(
-  value: string,
-  numeralSystem: NepaliNumeralSystem,
-): string {
-  if (numeralSystem !== "nepali") {
+export function formatNumericString(value: string, numeralSystem: NepaliNumeralSystem): string {
+  if (numeralSystem !== 'nepali') {
     return value;
   }
 
-  return value.replace(/\d/g, (digit) => "०१२३४५६७८९"[Number(digit)] ?? digit);
+  return value.replace(/\d/g, (digit) => '०१२३४५६७८९'[Number(digit)] ?? digit);
 }
 
-export function isSameMonth(
-  date: BsDate | null,
-  year: number,
-  month: number,
-): boolean {
+export function isSameMonth(date: BsDate | null, year: number, month: number): boolean {
   return Boolean(date && date.year === year && date.month === month);
 }
 
@@ -327,10 +288,7 @@ export function isSameYear(date: BsDate | null, year: number): boolean {
   return Boolean(date && date.year === year);
 }
 
-export function normalizeYearMonth(
-  year: number,
-  month: number,
-): Pick<BsDate, "year" | "month"> {
+export function normalizeYearMonth(year: number, month: number): Pick<BsDate, 'year' | 'month'> {
   let nextYear = year;
   let nextMonth = month;
 
@@ -347,13 +305,11 @@ export function normalizeYearMonth(
   return { year: nextYear, month: nextMonth };
 }
 
-export function getRootStyle(
-  props: NepaliDatePickerProps,
-): StyleObject | undefined {
+export function getRootStyle(props: NepaliDatePickerProps): StyleObject | undefined {
   return mergeStyles(
     getSizeStyleVariables(props.size),
     props.variables as StyleObject | undefined,
-    getSlotStyle(props, "root"),
+    getSlotStyle(props, 'root'),
     props.style,
   );
 }
@@ -373,9 +329,7 @@ export function getSlotStyle(
   return props.styles?.[slot];
 }
 
-export function mergeStyles(
-  ...styles: Array<StyleObject | undefined>
-): StyleObject | undefined {
+export function mergeStyles(...styles: Array<StyleObject | undefined>): StyleObject | undefined {
   const merged = styles.reduce<StyleObject>((accumulator, style) => {
     if (style) {
       Object.assign(accumulator, style);
@@ -390,14 +344,12 @@ export function mergeStyles(
 export function joinClassNames(
   ...classNames: Array<string | false | null | undefined>
 ): string | undefined {
-  const joined = classNames.filter(Boolean).join(" ");
+  const joined = classNames.filter(Boolean).join(' ');
   return joined || undefined;
 }
 
-function getSizeStyleVariables(
-  size: NepaliDatePickerSize | undefined,
-): StyleObject | undefined {
-  if (size === undefined || size === "md") {
+function getSizeStyleVariables(size: NepaliDatePickerSize | undefined): StyleObject | undefined {
+  if (size === undefined || size === 'md') {
     return undefined;
   }
 
@@ -408,21 +360,21 @@ function getSizeStyleVariables(
   }
 
   return {
-    "--nepali-date-picker-scale": scale,
+    '--nepali-date-picker-scale': scale,
   };
 }
 
 function getSizeScale(size: NepaliDatePickerSize): number {
-  if (typeof size === "number") {
+  if (typeof size === 'number') {
     return Number.isFinite(size) && size > 0 ? size : 1;
   }
 
   switch (size) {
-    case "sm":
+    case 'sm':
       return 0.9;
-    case "lg":
+    case 'lg':
       return 1.12;
-    case "xl":
+    case 'xl':
       return 1.24;
     default:
       return 1;
@@ -430,5 +382,5 @@ function getSizeScale(size: NepaliDatePickerSize): number {
 }
 
 function pad(value: number): string {
-  return String(value).padStart(2, "0");
+  return String(value).padStart(2, '0');
 }

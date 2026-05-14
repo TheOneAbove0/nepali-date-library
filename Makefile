@@ -1,4 +1,4 @@
-.PHONY: default test test-core verify-references build-react build-vue build-vanilla build-docs clean
+.PHONY: default test test-core verify-references build-react build-vue build-vanilla build-docs format format-check clean
 
 default: test
 
@@ -21,6 +21,12 @@ build-vanilla:
 
 build-docs:
 	cd docs-ui && npm run build
+
+format:
+	npm run format
+
+format-check:
+	npm run format:check
 
 clean:
 	rm -rf js/dist react/dist vue/dist vanilla/dist docs-ui/dist

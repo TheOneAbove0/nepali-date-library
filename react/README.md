@@ -15,8 +15,8 @@ npm i nepali-date-library-react nepali-date-library react react-dom
 ## Usage
 
 ```tsx
-import { DatePickerInput } from "nepali-date-library-react";
-import { useState } from "react";
+import { DatePickerInput } from 'nepali-date-library-react';
+import { useState } from 'react';
 
 export function App() {
   const [value, setValue] = useState(null);
@@ -80,8 +80,8 @@ Common customization props:
   showIcon
   clearable
   holidays={[
-    { date: "2083-01-01", label: "New year", className: "holiday-accent" },
-    { date: "2083-01-15", label: "Office closed", disabled: true },
+    { date: '2083-01-01', label: 'New year', className: 'holiday-accent' },
+    { date: '2083-01-15', label: 'Office closed', disabled: true },
   ]}
 />
 ```
@@ -91,17 +91,17 @@ Styling API:
 ```tsx
 <DatePickerInput
   variables={{
-    "--nepali-date-picker-accent": "#c97012",
-    "--nepali-date-picker-input-radius": "18px",
-    "--nepali-date-picker-calendar-radius": "22px",
+    '--nepali-date-picker-accent': '#c97012',
+    '--nepali-date-picker-input-radius': '18px',
+    '--nepali-date-picker-calendar-radius': '22px',
   }}
   styles={{
-    inputShell: { paddingInline: "4px" },
-    day: { borderRadius: "14px" },
+    inputShell: { paddingInline: '4px' },
+    day: { borderRadius: '14px' },
   }}
   classNames={{
-    calendar: "brand-calendar",
-    day: "brand-day",
+    calendar: 'brand-calendar',
+    day: 'brand-day',
   }}
 />
 ```

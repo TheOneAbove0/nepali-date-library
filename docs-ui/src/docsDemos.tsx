@@ -11,18 +11,44 @@ import {
 } from 'nepali-date-library-react';
 import { useState } from 'react';
 import { formatBsDateNepali, type BsDate } from 'nepali-date-library';
-import { brandedStyles, brandedVariables, sampleBs, sharedPickerProps, toDateRange, toSingleDate } from './docsShared';
+import {
+  brandedStyles,
+  brandedVariables,
+  sampleBs,
+  sharedPickerProps,
+  toDateRange,
+  toSingleDate,
+} from './docsShared';
 
 export function DatePickerInputDemo() {
   const [value, setValue] = useState<BsDate | null>(sampleBs);
 
-  return <DatePickerInput {...sharedPickerProps} label="Pick date" placeholderText="Pick date" showIcon value={value} onChange={(next) => setValue(toSingleDate(next))} />;
+  return (
+    <DatePickerInput
+      {...sharedPickerProps}
+      label="Pick date"
+      placeholderText="Pick date"
+      showIcon
+      value={value}
+      onChange={(next) => setValue(toSingleDate(next))}
+    />
+  );
 }
 
 export function DateInputDemo() {
   const [value, setValue] = useState<BsDate | null>(sampleBs);
 
-  return <DateInput {...sharedPickerProps} clearable label="Pick date" placeholderText="Pick date" showIcon value={value} onChange={(next) => setValue(toSingleDate(next))} />;
+  return (
+    <DateInput
+      {...sharedPickerProps}
+      clearable
+      label="Pick date"
+      placeholderText="Pick date"
+      showIcon
+      value={value}
+      onChange={(next) => setValue(toSingleDate(next))}
+    />
+  );
 }
 
 export function TypeableDateInputDemo() {
@@ -45,25 +71,52 @@ export function TypeableDateInputDemo() {
 export function DatePickerDemo() {
   const [value, setValue] = useState<BsDate | null>(sampleBs);
 
-  return <DatePicker {...sharedPickerProps} value={value} onChange={(next) => setValue(toSingleDate(next))} />;
+  return (
+    <DatePicker
+      {...sharedPickerProps}
+      value={value}
+      onChange={(next) => setValue(toSingleDate(next))}
+    />
+  );
 }
 
 export function MonthPickerInputDemo() {
   const [value, setValue] = useState<BsDate | null>({ year: 2083, month: 1, day: 1 });
 
-  return <MonthPickerInput {...sharedPickerProps} label="Pick month" placeholderText="Pick month" value={value} onChange={(next) => setValue(toSingleDate(next))} />;
+  return (
+    <MonthPickerInput
+      {...sharedPickerProps}
+      label="Pick month"
+      placeholderText="Pick month"
+      value={value}
+      onChange={(next) => setValue(toSingleDate(next))}
+    />
+  );
 }
 
 export function MonthPickerDemo() {
   const [value, setValue] = useState<BsDate | null>({ year: 2083, month: 1, day: 1 });
 
-  return <MonthPicker {...sharedPickerProps} value={value} onChange={(next) => setValue(toSingleDate(next))} />;
+  return (
+    <MonthPicker
+      {...sharedPickerProps}
+      value={value}
+      onChange={(next) => setValue(toSingleDate(next))}
+    />
+  );
 }
 
 export function YearPickerInputDemo() {
   const [value, setValue] = useState<BsDate | null>({ year: 2083, month: 1, day: 1 });
 
-  return <YearPickerInput label="Pick year" placeholderText="Pick year" value={value} onChange={(next) => setValue(toSingleDate(next))} />;
+  return (
+    <YearPickerInput
+      label="Pick year"
+      placeholderText="Pick year"
+      value={value}
+      onChange={(next) => setValue(toSingleDate(next))}
+    />
+  );
 }
 
 export function YearPickerDemo() {
@@ -76,7 +129,11 @@ export function CalendarDemo() {
   const [value, setValue] = useState<BsDate | null>(sampleBs);
 
   return (
-    <Calendar {...sharedPickerProps} value={value} onChange={(next) => setValue(toSingleDate(next))}>
+    <Calendar
+      {...sharedPickerProps}
+      value={value}
+      onChange={(next) => setValue(toSingleDate(next))}
+    >
       <div className="calendarFooter">Selected: {value ? formatBsDateNepali(value) : 'None'}</div>
     </Calendar>
   );
@@ -89,9 +146,22 @@ export function HolidayDemo() {
     <DatePickerInput
       {...sharedPickerProps}
       holidays={[
-        { date: { year: 2083, month: 1, day: 1 }, label: 'New year', className: 'docsHolidayAccent' },
-        { date: { year: 2083, month: 1, day: 15 }, label: 'Office closed', className: 'docsHolidayAccent', disabled: true },
-        { date: { year: 2083, month: 1, day: 23 }, label: 'Festival release', className: 'docsHolidayMuted' },
+        {
+          date: { year: 2083, month: 1, day: 1 },
+          label: 'New year',
+          className: 'docsHolidayAccent',
+        },
+        {
+          date: { year: 2083, month: 1, day: 15 },
+          label: 'Office closed',
+          className: 'docsHolidayAccent',
+          disabled: true,
+        },
+        {
+          date: { year: 2083, month: 1, day: 23 },
+          label: 'Festival release',
+          className: 'docsHolidayMuted',
+        },
       ]}
       label="Holiday dates"
       placeholderText="Pick festival date"
@@ -140,7 +210,15 @@ export function ConstraintsDemo() {
 export function CustomInputDemo() {
   const [value, setValue] = useState<BsDate | null>(sampleBs);
 
-  return <DatePickerInput {...sharedPickerProps} customInput={<button className="docsCustomInput" type="button" />} dateFormat={formatBsDateNepali} value={value} onChange={(next) => setValue(toSingleDate(next))} />;
+  return (
+    <DatePickerInput
+      {...sharedPickerProps}
+      customInput={<button className="docsCustomInput" type="button" />}
+      dateFormat={formatBsDateNepali}
+      value={value}
+      onChange={(next) => setValue(toSingleDate(next))}
+    />
+  );
 }
 
 export function CustomHeaderDemo() {
@@ -151,9 +229,13 @@ export function CustomHeaderDemo() {
       {...sharedPickerProps}
       renderCustomHeader={({ label, decrease, increase }) => (
         <div className="docsCustomHeader">
-          <button onClick={decrease} type="button">Prev</button>
+          <button onClick={decrease} type="button">
+            Prev
+          </button>
           <strong>{label}</strong>
-          <button onClick={increase} type="button">Next</button>
+          <button onClick={increase} type="button">
+            Next
+          </button>
         </div>
       )}
       value={value}
@@ -185,13 +267,28 @@ export function DateRangeDemo() {
     { year: sampleBs.year, month: sampleBs.month, day: 14 },
   ]);
 
-  return <DatePicker {...sharedPickerProps} type="range" value={value} onChange={(next) => setValue(toDateRange(next))} />;
+  return (
+    <DatePicker
+      {...sharedPickerProps}
+      type="range"
+      value={value}
+      onChange={(next) => setValue(toDateRange(next))}
+    />
+  );
 }
 
 export function NepaliNumeralsDemo() {
   const [value, setValue] = useState<BsDate | null>(sampleBs);
 
-  return <DatePickerInput label="Nepali numerals" numeralSystem="nepali" placeholderText="मिति छान्नुहोस्" value={value} onChange={(next) => setValue(toSingleDate(next))} />;
+  return (
+    <DatePickerInput
+      label="Nepali numerals"
+      numeralSystem="nepali"
+      placeholderText="मिति छान्नुहोस्"
+      value={value}
+      onChange={(next) => setValue(toSingleDate(next))}
+    />
+  );
 }
 
 export function StylingDemo() {

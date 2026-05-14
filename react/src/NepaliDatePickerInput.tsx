@@ -1,5 +1,8 @@
 import { cloneElement, isValidElement, type ReactNode } from 'react';
-import type { NepaliDatePickerCustomInputProps, NepaliDatePickerProps } from './NepaliDatePicker.types';
+import type {
+  NepaliDatePickerCustomInputProps,
+  NepaliDatePickerProps,
+} from './NepaliDatePicker.types';
 import { getSlotClassName, getSlotStyle, joinClassNames } from './NepaliDatePicker.utils';
 
 interface PickerInputControlProps {
@@ -54,13 +57,20 @@ export function PickerInputControl({
   };
 
   if (props.customInput && isValidElement(props.customInput)) {
-    return cloneElement(props.customInput, inputProps, inputValue || props.placeholderText || 'Pick date');
+    return cloneElement(
+      props.customInput,
+      inputProps,
+      inputValue || props.placeholderText || 'Pick date',
+    );
   }
 
   return (
     <input
       aria-haspopup="dialog"
-      className={joinClassNames(getSlotClassName(props, 'input', 'nepali-date-picker__input'), props.inputClassName)}
+      className={joinClassNames(
+        getSlotClassName(props, 'input', 'nepali-date-picker__input'),
+        props.inputClassName,
+      )}
       disabled={props.disabled}
       onClick={openCalendar}
       onFocus={openCalendar}

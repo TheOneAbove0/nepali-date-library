@@ -1,8 +1,8 @@
-import { BS_EPOCH_TS, BS_YEAR_ZERO, MONTH_NAMES, MS_PER_DAY } from "./data";
-import { daysInBsMonth } from "./calendar";
-import { parseAdDate, parseBsDate } from "./parsers";
-import { toDevanagari, zPad } from "./helpers";
-import type { AdDate, AdDateInput, BsDate, DevanagariDateParts } from "./types";
+import { BS_EPOCH_TS, BS_YEAR_ZERO, MONTH_NAMES, MS_PER_DAY } from './data';
+import { daysInBsMonth } from './calendar';
+import { parseAdDate, parseBsDate } from './parsers';
+import { toDevanagari, zPad } from './helpers';
+import type { AdDate, AdDateInput, BsDate, DevanagariDateParts } from './types';
 
 export function daysInMonth(year: number, month: number): number {
   return daysInBsMonth(year, month);
@@ -30,11 +30,7 @@ export function toBS(greg: AdDateInput): BsDate {
   throw new Error(`Date outside supported range: ${String(greg)} AD`);
 }
 
-export function toDev(
-  year: number,
-  month: number,
-  day: number,
-): DevanagariDateParts {
+export function toDev(year: number, month: number, day: number): DevanagariDateParts {
   return {
     day: toDevanagari(day),
     month: MONTH_NAMES[month - 1],

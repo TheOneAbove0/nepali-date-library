@@ -57,7 +57,7 @@ export function addBsMonths(date: BsDateInput, monthsToAdd: number): BsDate {
     throw new Error(`Invalid monthsToAdd value ${String(monthsToAdd)}`);
   }
 
-  const absoluteMonth = (parsed.year * 12) + (parsed.month - 1) + monthsToAdd;
+  const absoluteMonth = parsed.year * 12 + (parsed.month - 1) + monthsToAdd;
   const year = Math.floor(absoluteMonth / 12);
   const month = (absoluteMonth % 12) + 1;
   const day = Math.min(parsed.day, daysInBsMonth(year, month));
