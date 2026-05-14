@@ -1,14 +1,14 @@
-import { BS_EPOCH_TS, BS_YEAR_ZERO, MONTH_NAMES, MS_PER_DAY } from './data';
-import { daysInBsMonth } from './calendar';
-import { parseAdDate, parseBsDate } from './parsers';
-import { toDevanagari, zPad } from './helpers';
-import type { AdDate, AdDateInput, BsDate, DevanagariDateParts } from './types';
+import { BS_EPOCH_TS, BS_YEAR_ZERO, MONTH_NAMES, MS_PER_DAY } from "./data";
+import { daysInBsMonth } from "./calendar";
+import { parseAdDate, parseBsDate } from "./parsers";
+import { toDevanagari, zPad } from "./helpers";
+import type { AdDate, AdDateInput, BsDate, DevanagariDateParts } from "./types";
 
 export function daysInMonth(year: number, month: number): number {
   return daysInBsMonth(year, month);
 }
 
-export function toBik(greg: AdDateInput): BsDate {
+export function toBS(greg: AdDateInput): BsDate {
   const adDate = parseAdDate(greg);
   const gregTs = Date.UTC(adDate.year, adDate.month - 1, adDate.day);
 
@@ -30,7 +30,11 @@ export function toBik(greg: AdDateInput): BsDate {
   throw new Error(`Date outside supported range: ${String(greg)} AD`);
 }
 
-export function toDev(year: number, month: number, day: number): DevanagariDateParts {
+export function toDev(
+  year: number,
+  month: number,
+  day: number,
+): DevanagariDateParts {
   return {
     day: toDevanagari(day),
     month: MONTH_NAMES[month - 1],
@@ -38,25 +42,22 @@ export function toDev(year: number, month: number, day: number): DevanagariDateP
   };
 }
 
-export function toBik_euro(greg: AdDateInput): string {
-  const bikDate = toBik(greg);
-  return `${bikDate.year}-${zPad(bikDate.month)}-${zPad(bikDate.day)}`;
-}
-
 export function toBik_dev(greg: AdDateInput): string {
-  return toDevanagari(toBik_euro(greg));
+  const bikDate = toBS(greg);
+  const formatted = `${bikDate.year}-${zPad(bikDate.month)}-${zPad(bikDate.day)}`;
+  return toDevanagari(formatted);
 }
 
 export function toBik_text(greg: AdDateInput): string {
-  const bikDate = toBik(greg);
+  const bikDate = toBS(greg);
   const dev = toDev(bikDate.year, bikDate.month, bikDate.day);
   return `${dev.day} ${dev.month} ${dev.year}`;
 }
 
-export function toGreg(year: number, month: number, day: number): AdDate {
+export function toAD(year: number, month: number, day: number): AdDate {
   const validBs = parseBsDate({ year, month, day });
 
-  let timestamp = BS_EPOCH_TS + (MS_PER_DAY * validBs.day);
+  let timestamp = BS_EPOCH_TS + MS_PER_DAY * validBs.day;
   let workingMonth = validBs.month - 1;
   let workingYear = validBs.year;
 
@@ -78,7 +79,12 @@ export function toGreg(year: number, month: number, day: number): AdDate {
   };
 }
 
+export function toBik_euro(greg: AdDateInput): string {
+  const bikDate = toBS(greg);
+  return `${bikDate.year}-${zPad(bikDate.month)}-${zPad(bikDate.day)}`;
+}
+
 export function toGreg_text(year: number, month: number, day: number): string {
-  const gregDate = toGreg(year, month, day);
+  const gregDate = toAD(year, month, day);
   return `${gregDate.year}-${zPad(gregDate.month)}-${zPad(gregDate.day)}`;
 }

@@ -1,19 +1,22 @@
-import { MONTH_NAMES } from './data';
-import { toDev, toBik } from './conversion';
-import { parseAdDate, parseBsDate } from './parsers';
-import { zPad } from './helpers';
-import type { AdDateInput, BsDateInput } from './types';
+import { MONTH_NAMES } from "./data";
+import { toDev, toBS } from "./conversion";
+import { parseAdDate, parseBsDate } from "./parsers";
+import { zPad } from "./helpers";
+import type { AdDateInput, BsDateInput } from "./types";
 
-export type BsDateFormat = 'YYYY-MM-DD' | 'D MMMM YYYY' | 'DD MMMM YYYY';
+export type BsDateFormat = "YYYY-MM-DD" | "D MMMM YYYY" | "DD MMMM YYYY";
 
-export function formatBsDate(input: BsDateInput, format: BsDateFormat = 'YYYY-MM-DD'): string {
+export function formatBsDate(
+  input: BsDateInput,
+  format: BsDateFormat = "YYYY-MM-DD",
+): string {
   const date = parseBsDate(input);
 
-  if (format === 'YYYY-MM-DD') {
+  if (format === "YYYY-MM-DD") {
     return `${date.year}-${zPad(date.month)}-${zPad(date.day)}`;
   }
 
-  const day = format === 'DD MMMM YYYY' ? zPad(date.day) : String(date.day);
+  const day = format === "DD MMMM YYYY" ? zPad(date.day) : String(date.day);
   return `${day} ${MONTH_NAMES[date.month - 1]} ${date.year}`;
 }
 
@@ -28,10 +31,13 @@ export function formatAdDate(input: AdDateInput): string {
   return `${date.year}-${zPad(date.month)}-${zPad(date.day)}`;
 }
 
-export function formatAdAsBsDate(input: AdDateInput, format: BsDateFormat = 'YYYY-MM-DD'): string {
-  return formatBsDate(toBik(input), format);
+export function formatAdAsBsDate(
+  input: AdDateInput,
+  format: BsDateFormat = "YYYY-MM-DD",
+): string {
+  return formatBsDate(toBS(input), format);
 }
 
 export function formatAdAsBsDateNepali(input: AdDateInput): string {
-  return formatBsDateNepali(toBik(input));
+  return formatBsDateNepali(toBS(input));
 }

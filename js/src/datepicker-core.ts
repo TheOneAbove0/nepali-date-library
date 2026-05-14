@@ -1,23 +1,23 @@
-import { daysInMonth, toBik, toGreg } from './conversion';
-import { addBsDays, addBsMonths, compareBsDate } from './manipulation';
-import { parseBsDate } from './parsers';
-import type { BsDate, BsDateInput } from './types';
+import { daysInMonth, toBS, toAD } from "./conversion";
+import { addBsDays, addBsMonths, compareBsDate } from "./manipulation";
+import { parseBsDate } from "./parsers";
+import type { BsDate, BsDateInput } from "./types";
 
-export { addBsDays, addBsMonths, compareBsDate } from './manipulation';
+export { addBsDays, addBsMonths, compareBsDate } from "./manipulation";
 
 export type WeekdayIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6;
-export type DayOwner = 'prev' | 'current' | 'next';
+export type DayOwner = "prev" | "current" | "next";
 export type DatePickerKey =
-  | 'ArrowLeft'
-  | 'ArrowRight'
-  | 'ArrowUp'
-  | 'ArrowDown'
-  | 'Home'
-  | 'End'
-  | 'PageUp'
-  | 'PageDown'
-  | 'Enter'
-  | ' ';
+  | "ArrowLeft"
+  | "ArrowRight"
+  | "ArrowUp"
+  | "ArrowDown"
+  | "Home"
+  | "End"
+  | "PageUp"
+  | "PageDown"
+  | "Enter"
+  | " ";
 
 export interface DateConstraints {
   min?: BsDateInput;
@@ -80,7 +80,9 @@ export interface KeyNavigationOptions {
   shiftKey?: boolean;
 }
 
-export function normalizeConstraints(constraints?: DateConstraints): NormalizedDateConstraints {
+export function normalizeConstraints(
+  constraints?: DateConstraints,
+): NormalizedDateConstraints {
   if (!constraints) {
     return {};
   }
@@ -89,7 +91,7 @@ export function normalizeConstraints(constraints?: DateConstraints): NormalizedD
   const max = constraints.max ? parseBsDate(constraints.max) : undefined;
 
   if (min && max && compareBsDate(min, max) > 0) {
-    throw new Error('Invalid constraints: min date is after max date');
+    throw new Error("Invalid constraints: min date is after max date");
   }
 
   return {
@@ -99,20 +101,29 @@ export function normalizeConstraints(constraints?: DateConstraints): NormalizedD
   };
 }
 
-export function isDateOutOfRange(date: BsDate, constraints?: NormalizedDateConstraints): boolean {
+export function isDateOutOfRange(
+  date: BsDate,
+  constraints?: NormalizedDateConstraints,
+): boolean {
   if (!constraints) return false;
   if (constraints.min && compareBsDate(date, constraints.min) < 0) return true;
   if (constraints.max && compareBsDate(date, constraints.max) > 0) return true;
   return false;
 }
 
-export function isDateDisabled(date: BsDate, constraints?: NormalizedDateConstraints): boolean {
+export function isDateDisabled(
+  date: BsDate,
+  constraints?: NormalizedDateConstraints,
+): boolean {
   if (!constraints) return false;
   if (isDateOutOfRange(date, constraints)) return true;
   return Boolean(constraints.isDisabled && constraints.isDisabled(date));
 }
 
-export function clampBsDate(date: BsDateInput, constraints?: NormalizedDateConstraints): BsDate {
+export function clampBsDate(
+  date: BsDateInput,
+  constraints?: NormalizedDateConstraints,
+): BsDate {
   const parsed = parseBsDate(date);
   if (!constraints) return parsed;
 
@@ -136,11 +147,21 @@ export function generateMonthGrid(
   const constraints = normalizeConstraints(options.constraints);
 
   const currentMonthStart: BsDate = { year, month, day: 1 };
-  const currentMonthEnd: BsDate = { year, month, day: daysInMonth(year, month) };
+  const currentMonthEnd: BsDate = {
+    year,
+    month,
+    day: daysInMonth(year, month),
+  };
 
-  const selectedDate = options.selectedDate ? parseBsDate(options.selectedDate) : null;
-  const focusedDate = options.focusedDate ? parseBsDate(options.focusedDate) : null;
-  const today = options.today ? parseBsDate(options.today) : toBik(new Date());
+  const selectedDate = options.selectedDate
+    ? parseBsDate(options.selectedDate)
+    : null;
+  const focusedDate = options.focusedDate
+    ? parseBsDate(options.focusedDate)
+    : null;
+  const today = options.today
+    ? parseBsDate(options.today)
+    : toBS(new Date());
 
   const firstWeekday = getWeekday(currentMonthStart);
   const leadingDays = (firstWeekday - weekStartsOn + 7) % 7;
@@ -158,21 +179,27 @@ export function generateMonthGrid(
 
     const inCurrentMonth = cellDate.year === year && cellDate.month === month;
     const owner: DayOwner = inCurrentMonth
-      ? 'current'
+      ? "current"
       : compareBsDate(cellDate, currentMonthStart) < 0
-        ? 'prev'
-        : 'next';
+        ? "prev"
+        : "next";
 
     const isOutOfRange = isDateOutOfRange(cellDate, constraints);
-    const disabledByPredicate = Boolean(constraints.isDisabled && constraints.isDisabled(cellDate));
+    const disabledByPredicate = Boolean(
+      constraints.isDisabled && constraints.isDisabled(cellDate),
+    );
 
     week.push({
       date: cellDate,
       owner,
       inCurrentMonth,
       isToday: compareBsDate(cellDate, today) === 0,
-      isSelected: Boolean(selectedDate && compareBsDate(cellDate, selectedDate) === 0),
-      isFocused: Boolean(focusedDate && compareBsDate(cellDate, focusedDate) === 0),
+      isSelected: Boolean(
+        selectedDate && compareBsDate(cellDate, selectedDate) === 0,
+      ),
+      isFocused: Boolean(
+        focusedDate && compareBsDate(cellDate, focusedDate) === 0,
+      ),
       isOutOfRange,
       isDisabled: isOutOfRange || disabledByPredicate,
     });
@@ -186,11 +213,15 @@ export function generateMonthGrid(
   return { year, month, weekStartsOn, weeks };
 }
 
-export function createDatePickerState(options: CreateDatePickerStateOptions = {}): DatePickerState {
+export function createDatePickerState(
+  options: CreateDatePickerStateOptions = {},
+): DatePickerState {
   const constraints = normalizeConstraints(options.constraints);
   const weekStartsOn = normalizeWeekday(options.weekStartsOn);
 
-  const today = options.today ? parseBsDate(options.today) : toBik(new Date());
+  const today = options.today
+    ? parseBsDate(options.today)
+    : toBS(new Date());
   const baseFocusedDate = options.focusedDate
     ? parseBsDate(options.focusedDate)
     : options.selectedDate
@@ -198,7 +229,9 @@ export function createDatePickerState(options: CreateDatePickerStateOptions = {}
       : today;
 
   const focusedDate = clampBsDate(baseFocusedDate, constraints);
-  const selectedDate = options.selectedDate ? clampBsDate(options.selectedDate, constraints) : null;
+  const selectedDate = options.selectedDate
+    ? clampBsDate(options.selectedDate, constraints)
+    : null;
 
   return {
     viewYear: options.viewYear ?? focusedDate.year,
@@ -217,26 +250,26 @@ export function navigateByKey(
 ): DatePickerState {
   let nextFocusedDate = state.focusedDate;
 
-  if (key === 'ArrowLeft') {
+  if (key === "ArrowLeft") {
     nextFocusedDate = moveByDelta(state, -1);
-  } else if (key === 'ArrowRight') {
+  } else if (key === "ArrowRight") {
     nextFocusedDate = moveByDelta(state, 1);
-  } else if (key === 'ArrowUp') {
+  } else if (key === "ArrowUp") {
     nextFocusedDate = moveByDelta(state, -7);
-  } else if (key === 'ArrowDown') {
+  } else if (key === "ArrowDown") {
     nextFocusedDate = moveByDelta(state, 7);
-  } else if (key === 'Home') {
+  } else if (key === "Home") {
     const weekday = getWeekday(state.focusedDate);
     const delta = -((weekday - state.weekStartsOn + 7) % 7);
     nextFocusedDate = moveByDelta(state, delta);
-  } else if (key === 'End') {
+  } else if (key === "End") {
     const weekday = getWeekday(state.focusedDate);
     const delta = 6 - ((weekday - state.weekStartsOn + 7) % 7);
     nextFocusedDate = moveByDelta(state, delta);
-  } else if (key === 'PageUp') {
+  } else if (key === "PageUp") {
     const months = options.shiftKey ? -12 : -1;
     nextFocusedDate = moveByMonth(state, months);
-  } else if (key === 'PageDown') {
+  } else if (key === "PageDown") {
     const months = options.shiftKey ? 12 : 1;
     nextFocusedDate = moveByMonth(state, months);
   }
@@ -248,7 +281,7 @@ export function navigateByKey(
     viewMonth: nextFocusedDate.month,
   };
 
-  if (key === 'Enter' || key === ' ') {
+  if (key === "Enter" || key === " ") {
     if (!isDateDisabled(nextState.focusedDate, nextState.constraints)) {
       nextState.selectedDate = nextState.focusedDate;
     }
@@ -301,7 +334,7 @@ function resolveNavigableDate(
 }
 
 function normalizeWeekday(value?: number): WeekdayIndex {
-  if (typeof value === 'undefined') {
+  if (typeof value === "undefined") {
     return 0;
   }
 
@@ -317,6 +350,8 @@ function toDirection(delta: number): 1 | -1 {
 }
 
 function getWeekday(date: BsDate): WeekdayIndex {
-  const ad = toGreg(date.year, date.month, date.day);
-  return new Date(Date.UTC(ad.year, ad.month - 1, ad.day)).getUTCDay() as WeekdayIndex;
+  const ad = toAD(date.year, date.month, date.day);
+  return new Date(
+    Date.UTC(ad.year, ad.month - 1, ad.day),
+  ).getUTCDay() as WeekdayIndex;
 }
