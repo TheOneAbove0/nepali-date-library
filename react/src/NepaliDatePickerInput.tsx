@@ -9,7 +9,11 @@ interface PickerInputControlProps {
   openCalendar: () => void;
   onInputBlur: () => void;
   onInputKeyDown: (key: string) => void;
-  onInputValueChange: (nextValue: string) => void;
+  onInputValueChange: (
+    nextValue: string,
+    cursorPosition?: number | null,
+    isDeleting?: boolean,
+  ) => void;
 }
 
 export function PickerInputControl({
@@ -29,8 +33,24 @@ export function PickerInputControl({
     onClick: openCalendar,
     onFocus: openCalendar,
     onBlur: () => onInputBlur(),
-    onChange: (event) => onInputValueChange(event.target.value),
-    onKeyDown: (event) => onInputKeyDown(event.key),
+    onChange: (event) =>
+      onInputValueChange(
+        event.target.value,
+        event.target.selectionStart,
+        event.target.value.length < inputValue.length,
+      ),
+    onKeyDown: (event) => {
+      if (event.key === 'Backspace' && isInputTypeable) {
+        const nextValue = removePreviousSeparator(event.currentTarget);
+        if (nextValue) {
+          event.preventDefault();
+          onInputValueChange(nextValue.value, nextValue.cursorPosition, true);
+          return;
+        }
+      }
+
+      onInputKeyDown(event.key);
+    },
   };
 
   if (props.customInput && isValidElement(props.customInput)) {
@@ -54,4 +74,23 @@ export function PickerInputControl({
       value={inputValue}
     />
   );
+}
+
+function removePreviousSeparator(
+  input: HTMLInputElement,
+): { value: string; cursorPosition: number } | null {
+  const start = input.selectionStart;
+  const end = input.selectionEnd;
+  if (start === null || end === null || start !== end || start < 1) {
+    return null;
+  }
+
+  if (!/[-/.]/.test(input.value[start - 1])) {
+    return null;
+  }
+
+  return {
+    value: `${input.value.slice(0, start - 1)}${input.value.slice(end)}`,
+    cursorPosition: start - 1,
+  };
 }

@@ -1,9 +1,4 @@
-import {
-  compareBsDate,
-  daysInMonth,
-  parseBsDate,
-  type BsDate,
-} from "nepali-date-library";
+import { parseBsDate, type BsDate } from 'nepali-date-library';
 import {
   useCallback,
   useEffect,
@@ -12,11 +7,11 @@ import {
   useRef,
   useState,
   type RefObject,
-} from "react";
+} from 'react';
 import type {
   NepaliDatePickerLevel,
   NepaliDatePickerProps,
-} from "./NepaliDatePicker.types";
+} from './NepaliDatePicker.types';
 import {
   formatPickerValue,
   formatRangeValue,
@@ -27,8 +22,9 @@ import {
   toDateKey,
   toDateKeySet,
   toHolidayMap,
-} from "./NepaliDatePicker.utils";
-import { useNepaliDatePickerState } from "./useNepaliDatePicker";
+} from './NepaliDatePicker.utils';
+import { useNepaliDatePickerState } from './useNepaliDatePicker';
+import { useTypeableDateInput } from './useTypeableDateInput';
 
 export interface UseNepaliDatePickerControllerResult {
   calendarId: string;
@@ -55,7 +51,11 @@ export interface UseNepaliDatePickerControllerResult {
   closeCalendar: () => void;
   onInputBlur: () => void;
   onInputKeyDown: (key: string) => void;
-  onInputValueChange: (nextValue: string) => void;
+  onInputValueChange: (
+    nextValue: string,
+    cursorPosition?: number | null,
+    isDeleting?: boolean,
+  ) => void;
   selectDate: (date: BsDate) => void;
   setCalendarLevel: (level: NepaliDatePickerLevel) => void;
   toggleCalendar: () => void;
@@ -68,13 +68,13 @@ export function useNepaliDatePickerController(
   const readOnly = Boolean(props.readOnly);
   const inline = Boolean(props.inline);
   const controlledValue =
-    typeof props.value !== "undefined" ? props.value : props.selected;
+    typeof props.value !== 'undefined' ? props.value : props.selected;
   const min = props.min ?? props.minDate;
   const max = props.max ?? props.maxDate;
   const weekStartsOn = props.weekStartsOn ?? props.calendarStartDay;
-  const pickerType = props.pickerType ?? "date";
-  const numeralSystem = props.numeralSystem ?? "latin";
-  const selectionType = props.type ?? "default";
+  const pickerType = props.pickerType ?? 'date';
+  const numeralSystem = props.numeralSystem ?? 'latin';
+  const selectionType = props.type ?? 'default';
   const isClearable = props.isClearable ?? props.clearable ?? false;
   const shouldCloseOnSelect = props.shouldCloseOnSelect ?? true;
   const rootRef = useRef<HTMLDivElement>(null);
@@ -152,12 +152,12 @@ export function useNepaliDatePickerController(
   const [rangeDraft, setRangeDraft] = useState(rangeValue);
 
   const selectedDate =
-    selectionType === "range"
+    selectionType === 'range'
       ? (rangeDraft[1] ?? rangeDraft[0])
       : picker.state.selectedDate;
   const displayValue = useMemo(
     () =>
-      selectionType === "range"
+      selectionType === 'range'
         ? formatRangeValue(
             rangeDraft,
             pickerType,
@@ -183,39 +183,25 @@ export function useNepaliDatePickerController(
   );
   const isInputTypeable =
     Boolean(props.typeable) &&
-    selectionType === "default" &&
+    selectionType === 'default' &&
     !inline &&
     !disabled &&
     !readOnly;
-  const [typedInputValue, setTypedInputValue] = useState(displayValue);
-  const inputValue = isInputTypeable ? typedInputValue : displayValue;
-  const typeableSeparator = useMemo(
-    () => getTypeableSeparator(props.dateFormat),
-    [props.dateFormat],
-  );
-  const typeableDigits = useMemo(
-    () => getTypeableDigits(pickerType),
-    [pickerType],
-  );
 
   useEffect(() => {
     setCalendarLevel(getDefaultLevel(pickerType));
   }, [pickerType]);
 
   useEffect(() => {
-    if (selectionType === "range") {
+    if (selectionType === 'range') {
       setRangeDraft(rangeValue);
     }
   }, [rangeValue, selectionType]);
 
   useEffect(() => {
-    setTypedInputValue(displayValue);
-  }, [displayValue]);
-
-  useEffect(() => {
     if (
-      typeof controlledValue === "undefined" ||
-      selectionType === "range" ||
+      typeof controlledValue === 'undefined' ||
+      selectionType === 'range' ||
       Array.isArray(controlledValue)
     ) {
       return;
@@ -251,8 +237,8 @@ export function useNepaliDatePickerController(
       closeCalendar();
     };
 
-    document.addEventListener("mousedown", onPointerDown);
-    return () => document.removeEventListener("mousedown", onPointerDown);
+    document.addEventListener('mousedown', onPointerDown);
+    return () => document.removeEventListener('mousedown', onPointerDown);
   }, [closeCalendar, inline, isOpen]);
 
   const openCalendar = useCallback((): void => {
@@ -271,7 +257,7 @@ export function useNepaliDatePickerController(
         return;
       }
 
-      if (selectionType === "range") {
+      if (selectionType === 'range') {
         const nextRange = getNextRange(rangeDraft, date);
         setRangeDraft(nextRange);
         picker.setValue(date);
@@ -286,9 +272,6 @@ export function useNepaliDatePickerController(
 
       picker.setValue(date);
       props.onChange?.(date);
-      setTypedInputValue(
-        formatPickerValue(date, pickerType, props.dateFormat, numeralSystem),
-      );
 
       if (shouldCloseOnSelect) {
         closeCalendar();
@@ -298,10 +281,7 @@ export function useNepaliDatePickerController(
       closeCalendar,
       disabled,
       isDateDisabled,
-      numeralSystem,
       picker,
-      pickerType,
-      props.dateFormat,
       props.onChange,
       rangeDraft,
       selectionType,
@@ -314,7 +294,7 @@ export function useNepaliDatePickerController(
       return;
     }
 
-    if (selectionType === "range") {
+    if (selectionType === 'range') {
       const emptyRange: [null, null] = [null, null];
       setRangeDraft(emptyRange);
       props.onChange?.(emptyRange);
@@ -323,125 +303,30 @@ export function useNepaliDatePickerController(
 
     picker.setValue(null);
     props.onChange?.(null);
-    setTypedInputValue("");
   }, [disabled, picker, props.onChange, readOnly, selectionType]);
-
-  const syncTypedInput = useCallback(
-    (candidateValue: string): void => {
-      if (!isInputTypeable || disabled || readOnly) {
-        return;
-      }
-
-      const typedSeparator =
-        detectTypedSeparator(candidateValue) ?? typeableSeparator;
-
-      const rawValue = normalizeTypedInput(
-        candidateValue,
-        typedSeparator,
-      ).trim();
-
-      if (!rawValue) {
-        picker.setValue(null);
-        props.onChange?.(null);
-        setTypedInputValue("");
-        return;
-      }
-
-      const digits = extractDigits(rawValue).slice(0, typeableDigits);
-      if (!digits) {
-        setTypedInputValue("");
-        return;
-      }
-
-      const formattedValue = formatTypedInputValue(
-        digits,
-        typedSeparator,
-        numeralSystem,
-        pickerType,
-      );
-      setTypedInputValue(formattedValue);
-
-      const candidate = buildTypedCandidateDate({
-        digits,
-        baseDate: selectedDate ?? {
-          year: picker.state.viewYear,
-          month: picker.state.viewMonth,
-          day: 1,
-        },
-        pickerType,
-      });
-
-      if (!candidate) {
-        return;
-      }
-
-      if (digits.length < typeableDigits) {
-        picker.focusDate(candidate);
-        return;
-      }
-
-      if (
-        (min && compareBsDate(candidate, parseBsDate(min)) < 0) ||
-        (max && compareBsDate(candidate, parseBsDate(max)) > 0) ||
-        isDateDisabled(candidate)
-      ) {
-        setTypedInputValue(displayValue);
-        return;
-      }
-
-      picker.setValue(candidate);
-      props.onChange?.(candidate);
-      setTypedInputValue(
-        formatPickerValue(
-          candidate,
-          pickerType,
-          props.dateFormat,
-          numeralSystem,
-        ),
-      );
-    },
-    [
-      disabled,
-      displayValue,
-      isDateDisabled,
-      isInputTypeable,
-      max,
-      min,
-      numeralSystem,
-      picker,
-      pickerType,
-      props.dateFormat,
-      props.onChange,
-      readOnly,
-      typeableSeparator,
-      selectedDate,
-      typeableDigits,
-    ],
-  );
-
-  const onInputValueChange = useCallback(
-    (nextValue: string): void => {
-      if (!isInputTypeable || disabled || readOnly) {
-        return;
-      }
-
-      syncTypedInput(nextValue);
-    },
-    [disabled, isInputTypeable, readOnly, syncTypedInput],
-  );
-
-  const onInputBlur = useCallback((): void => {
-    syncTypedInput(typedInputValue);
-  }, [syncTypedInput, typedInputValue]);
-
-  const onInputKeyDown = useCallback(
-    (key: string): void => {
-      if (key === "Enter") {
-        syncTypedInput(typedInputValue);
-      }
-    },
-    [syncTypedInput, typedInputValue],
-  );
+  const {
+    inputValue,
+    onInputBlur,
+    onInputKeyDown,
+    onInputValueChange,
+  } = useTypeableDateInput({
+    enabled: isInputTypeable,
+    disabled,
+    readOnly,
+    displayValue,
+    selectedDate,
+    viewYear: picker.state.viewYear,
+    viewMonth: picker.state.viewMonth,
+    pickerType,
+    numeralSystem,
+    dateFormat: props.dateFormat,
+    min,
+    max,
+    isDateDisabled,
+    setValue: picker.setValue,
+    focusDate: picker.focusDate,
+    onChange: props.onChange,
+  });
 
   const toggleCalendar = useCallback((): void => {
     if (disabled || readOnly) {
@@ -486,140 +371,4 @@ export function useNepaliDatePickerController(
     setCalendarLevel,
     toggleCalendar,
   };
-}
-
-function normalizeNumerals(value: string): string {
-  return value.replace(/[०-९]/g, (digit) =>
-    String("०१२३४५६७८९".indexOf(digit)),
-  );
-}
-
-function normalizeTypedInput(value: string, separator: string): string {
-  return normalizeNumerals(value).replace(/[-/.]/g, separator);
-}
-
-function detectTypedSeparator(value: string): string | undefined {
-  return value.match(/[-/.]/)?.[0];
-}
-
-function extractDigits(value: string): string {
-  return value.replace(/\D/g, "");
-}
-
-function formatTypedInputValue(
-  value: string,
-  separator: string,
-  numeralSystem: NonNullable<NepaliDatePickerProps["numeralSystem"]>,
-  pickerType: NonNullable<NepaliDatePickerProps["pickerType"]>,
-): string {
-  const digits = extractDigits(normalizeNumerals(value)).slice(
-    0,
-    getTypeableDigits(pickerType),
-  );
-  if (!digits) {
-    return "";
-  }
-
-  const formattedDigits =
-    numeralSystem === "nepali"
-      ? digits.replace(/\d/g, (digit) => "०१२३४५६७८९"[Number(digit)] ?? digit)
-      : digits;
-
-  if (pickerType === "year") {
-    return formattedDigits.slice(0, 4);
-  }
-
-  if (pickerType === "month") {
-    return formattedDigits.slice(0, 2);
-  }
-
-  if (formattedDigits.length <= 4) {
-    return formattedDigits;
-  }
-
-  if (formattedDigits.length <= 6) {
-    return `${formattedDigits.slice(0, 4)}${separator}${formattedDigits.slice(4)}`;
-  }
-
-  return `${formattedDigits.slice(0, 4)}${separator}${formattedDigits.slice(4, 6)}${separator}${formattedDigits.slice(6)}`;
-}
-
-function buildTypedCandidateDate({
-  digits,
-  baseDate,
-  pickerType,
-}: {
-  digits: string;
-  baseDate: BsDate;
-  pickerType: NonNullable<NepaliDatePickerProps["pickerType"]>;
-}): BsDate | null {
-  if (pickerType === "year") {
-    if (digits.length < 4) {
-      return null;
-    }
-
-    const year = Number(digits.slice(0, 4));
-    return { year, month: 1, day: 1 };
-  }
-
-  if (pickerType === "month") {
-    if (digits.length < 1) {
-      return null;
-    }
-
-    const year = baseDate.year;
-    const month = Number(digits.slice(0, 2));
-    if (!Number.isFinite(month) || month < 1 || month > 12) {
-      return null;
-    }
-
-    return { year, month, day: 1 };
-  }
-
-  if (digits.length < 8) {
-    return null;
-  }
-
-  const year = Number(digits.slice(0, 4));
-  const month = Number(digits.slice(4, 6));
-  const safeMonth =
-    Number.isFinite(month) && month >= 1 && month <= 12
-      ? month
-      : baseDate.month;
-  const day = Number(digits.slice(6, 8));
-  const safeDay =
-    Number.isFinite(day) && day >= 1
-      ? Math.min(day, daysInMonth(year, safeMonth))
-      : baseDate.day;
-
-  return {
-    year,
-    month: safeMonth,
-    day: safeDay,
-  };
-}
-
-function getTypeableDigits(
-  pickerType: NonNullable<NepaliDatePickerProps["pickerType"]>,
-): number {
-  if (pickerType === "year") {
-    return 4;
-  }
-
-  if (pickerType === "month") {
-    return 2;
-  }
-
-  return 8;
-}
-
-function getTypeableSeparator(
-  dateFormat: NepaliDatePickerProps["dateFormat"],
-): string {
-  if (typeof dateFormat !== "string") {
-    return "-";
-  }
-
-  const separator = dateFormat.match(/[-/.]/)?.[0];
-  return separator ?? "-";
 }
