@@ -86,6 +86,7 @@ export function NepaliDatePicker(props: NepaliDatePickerProps) {
           'nepali-date-picker--inline',
           props.className,
         )}
+        data-cell-spacing={props.withCellSpacing ?? true}
         data-inline="true"
         data-picker-type={controller.pickerType}
         data-selection-type={controller.selectionType}
@@ -116,6 +117,7 @@ export function NepaliDatePicker(props: NepaliDatePickerProps) {
   return (
     <div
       className={getSlotClassName(props, 'root', 'nepali-date-picker', props.className)}
+      data-cell-spacing={props.withCellSpacing ?? true}
       data-inline="false"
       data-open={controller.isOpen || undefined}
       data-picker-type={controller.pickerType}

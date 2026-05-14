@@ -28,9 +28,11 @@ export function PickerInputControl({
   onInputKeyDown,
   onInputValueChange,
 }: PickerInputControlProps): ReactNode {
+  const placeholderText = props.placeholder ?? props.placeholderText;
+
   const inputProps: NepaliDatePickerCustomInputProps = {
     value: inputValue,
-    placeholder: props.placeholderText,
+    placeholder: placeholderText,
     disabled: props.disabled,
     readOnly: !isInputTypeable,
     onClick: openCalendar,
@@ -60,7 +62,7 @@ export function PickerInputControl({
     return cloneElement(
       props.customInput,
       inputProps,
-      inputValue || props.placeholderText || 'Pick date',
+      inputValue || placeholderText || 'Pick date',
     );
   }
 
@@ -77,7 +79,7 @@ export function PickerInputControl({
       onBlur={inputProps.onBlur}
       onChange={inputProps.onChange}
       onKeyDown={inputProps.onKeyDown}
-      placeholder={props.placeholderText}
+      placeholder={placeholderText}
       readOnly={!isInputTypeable}
       style={getSlotStyle(props, 'input')}
       type="text"

@@ -35,6 +35,33 @@ export function App() {
 }
 ```
 
+```tsx
+import { DateTimePicker, TimePicker } from 'nepali-date-library-react';
+import { useState } from 'react';
+
+export function DateTimeExample() {
+  const [value, setValue] = useState({
+    date: { year: 2083, month: 1, day: 30 },
+    time: '15:22',
+  });
+
+  return (
+    <DateTimePicker
+      label="Pick date and time"
+      placeholderText="Pick date and time"
+      firstDayOfWeek={0}
+      timeFormat="12h"
+      value={value}
+      onChange={setValue}
+    />
+  );
+}
+
+export function TimeExample() {
+  return <TimePicker label="Pick time" format="24h" withSeconds />;
+}
+```
+
 ## Customization
 
 Available components:
@@ -42,8 +69,11 @@ Available components:
 - `DatePicker`
 - `DatePickerInput`
 - `DateInput`
+- `DateTimePicker`
 - `MonthPicker`
 - `MonthPickerInput`
+- `TimeInput`
+- `TimePicker`
 - `YearPicker`
 - `YearPickerInput`
 - `Calendar`
@@ -68,7 +98,9 @@ Common customization props:
 - `holidays`
 - `filterDate`
 - `min` / `max`
+- `firstDayOfWeek` (`0-6`, where `0` is Sunday)
 - `calendarStartDay`
+- `withCellSpacing`
 - `numeralSystem`
 
 ```tsx

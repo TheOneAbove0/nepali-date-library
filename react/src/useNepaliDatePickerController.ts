@@ -59,7 +59,7 @@ export function useNepaliDatePickerController(
   const controlledValue = typeof props.value !== 'undefined' ? props.value : props.selected;
   const min = props.min ?? props.minDate;
   const max = props.max ?? props.maxDate;
-  const weekStartsOn = props.weekStartsOn ?? props.calendarStartDay;
+  const weekStartsOn = props.firstDayOfWeek ?? props.weekStartsOn ?? props.calendarStartDay;
   const pickerType = props.pickerType ?? 'date';
   const numeralSystem = props.numeralSystem ?? 'latin';
   const selectionType = props.type ?? 'default';

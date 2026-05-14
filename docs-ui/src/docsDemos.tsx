@@ -1,15 +1,18 @@
 import {
   Calendar,
   DateInput,
+  DateTimePicker,
   DatePicker,
   DatePickerInput,
   MonthPicker,
   MonthPickerInput,
   type NepaliDatePickerSize,
+  TimeInput,
+  TimePicker,
   YearPicker,
   YearPickerInput,
 } from 'nepali-date-library-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { formatBsDateNepali, type BsDate } from 'nepali-date-library';
 import {
   brandedStyles,
@@ -274,6 +277,163 @@ export function DateRangeDemo() {
       value={value}
       onChange={(next) => setValue(toDateRange(next))}
     />
+  );
+}
+
+export function DateTimePickerDemo() {
+  const [value, setValue] = useState<{ date: BsDate | null; time: string }>({
+    date: sampleBs,
+    time: '15:22',
+  });
+  const [format, setFormat] = useState<'12h' | '24h'>('24h');
+  const [firstDayOfWeek, setFirstDayOfWeek] = useState<0 | 1 | 6>(1);
+  const [withCellSpacing, setWithCellSpacing] = useState(true);
+  const [typeable, setTypeable] = useState(true);
+
+  return (
+    <div className="docsInlinePlayground">
+      <div className="docsInlinePlayground__preview">
+        <DateTimePicker
+          {...sharedPickerProps}
+          clearable
+          firstDayOfWeek={firstDayOfWeek}
+          label="Pick date and time"
+          placeholder="Pick date and time"
+          showIcon
+          timePickerProps={{
+            format,
+            withDropdown: true,
+          }}
+          timeLabel="Time"
+          typeable={typeable}
+          value={value}
+          withCellSpacing={withCellSpacing}
+          onChange={setValue}
+        />
+      </div>
+      <aside className="docsInlinePlayground__controls">
+        <div className="docsControlGroup">
+          <label className="docsControlLabel">Time format</label>
+          <div className="docsSegmented">
+            <button
+              className={format === '24h' ? 'is-active' : undefined}
+              onClick={() => setFormat('24h')}
+              type="button"
+            >
+              24h
+            </button>
+            <button
+              className={format === '12h' ? 'is-active' : undefined}
+              onClick={() => setFormat('12h')}
+              type="button"
+            >
+              12h
+            </button>
+          </div>
+        </div>
+
+        <div className="docsControlGroup">
+          <label className="docsControlLabel" htmlFor="week-start">
+            Week starts on
+          </label>
+          <select
+            className="docsControlSelect"
+            id="week-start"
+            onChange={(event) => setFirstDayOfWeek(Number(event.currentTarget.value) as 0 | 1 | 6)}
+            value={String(firstDayOfWeek)}
+          >
+            <option value="0">Sunday</option>
+            <option value="1">Monday</option>
+            <option value="6">Saturday</option>
+          </select>
+        </div>
+
+        <label className="docsControlToggle">
+          <input
+            checked={withCellSpacing}
+            onChange={(event) => setWithCellSpacing(event.currentTarget.checked)}
+            type="checkbox"
+          />
+          <span>Cell spacing</span>
+        </label>
+
+        <label className="docsControlToggle">
+          <input
+            checked={typeable}
+            onChange={(event) => setTypeable(event.currentTarget.checked)}
+            type="checkbox"
+          />
+          <span>Typeable input</span>
+        </label>
+      </aside>
+    </div>
+  );
+}
+
+export function TimeInputDemo() {
+  const ref = useRef<HTMLInputElement | null>(null);
+  const [value, setValue] = useState('15:22');
+
+  return (
+    <TimeInput
+      description="Native browser picker with optional trigger button."
+      label="Click icon to show browser picker"
+      ref={ref}
+      showPickerButton
+      value={value}
+      onChange={(next) => setValue(next)}
+    />
+  );
+}
+
+export function TimePickerDemo() {
+  const [value24, setValue24] = useState('');
+  const [value12, setValue12] = useState('');
+  const [withDropdown, setWithDropdown] = useState(true);
+  const [withSeconds, setWithSeconds] = useState(true);
+
+  return (
+    <div className="docsInlinePlayground">
+      <div className="docsInlinePlayground__preview">
+        <div style={{ width: '100%', maxWidth: 420 }}>
+          <TimePicker
+            label="Enter time (24h format)"
+            value={value24}
+            withDropdown={withDropdown}
+            withSeconds={withSeconds}
+            onChange={setValue24}
+          />
+          <TimePicker
+            format="12h"
+            label="Enter time (12h format)"
+            mt="md"
+            value={value12}
+            withDropdown={withDropdown}
+            withSeconds={withSeconds}
+            onChange={setValue12}
+          />
+        </div>
+      </div>
+      <aside className="docsInlinePlayground__controls">
+        <label className="docsControlToggle">
+          <input
+            checked={withDropdown}
+            onChange={(event) => setWithDropdown(event.currentTarget.checked)}
+            type="checkbox"
+          />
+          <span>With dropdown</span>
+        </label>
+
+        <label className="docsControlToggle">
+          <input
+            checked={withSeconds}
+            onChange={(event) => setWithSeconds(event.currentTarget.checked)}
+            type="checkbox"
+          />
+          <span>With seconds</span>
+        </label>
+      </aside>
+    </div>
   );
 }
 

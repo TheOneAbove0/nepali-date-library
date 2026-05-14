@@ -57,4 +57,20 @@ function ClearIcon() {
   );
 }
 
-export { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ClearIcon };
+function ClockIcon() {
+  return (
+    <svg aria-hidden="true" className="nepali-date-picker__icon" viewBox="0 0 16 16">
+      <circle cx="8" cy="8" fill="none" r="5.5" stroke="currentColor" strokeWidth="1.5" />
+      <path
+        d="M8 5v3l2 1"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      />
+    </svg>
+  );
+}
+
+export { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ClearIcon, ClockIcon };

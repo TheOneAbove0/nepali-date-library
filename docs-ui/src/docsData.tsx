@@ -8,11 +8,14 @@ import {
   DatePickerDemo,
   DatePickerInputDemo,
   DateRangeDemo,
+  DateTimePickerDemo,
   DayClassDemo,
   HolidayDemo,
   MonthPickerDemo,
   MonthPickerInputDemo,
   NepaliNumeralsDemo,
+  TimeInputDemo,
+  TimePickerDemo,
   TypeableDateInputDemo,
   StylingDemo,
   SizeDemo,
@@ -162,6 +165,74 @@ function Demo() {
       value={value}
       onChange={setValue}
     />
+  );
+}`,
+  },
+  {
+    id: 'date-time-picker',
+    title: 'DateTimePicker',
+    summary:
+      'Combined BS date + time picker with explicit 12h/24h format, first day of week control, and calendar spacing.',
+    Demo: DateTimePickerDemo,
+    code: `import { useState } from 'react';
+import { DateTimePicker } from 'nepali-date-library-react';
+
+function Demo() {
+  const [value, setValue] = useState({
+    date: { year: 2083, month: 1, day: 30 },
+    time: '15:22',
+  });
+
+  return (
+    <DateTimePicker
+      label="Pick date and time"
+      placeholderText="Pick date and time"
+      firstDayOfWeek={0}
+      withCellSpacing
+      timePickerProps={{ format: '12h', withDropdown: true }}
+      value={value}
+      onChange={setValue}
+    />
+  );
+}`,
+  },
+  {
+    id: 'time-input',
+    title: 'TimeInput',
+    summary: 'Native browser time input with optional clock trigger button.',
+    Demo: TimeInputDemo,
+    code: `import { useRef } from 'react';
+import { TimeInput } from 'nepali-date-library-react';
+
+function Demo() {
+  const ref = useRef<HTMLInputElement | null>(null);
+
+  return (
+    <TimeInput
+      label="Click icon to show browser picker"
+      ref={ref}
+      showPickerButton
+    />
+  );
+}`,
+  },
+  {
+    id: 'time-picker',
+    title: 'TimePicker',
+    summary: 'Lightweight select-based time picker with 12h/24h format and optional seconds.',
+    Demo: TimePickerDemo,
+    code: `import { useState } from 'react';
+import { TimePicker } from 'nepali-date-library-react';
+
+function Demo() {
+  const [value24, setValue24] = useState('');
+  const [value12, setValue12] = useState('');
+
+  return (
+    <>
+      <TimePicker label="Enter time (24h format)" withSeconds withDropdown value={value24} onChange={setValue24} />
+      <TimePicker label="Enter time (12h format)" withSeconds withDropdown format="12h" mt="md" value={value12} onChange={setValue12} />
+    </>
   );
 }`,
   },

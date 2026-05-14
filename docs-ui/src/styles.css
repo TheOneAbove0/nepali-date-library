@@ -404,6 +404,93 @@ pre {
   font-weight: 600;
 }
 
+.docsInlinePlayground {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  overflow: visible;
+  min-height: 470px;
+}
+
+.docsInlinePlayground__preview {
+  padding: 18px;
+  min-height: 470px;
+  display: grid;
+  align-content: start;
+  background: var(--paper);
+  overflow: visible;
+}
+
+.docsInlinePlayground__controls {
+  padding: 14px 12px;
+  border-left: 1px solid var(--line);
+  background: var(--paper);
+  display: grid;
+  align-content: start;
+  gap: 14px;
+}
+
+.docsControlGroup {
+  display: grid;
+  gap: 6px;
+}
+
+.docsControlLabel {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.docsSegmented {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #f8f9fa;
+}
+
+.docsSegmented button {
+  min-height: 34px;
+  border: 0;
+  border-radius: 7px;
+  color: var(--muted);
+  background: transparent;
+  font-weight: 600;
+}
+
+.docsSegmented button.is-active {
+  color: var(--ink);
+  background: #ffffff;
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+}
+
+.docsControlSelect {
+  min-height: 38px;
+  width: 100%;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  padding: 0 10px;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.docsControlToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.docsControlToggle input {
+  margin: 0;
+}
+
 .docsCustomInput {
   width: 100%;
   min-height: 44px;
@@ -484,27 +571,29 @@ pre {
   );
   color: var(--ink);
   --nepali-date-picker-scale: 1;
-  --nepali-date-picker-base-inline-width: 320px;
-  --nepali-date-picker-base-popover-width: 292px;
-  --nepali-date-picker-accent: var(--accent);
-  --nepali-date-picker-accent-soft: var(--accent-soft);
+  --nepali-date-picker-base-inline-width: 300px;
+  --nepali-date-picker-base-popover-width: 300px;
+  --nepali-date-picker-accent: #228be6;
+  --nepali-date-picker-accent-soft: #e7f5ff;
   --nepali-date-picker-accent-contrast: #ffffff;
-  --nepali-date-picker-text: var(--ink);
-  --nepali-date-picker-muted: #78867f;
-  --nepali-date-picker-input-bg: var(--paper);
-  --nepali-date-picker-input-border: var(--line-strong);
-  --nepali-date-picker-input-radius: 12px;
-  --nepali-date-picker-input-placeholder: #9aa6a0;
-  --nepali-date-picker-calendar-bg: var(--paper);
-  --nepali-date-picker-calendar-border: var(--line);
-  --nepali-date-picker-calendar-radius: 14px;
-  --nepali-date-picker-header-bg: #f6f7f5;
-  --nepali-date-picker-hover-bg: var(--soft);
-  --nepali-date-picker-hover-outline: var(--accent);
-  --nepali-date-picker-range-bg: #d8ebfb;
-  --nepali-date-picker-outside-color: #bec7c1;
-  --nepali-date-picker-disabled-color: #c1c9c4;
-  --nepali-date-picker-shadow: var(--shadow);
+  --nepali-date-picker-text: #212529;
+  --nepali-date-picker-muted: #868e96;
+  --nepali-date-picker-input-bg: #ffffff;
+  --nepali-date-picker-input-border: #ced4da;
+  --nepali-date-picker-input-radius: 8px;
+  --nepali-date-picker-input-placeholder: #adb5bd;
+  --nepali-date-picker-calendar-bg: #ffffff;
+  --nepali-date-picker-calendar-border: #dee2e6;
+  --nepali-date-picker-calendar-radius: 8px;
+  --nepali-date-picker-header-bg: transparent;
+  --nepali-date-picker-hover-bg: #f1f3f5;
+  --nepali-date-picker-hover-outline: transparent;
+  --nepali-date-picker-range-bg: #e7f5ff;
+  --nepali-date-picker-outside-color: #ced4da;
+  --nepali-date-picker-disabled-color: #dee2e6;
+  --nepali-date-picker-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  --nepali-date-picker-cell-spacing-x: 2px;
+  --nepali-date-picker-cell-spacing-y: 2px;
 }
 
 .nepali-date-picker--inline {
@@ -536,6 +625,7 @@ pre {
   border: 1px solid var(--nepali-date-picker-input-border);
   border-radius: var(--nepali-date-picker-input-radius);
   background: var(--nepali-date-picker-input-bg);
+  overflow: hidden;
 }
 
 .nepali-date-picker__input {
@@ -547,6 +637,12 @@ pre {
   color: var(--nepali-date-picker-text);
   background: transparent;
   font-size: 15px;
+}
+
+.nepali-date-picker--time-input[data-show-picker-button='true']
+  .nepali-date-picker__input[type='time']::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .nepali-date-picker__input::placeholder {
@@ -563,9 +659,10 @@ pre {
   place-items: center;
   width: 38px;
   height: 38px;
-  margin-right: 3px;
+  margin-right: 0;
   border: 0;
-  border-radius: 8px;
+  border-left: 1px solid color-mix(in srgb, var(--nepali-date-picker-input-border) 85%, #ffffff);
+  border-radius: 0;
   color: var(--muted);
   background: transparent;
 }
@@ -583,7 +680,7 @@ pre {
 .nepali-date-picker__popper {
   position: absolute;
   z-index: 20;
-  top: calc(100% + 12px);
+  top: calc(100% + 6px);
   left: 0;
   width: min(
     100vw - 48px,
@@ -606,16 +703,16 @@ pre {
     calc(34px * var(--nepali-date-picker-scale)) minmax(0, 1fr)
     calc(34px * var(--nepali-date-picker-scale));
   align-items: center;
-  gap: calc(10px * var(--nepali-date-picker-scale));
-  padding: calc(16px * var(--nepali-date-picker-scale)) calc(18px * var(--nepali-date-picker-scale))
-    calc(8px * var(--nepali-date-picker-scale));
+  gap: calc(6px * var(--nepali-date-picker-scale));
+  padding: calc(10px * var(--nepali-date-picker-scale)) calc(12px * var(--nepali-date-picker-scale))
+    calc(2px * var(--nepali-date-picker-scale));
 }
 
 .nepali-date-picker__nav-button {
   display: grid;
   place-items: center;
-  width: calc(34px * var(--nepali-date-picker-scale));
-  height: calc(34px * var(--nepali-date-picker-scale));
+  width: calc(30px * var(--nepali-date-picker-scale));
+  height: calc(30px * var(--nepali-date-picker-scale));
   padding: 8px;
   border: 0;
   border-radius: 8px;
@@ -632,35 +729,40 @@ pre {
 }
 
 .nepali-date-picker__header-label {
-  min-height: calc(34px * var(--nepali-date-picker-scale));
-  padding: 8px;
+  min-height: calc(30px * var(--nepali-date-picker-scale));
+  padding: 6px;
   border: 0;
-  border-radius: 9px;
+  border-radius: 6px;
   color: var(--nepali-date-picker-text);
   background: var(--nepali-date-picker-header-bg);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .nepali-date-picker__table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: var(--nepali-date-picker-cell-spacing-x) var(--nepali-date-picker-cell-spacing-y);
   table-layout: fixed;
-  padding: 0 14px 20px;
+  padding: 0 10px 12px;
 }
 
 .nepali-date-picker__weekday {
-  padding: 8px 0;
+  padding: 6px 0 8px;
   color: var(--nepali-date-picker-muted);
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .nepali-date-picker__cell {
-  padding: 2px 4px;
+  padding: 0;
+}
+
+.nepali-date-picker[data-cell-spacing='false'] .nepali-date-picker__table {
+  border-spacing: 0;
 }
 
 .nepali-date-picker__table tbody tr:last-child .nepali-date-picker__cell {
-  padding-bottom: 10px;
+  padding-bottom: 0;
 }
 
 .nepali-date-picker__day {
@@ -668,16 +770,16 @@ pre {
   aspect-ratio: 1;
   padding: 0;
   border: 0;
-  border-radius: 8px;
+  border-radius: 6px;
   color: var(--nepali-date-picker-text);
   background: transparent;
-  font-size: calc(15px * var(--nepali-date-picker-scale));
+  font-size: calc(14px * var(--nepali-date-picker-scale));
   font-weight: 500;
 }
 
 .nepali-date-picker__day:hover:not(:disabled) {
   background: var(--nepali-date-picker-hover-bg);
-  box-shadow: inset 0 0 0 1px var(--nepali-date-picker-hover-outline);
+  box-shadow: none;
   color: var(--nepali-date-picker-text);
 }
 
@@ -692,7 +794,7 @@ pre {
 
 .nepali-date-picker__day--selected:hover {
   background: var(--nepali-date-picker-accent);
-  box-shadow: inset 0 0 0 1px var(--nepali-date-picker-accent);
+  box-shadow: none;
 }
 
 .nepali-date-picker__day--in-range {
@@ -702,7 +804,7 @@ pre {
 
 .nepali-date-picker__day--range-start,
 .nepali-date-picker__day--range-end {
-  border-radius: 8px;
+  border-radius: 6px;
 }
 
 .nepali-date-picker__day--today {
@@ -769,7 +871,179 @@ pre {
 }
 
 .nepali-date-picker__children {
-  padding: 0 16px 16px;
+  margin: 4px 12px 10px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.nepali-date-time-picker__time .nepali-date-picker__label {
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--nepali-date-picker-muted);
+}
+
+.nepali-time-picker__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nepali-time-picker__dropdown-root {
+  position: relative;
+}
+
+.nepali-time-picker__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid var(--nepali-date-picker-input-border);
+  border-radius: 8px;
+  padding: 0 8px 0 12px;
+  text-align: left;
+  color: var(--nepali-date-picker-text);
+  background: var(--nepali-date-picker-input-bg);
+  font-size: 14px;
+}
+
+.nepali-date-picker--time-picker-dropdown[data-dropdown-open='true'] .nepali-time-picker__trigger {
+  border-color: var(--nepali-date-picker-accent);
+}
+
+.nepali-time-picker__trigger:focus {
+  outline: 2px solid color-mix(in srgb, var(--nepali-date-picker-accent) 40%, transparent);
+  outline-offset: 1px;
+}
+
+.nepali-time-picker__trigger-action {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-left: 1px solid color-mix(in srgb, var(--nepali-date-picker-input-border) 85%, #ffffff);
+  color: var(--nepali-date-picker-muted);
+  background: transparent;
+}
+
+.nepali-time-picker__trigger-action .nepali-date-picker__icon {
+  width: 12px;
+  height: 12px;
+}
+
+.nepali-time-picker__dropdown {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 8px);
+  left: 0;
+  border: 1px solid var(--nepali-date-picker-calendar-border);
+  border-radius: 8px;
+  background: var(--paper);
+  box-shadow: var(--nepali-date-picker-shadow);
+}
+
+.nepali-time-picker__columns {
+  display: flex;
+  align-items: flex-start;
+  padding: 4px;
+  gap: 4px;
+}
+
+.nepali-time-picker__column {
+  width: 54px;
+  max-height: 172px;
+  overflow-y: auto;
+  padding: 6px 2px 42px;
+  border-radius: 6px;
+  background: transparent;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.nepali-time-picker__column::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+.nepali-time-picker__column--ampm {
+  width: 56px;
+}
+
+.nepali-time-picker__option {
+  display: block;
+  width: 100%;
+  min-height: 26px;
+  border: 0;
+  border-radius: 8px;
+  color: var(--nepali-date-picker-text);
+  background: transparent;
+  font-size: 14px;
+  line-height: 1;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.nepali-time-picker__option:hover:not(:disabled) {
+  background: #f1f3f5;
+}
+
+.nepali-time-picker__option--selected {
+  color: #ffffff;
+  background: var(--nepali-date-picker-accent);
+}
+
+.nepali-time-picker__option--selected:hover {
+  background: var(--nepali-date-picker-accent);
+}
+
+.nepali-time-picker__option--ampm {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.nepali-time-picker__separator {
+  color: var(--nepali-date-picker-muted);
+  font-weight: 700;
+}
+
+.nepali-time-picker__select {
+  min-height: 34px;
+  min-width: 58px;
+  border: 1px solid var(--nepali-date-picker-input-border);
+  border-radius: 8px;
+  padding: 0 10px;
+  color: var(--nepali-date-picker-text);
+  background: var(--nepali-date-picker-input-bg);
+}
+
+.nepali-time-picker__select--meridiem {
+  min-width: 74px;
+}
+
+.nepali-date-time-picker__time .nepali-time-picker__row {
+  min-height: 40px;
+  gap: 0;
+  border: 1px solid var(--nepali-date-picker-input-border);
+  border-radius: 8px;
+  background: var(--nepali-date-picker-input-bg);
+  overflow: hidden;
+}
+
+.nepali-date-time-picker__time .nepali-time-picker__select {
+  min-height: 38px;
+  border: 0;
+  border-radius: 0;
+  padding: 0 8px;
+  background: transparent;
+}
+
+.nepali-date-time-picker__time .nepali-time-picker__separator {
+  padding: 0 4px;
 }
 
 .docsHolidayAccent {
@@ -857,6 +1131,15 @@ pre {
   .heroStats,
   .calloutGrid {
     grid-template-columns: 1fr;
+  }
+
+  .docsInlinePlayground {
+    grid-template-columns: 1fr;
+  }
+
+  .docsInlinePlayground__controls {
+    border-left: 0;
+    border-top: 1px solid var(--line);
   }
 }
 

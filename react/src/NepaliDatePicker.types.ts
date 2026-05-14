@@ -136,13 +136,16 @@ export interface NepaliDatePickerProps {
   filterDate?: (date: BsDate) => boolean;
   isDateDisabled?: (date: BsDate) => boolean;
   weekStartsOn?: WeekdayIndex;
+  firstDayOfWeek?: WeekdayIndex;
   calendarStartDay?: WeekdayIndex;
+  withCellSpacing?: boolean;
   inline?: boolean;
   disabled?: boolean;
   readOnly?: boolean;
   isClearable?: boolean;
   clearable?: boolean;
   shouldCloseOnSelect?: boolean;
+  placeholder?: string;
   placeholderText?: string;
   label?: ReactNode;
   description?: ReactNode;
