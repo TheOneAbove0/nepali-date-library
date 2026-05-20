@@ -1,17 +1,25 @@
-import { CalendarDays, Code2, Moon, PackageCheck, Sun, Check } from 'lucide-react';
-import { formatBsDateNepali } from 'nepali-date-library';
+import { Fragment } from 'react';
+import { CalendarDays, Moon, Sun } from 'lucide-react';
 import { DocsSection } from './DocsSection';
 import { sections } from './docsData';
-import { sampleAd, sampleBs } from './docsShared';
+import { playgroundTabs } from './playgroundConfig';
 import { useActiveDocsSection } from './useActiveDocsSection';
 import { useDocsTheme } from './useDocsTheme';
+import { NumeralSystemProvider, useNumeralSystem } from './NumeralSystemContext';
 import './styles.css';
 
-export function App() {
+function AppInner() {
   const { theme, setTheme } = useDocsTheme();
   const { activeSection, setActiveSection } = useActiveDocsSection(
     sections.map((section) => section.id),
   );
+  const { numeralSystem, setNumeralSystem } = useNumeralSystem();
+
+  const openPlaygroundTab = (tabId: string) => {
+    setActiveSection('playground');
+    document.getElementById('playground')?.scrollIntoView({ behavior: 'smooth' });
+    window.dispatchEvent(new CustomEvent('playground-tab-change', { detail: tabId }));
+  };
 
   return (
     <main className="docsShell" data-theme={theme}>
@@ -20,17 +28,32 @@ export function App() {
           <CalendarDays size={18} />
           <span>Nepali React Datepicker</span>
         </div>
-        <div className="sidebarGroupTitle">Dates</div>
+        <div className="sidebarGroupTitle">Documentation</div>
         <nav>
           {sections.map((section) => (
-            <a
-              className={section.id === activeSection ? 'active' : undefined}
-              href={`#${section.id}`}
-              key={section.id}
-              onClick={() => setActiveSection(section.id)}
-            >
-              {section.title}
-            </a>
+            <Fragment key={section.id}>
+              <a
+                className={section.id === activeSection ? 'active' : undefined}
+                href={`#${section.id}`}
+                onClick={() => setActiveSection(section.id)}
+              >
+                {section.title}
+              </a>
+              {section.id === 'playground' &&
+                playgroundTabs.map((tab) => (
+                  <a
+                    className="sidebarSub"
+                    href="#playground"
+                    key={tab.id}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      openPlaygroundTab(tab.id);
+                    }}
+                  >
+                    {tab.label}
+                  </a>
+                ))}
+            </Fragment>
           ))}
         </nav>
       </aside>
@@ -38,55 +61,52 @@ export function App() {
       <section className="content">
         <header className="pageHeader">
           <div>
-            <p className="eyebrow">Crafted for Bikram Sambat interfaces</p>
-            <h1>Dates</h1>
+            <h1>Nepali React Datepicker</h1>
             <p className="lede">
-              Simple day, month, and year pickers for BS date workflows. The calendar engine stays
-              shared, while the docs now focus on quieter inputs, cleaner dropdowns, and more
-              breathing room.
+              Day, month, year, time, and date-range pickers for Bikram Sambat interfaces.
+              Lightweight, composable, and fully styleable.
             </p>
           </div>
-          <div className="headerMeta">
-            <span>
-              <PackageCheck size={14} /> React package
-            </span>
-            <span>
-              <Check size={14} /> Day, month, year pickers
-            </span>
-            <span>
-              <Code2 size={14} /> Styling API documented
-            </span>
+          <div className="headerActions">
+            <button
+              aria-label={`Switch numerals to ${numeralSystem === 'nepali' ? 'Latin (English)' : 'Nepali (देवनागरी)'}`}
+              className="numeralToggle"
+              onClick={() =>
+                setNumeralSystem(numeralSystem === 'nepali' ? 'latin' : 'nepali')
+              }
+              title={`Currently: ${numeralSystem === 'nepali' ? 'नेपाली' : 'English'} numerals`}
+              type="button"
+            >
+              <span className="numeralToggleLabel">
+                {numeralSystem === 'nepali' ? 'क' : 'A'}
+              </span>
+              <span className="numeralToggleHint">
+                {numeralSystem === 'nepali' ? 'नेपाली' : 'English'}
+              </span>
+            </button>
             <button
               aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
               className="themeToggle"
               onClick={() => setTheme((current) => (current === 'light' ? 'dark' : 'light'))}
               type="button"
             >
-              {theme === 'light' ? <Moon size={14} /> : <Sun size={14} />}
-              <span>{theme === 'light' ? 'Dark mode' : 'Light mode'}</span>
+              {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
             </button>
           </div>
         </header>
-
-        <section className="heroStats">
-          <article>
-            <span>Gregorian sample</span>
-            <strong>{sampleAd}</strong>
-          </article>
-          <article>
-            <span>BS sample</span>
-            <strong>{formatBsDateNepali(sampleBs)}</strong>
-          </article>
-          <article>
-            <span>Current focus</span>
-            <strong>Cleaner input + dropdown</strong>
-          </article>
-        </section>
 
         {sections.map((section) => (
           <DocsSection key={section.id} section={section} />
         ))}
       </section>
     </main>
+  );
+}
+
+export function App() {
+  return (
+    <NumeralSystemProvider>
+      <AppInner />
+    </NumeralSystemProvider>
   );
 }

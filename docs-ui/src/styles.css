@@ -1,10 +1,18 @@
+/* ===================================================================
+   Nepali React Datepicker — Documentation Styles
+   =================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ===== Theme tokens (light) ===== */
+
 .docsShell {
   color: #18211d;
   background: #f6f8f4;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --ink: #18211d;
   --muted: #69756f;
-  --line: #d7ddd7;
+  --line: #e2e6e2;
   --line-strong: #c8d1cb;
   --paper: #ffffff;
   --soft: #f2f5f1;
@@ -14,30 +22,28 @@
   --accent-soft: #e7f2ff;
   --red: #d04b4b;
   --red-soft: #fff0f0;
-  --shadow: 0 18px 40px rgba(24, 33, 29, 0.08);
-  --shell-bg:
-    linear-gradient(90deg, rgba(28, 126, 214, 0.05) 0 1px, transparent 1px 100%),
-    linear-gradient(180deg, rgba(28, 126, 214, 0.04) 0 1px, transparent 1px 100%), #ffffff;
+  --shadow: 0 2px 8px rgba(24, 33, 29, 0.06);
   --sidebar-bg: rgba(255, 255, 255, 0.92);
-  --panel-bg: rgba(255, 255, 255, 0.96);
-  --demo-bg: #ffffff;
-  --code-bg: #ffffff;
-  --code-head-bg: #f7f9fc;
-  --code-border: #e3e8ef;
+  --panel-bg: #ffffff;
+  --demo-bg: #fafbfa;
+  --code-bg: #fafbfa;
+  --code-head-bg: #f4f6f4;
+  --code-border: #e2e6e2;
   --code-text: #23313b;
   --code-muted: #5b6a76;
   --code-keyword: #d9485f;
   --code-accent: #3366cc;
-  --inline-code-bg: #ffffff;
-  --header-pill-bg: rgba(255, 255, 255, 0.92);
+  --inline-code-bg: #f4f6f4;
 }
+
+/* ===== Theme tokens (dark) ===== */
 
 .docsShell[data-theme='dark'] {
   color: #e8eeea;
   background: #0f1513;
   --ink: #e8eeea;
   --muted: #a6b3ad;
-  --line: #26302b;
+  --line: #222c28;
   --line-strong: #33403a;
   --paper: #151c19;
   --soft: #1b2521;
@@ -47,24 +53,21 @@
   --accent-soft: rgba(88, 166, 255, 0.14);
   --red: #ff7f7f;
   --red-soft: rgba(255, 127, 127, 0.15);
-  --shadow: 0 22px 44px rgba(0, 0, 0, 0.34);
-  --shell-bg:
-    linear-gradient(90deg, rgba(88, 166, 255, 0.06) 0 1px, transparent 1px 100%),
-    linear-gradient(180deg, rgba(88, 166, 255, 0.05) 0 1px, transparent 1px 100%),
-    linear-gradient(180deg, #0f1513 0%, #131b18 100%);
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   --sidebar-bg: rgba(18, 24, 22, 0.92);
-  --panel-bg: rgba(21, 28, 25, 0.96);
+  --panel-bg: #171f1c;
   --demo-bg: #141b18;
   --code-bg: #0f1513;
   --code-head-bg: #121a17;
-  --code-border: #26302b;
+  --code-border: #222c28;
   --code-text: #e8eeea;
   --code-muted: #a6b3ad;
   --code-keyword: #ff8da1;
   --code-accent: #7fb2ff;
-  --inline-code-bg: #141c19;
-  --header-pill-bg: rgba(21, 28, 25, 0.96);
+  --inline-code-bg: #1b2521;
 }
+
+/* ===== Reset ===== */
 
 * {
   box-sizing: border-box;
@@ -77,7 +80,12 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  background: #ffffff;
+  background: #f6f8f4;
+}
+
+.docsShell[data-theme='dark'] ~ body,
+body:has(.docsShell[data-theme='dark']) {
+  background: #0f1513;
 }
 
 button,
@@ -100,16 +108,15 @@ p {
   margin: 0;
 }
 
+/* ===== Layout shell ===== */
+
 .docsShell {
   display: grid;
-  grid-template-columns: 260px minmax(0, 1fr);
+  grid-template-columns: 240px minmax(0, 1fr);
   min-height: 100vh;
-  background: var(--shell-bg);
-  background-size:
-    36px 36px,
-    36px 36px,
-    auto;
 }
+
+/* ===== Sidebar ===== */
 
 .sidebar {
   position: sticky;
@@ -120,188 +127,230 @@ p {
   border-right: 1px solid var(--line);
   background: var(--sidebar-bg);
   backdrop-filter: blur(16px);
-  padding: 22px 14px 28px;
+  padding: 20px 12px 28px;
 }
 
 .sidebarBrand {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 8px 10px 18px;
+  padding: 8px 10px 16px;
   border-bottom: 1px solid var(--line);
   font-weight: 700;
+  font-size: 14px;
 }
 
 .sidebarGroupTitle {
-  padding: 18px 10px 10px;
+  padding: 16px 10px 10px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
 }
 
 .sidebar nav {
   display: grid;
-  gap: 4px;
+  gap: 2px;
 }
 
 .sidebar nav a {
-  border-radius: 10px;
-  padding: 9px 10px;
-  color: #2a3631;
-  font-size: 14px;
-  font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
   text-decoration: none;
   transition:
     background-color 0.18s ease,
     color 0.18s ease;
 }
 
-.sidebar nav a:hover,
+.sidebar nav a:hover {
+  color: var(--ink);
+  background: var(--soft);
+}
+
 .sidebar nav a.active {
   color: var(--green);
   background: var(--green-soft);
-}
-
-.content {
-  width: min(1080px, calc(100% - 72px));
-  margin: 0 auto;
-  padding: 52px 0 112px;
-}
-
-.pageHeader {
-  display: grid;
-  gap: 22px;
-  padding-bottom: 34px;
-  border-bottom: 1px solid var(--line);
-}
-
-.eyebrow {
-  color: var(--green);
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.pageHeader h1 {
-  margin-top: 10px;
-  font-size: 62px;
-  line-height: 0.96;
-  letter-spacing: 0;
-  font-weight: 700;
-}
-
-.lede {
-  max-width: 760px;
-  margin-top: 14px;
-  color: var(--muted);
-  font-size: 18px;
-  line-height: 1.75;
-}
-
-.headerMeta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.headerMeta span {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 34px;
-  padding: 0 12px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--header-pill-bg);
-  font-size: 13px;
   font-weight: 600;
 }
 
-.themeToggle {
-  display: inline-flex;
+.sidebarSub {
+  padding-left: 22px !important;
+  font-size: 12px !important;
+  color: var(--muted) !important;
+  opacity: 0.85;
+}
+
+.sidebarSub:hover {
+  opacity: 1;
+}
+
+/* ===== Content area ===== */
+
+.content {
+  width: min(960px, calc(100% - 64px));
+  margin: 0 auto;
+  padding: 48px 0 120px;
+}
+
+/* ===== Page header (simplified) ===== */
+
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--line);
+}
+
+.pageHeader h1 {
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.lede {
+  max-width: 600px;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.headerActions {
+  display: flex;
   align-items: center;
   gap: 8px;
-  min-height: 34px;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.numeralToggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
   padding: 0 12px;
   border: 1px solid var(--line);
-  border-radius: 999px;
-  color: var(--ink);
-  background: var(--header-pill-bg);
-}
-
-.heroStats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-  padding: 34px 0 18px;
-}
-
-.heroStats article {
-  display: grid;
-  gap: 8px;
-  padding: 18px 20px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: var(--panel-bg);
-}
-
-.heroStats span {
+  border-radius: 10px;
   color: var(--muted);
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
+  background: var(--paper);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease;
 }
 
-.heroStats strong {
-  font-size: 18px;
+.numeralToggle:hover {
+  color: var(--ink);
+  border-color: var(--line-strong);
 }
+
+.numeralToggleLabel {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.numeralToggleHint {
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+.themeToggle {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--muted);
+  background: var(--paper);
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.themeToggle:hover {
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+
+/* ===== Sections ===== */
 
 .docsSection {
-  padding-top: 68px;
+  padding-top: 64px;
   scroll-margin-top: 32px;
 }
 
 .sectionIntro {
   display: grid;
-  gap: 10px;
-  margin-bottom: 22px;
+  gap: 6px;
+  margin-bottom: 20px;
 }
 
 .sectionIntro h2 {
-  font-size: 34px;
-  line-height: 1.1;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .sectionIntro p {
-  max-width: 720px;
+  max-width: 640px;
   color: var(--muted);
-  line-height: 1.75;
+  font-size: 14px;
+  line-height: 1.7;
 }
 
+.sectionIntro p code {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--inline-code-bg);
+  font-size: 13px;
+  font-family: 'SFMono-Regular', 'Cascadia Code', 'Liberation Mono', monospace;
+}
+
+/* ===== Section cards (lighter) ===== */
+
 .sectionCard {
-  overflow: hidden;
+  overflow: visible;
   border: 1px solid var(--line);
-  border-radius: 20px;
+  border-radius: 12px;
   background: var(--panel-bg);
-  box-shadow: var(--shadow);
+}
+
+.sectionCard > :first-child {
+  border-radius: 11px 11px 0 0;
+}
+
+.sectionCard > :last-child {
+  border-radius: 0 0 11px 11px;
+}
+
+.sectionCard > :only-child {
+  border-radius: 11px;
 }
 
 .demoStage {
   display: grid;
   justify-items: start;
   gap: 20px;
-  padding: 34px;
-  background:
-    linear-gradient(90deg, rgba(28, 126, 214, 0.04) 0 1px, transparent 1px 100%),
-    linear-gradient(180deg, rgba(28, 126, 214, 0.03) 0 1px, transparent 1px 100%), var(--demo-bg);
-  background-size:
-    36px 36px,
-    36px 36px,
-    auto;
+  padding: 28px;
+  background: var(--demo-bg);
 }
+
+/* ===== Code panel ===== */
 
 .codePanel {
   border-top: 1px solid var(--line);
@@ -312,8 +361,8 @@ p {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 54px;
-  padding: 10px 16px;
+  min-height: 44px;
+  padding: 8px 16px;
   border-bottom: 1px solid var(--code-border);
   background: var(--code-head-bg);
 }
@@ -321,28 +370,33 @@ p {
 .codePanelHead span {
   display: inline-flex;
   align-items: center;
-  padding: 4px 10px;
-  border: 1px solid var(--code-border);
-  border-radius: 999px;
-  color: var(--code-accent);
+  color: var(--code-muted);
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .codePanelHead button {
   display: grid;
   place-items: center;
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border: 1px solid var(--code-border);
-  border-radius: 8px;
+  border-radius: 6px;
   color: var(--code-muted);
   background: transparent;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.codePanelHead button:hover {
+  color: var(--ink);
+  border-color: var(--line-strong);
 }
 
 pre {
   margin: 0;
-  padding: 22px 24px 24px;
+  padding: 18px 20px 20px;
   overflow-x: auto;
   color: var(--code-text);
   font-family: 'SFMono-Regular', 'Cascadia Code', 'Liberation Mono', monospace;
@@ -352,72 +406,240 @@ pre {
   overflow-wrap: anywhere;
 }
 
-.inlineCode {
-  padding: 16px 18px;
+/* ===== Getting started ===== */
+
+.installBlock {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.installRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.installLabel {
+  flex-shrink: 0;
+  width: 40px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.installCode {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--inline-code-bg);
+  color: var(--ink);
+  font-size: 13px;
+}
+
+.copyBtn {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--muted);
+  background: var(--paper);
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.copyBtn:hover {
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+
+.sectionNote {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+  padding-left: 12px;
+  border-left: 2px solid var(--line);
+}
+
+.sectionNote code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--inline-code-bg);
+  font-size: 12px;
+  font-family: 'SFMono-Regular', 'Cascadia Code', 'Liberation Mono', monospace;
+}
+
+/* ===== Playground ===== */
+
+.playground {
   border: 1px solid var(--line);
   border-radius: 12px;
-  background: var(--inline-code-bg);
+  background: var(--panel-bg);
+  overflow: visible;
+}
+
+.playground > :first-child {
+  border-radius: 11px 11px 0 0;
+}
+
+.playground > :last-child {
+  border-radius: 0 0 11px 11px;
+}
+
+.playgroundTabBarWrap {
+  position: relative;
+  border-bottom: 1px solid var(--line);
+  background: var(--code-head-bg);
+  border-radius: 11px 11px 0 0;
+}
+
+.playgroundTabArrow {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 1px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  border: 0;
+  color: var(--muted);
+  background: transparent;
+  transition: color 0.15s ease;
+}
+
+.playgroundTabArrow:hover {
   color: var(--ink);
 }
 
-.calloutGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
+.playgroundTabArrow--left {
+  left: 0;
+  background: linear-gradient(to right, var(--code-head-bg) 60%, transparent);
+  padding-right: 8px;
 }
 
-.calloutGrid article {
-  padding: 24px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: var(--panel-bg);
+.playgroundTabArrow--right {
+  right: 0;
+  background: linear-gradient(to left, var(--code-head-bg) 60%, transparent);
+  padding-left: 8px;
 }
 
-.calloutGrid h3 {
-  margin-bottom: 14px;
-  font-size: 20px;
+.playgroundTabBar {
+  display: flex;
+  gap: 0;
+  padding: 0 4px;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-.calloutNote {
-  margin-top: 18px;
-  padding: 18px 20px;
-  border: 1px solid var(--line);
-  border-radius: 14px;
+.playgroundTabBar::-webkit-scrollbar {
+  display: none;
+}
+
+.playgroundTab {
+  flex-shrink: 0;
+  padding: 10px 14px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
   color: var(--muted);
-  background: var(--panel-bg);
-  line-height: 1.7;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
 
-.flatList {
-  display: grid;
-  gap: 8px;
-  margin: 0;
-  padding-left: 18px;
+.playgroundTab:hover {
+  color: var(--ink);
 }
 
-.calendarFooter {
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 10px;
-  background: var(--green-soft);
+.playgroundTab.is-active {
   color: var(--green);
+  border-bottom-color: var(--green);
   font-weight: 600;
 }
+
+.playgroundPreview {
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+  background: var(--demo-bg);
+}
+
+.playgroundDesc {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.playgroundDemoArea {
+  display: grid;
+  justify-items: start;
+}
+
+.playgroundValue {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  font-size: 13px;
+}
+
+.playgroundValueLabel {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.playgroundValueType {
+  color: var(--green);
+  font-family: 'SFMono-Regular', 'Cascadia Code', 'Liberation Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--green-soft);
+}
+
+.playgroundValueCode {
+  flex: 1;
+  min-width: 0;
+  color: var(--ink);
+  font-family: 'SFMono-Regular', 'Cascadia Code', 'Liberation Mono', monospace;
+  font-size: 12px;
+  word-break: break-all;
+}
+
+/* ===== Inline playground (DateTimePicker, TimePicker legacy) ===== */
 
 .docsInlinePlayground {
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 260px;
+  grid-template-columns: minmax(0, 1fr) 240px;
   border: 1px solid var(--line);
   border-radius: 12px;
   background: var(--paper);
   overflow: visible;
-  min-height: 470px;
 }
 
 .docsInlinePlayground__preview {
   padding: 18px;
-  min-height: 470px;
   display: grid;
   align-content: start;
   background: var(--paper);
@@ -451,39 +673,41 @@ pre {
   padding: 3px;
   border: 1px solid var(--line);
   border-radius: 9px;
-  background: #f8f9fa;
+  background: var(--soft);
 }
 
 .docsSegmented button {
-  min-height: 34px;
+  min-height: 32px;
   border: 0;
   border-radius: 7px;
   color: var(--muted);
   background: transparent;
   font-weight: 600;
+  font-size: 13px;
 }
 
 .docsSegmented button.is-active {
   color: var(--ink);
-  background: #ffffff;
+  background: var(--paper);
   box-shadow: inset 0 0 0 1px var(--line-strong);
 }
 
 .docsControlSelect {
-  min-height: 38px;
+  min-height: 36px;
   width: 100%;
   border: 1px solid var(--line-strong);
   border-radius: 8px;
   padding: 0 10px;
   color: var(--ink);
   background: var(--paper);
+  font-size: 13px;
 }
 
 .docsControlToggle {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
+  font-size: 13px;
   color: var(--ink);
 }
 
@@ -491,65 +715,146 @@ pre {
   margin: 0;
 }
 
+/* ===== Custom demos ===== */
+
+/* Strip the input shell when a custom input replaces it */
+.nepali-date-picker__input-shell:has(.docsCustomInput) {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  gap: 0;
+}
+
 .docsCustomInput {
   width: 100%;
+  display: flex;
+  align-items: center;
   min-height: 44px;
-  border: 1px solid var(--line-strong);
-  border-radius: 10px;
-  padding: 0 14px;
-  color: var(--ink);
-  background: var(--paper);
+  padding: 0 18px;
+  border: 1px dashed var(--green);
+  border-radius: 999px;
+  color: var(--green);
+  background: var(--green-soft);
   text-align: left;
   font-weight: 600;
+  font-size: 14px;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-style 0.2s ease;
+}
+
+.docsCustomInput:hover {
+  border-style: solid;
+  background: var(--green);
+  color: #fff;
 }
 
 .docsCustomHeader {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 12px;
-  padding: 4px 2px 8px;
-}
-
-.docsCustomHeader strong {
   display: flex;
   align-items: center;
-  justify-content: center;
-  min-height: 40px;
-  padding: 0 14px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--soft);
-  color: var(--ink);
+  justify-content: space-between;
+  padding: 8px 4px;
+}
+
+.docsCustomHeader__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.docsCustomHeader__chip {
+  padding: 2px 8px;
+  border-radius: 5px;
+  background: var(--green-soft);
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
 .docsCustomHeader button {
-  min-width: 72px;
-  height: 40px;
-  padding: 0 16px;
-  border: 1px solid var(--line-strong);
-  border-radius: 999px;
-  color: var(--ink);
-  background: var(--paper);
-  font-weight: 600;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 8px;
+  color: var(--muted);
+  background: transparent;
   transition:
-    background 160ms ease,
-    border-color 160ms ease,
-    color 160ms ease,
-    transform 160ms ease;
+    color 0.15s ease,
+    background 0.15s ease;
 }
 
 .docsCustomHeader button:hover {
-  border-color: var(--green);
-  color: var(--green);
-  background: var(--green-soft);
-  transform: translateY(-1px);
+  color: var(--ink);
+  background: var(--soft);
 }
 
-.docsCustomHeader button:active {
-  transform: translateY(0);
+/* ===== Size pills ===== */
+
+.sizePills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
+
+.sizePill {
+  min-height: 30px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  background: var(--paper);
+  font-weight: 700;
+  font-size: 12px;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.sizePill.is-active {
+  color: var(--green);
+  background: var(--green-soft);
+  border-color: var(--green-soft);
+}
+
+.sizePill:hover:not(.is-active) {
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+.sizeDivider {
+  width: 1px;
+  align-self: stretch;
+  margin: 4px 2px;
+  background: var(--line);
+}
+
+.sizeInput {
+  width: 64px;
+  min-height: 30px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: var(--paper);
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.sizeInput:focus {
+  outline: 2px solid var(--green-soft);
+  border-color: var(--green);
+}
+
+/* ===== Day class & calendar demos ===== */
 
 .docsMonthOpeningDay {
   color: var(--green);
@@ -562,6 +867,20 @@ pre {
   background: #fff3df;
   font-weight: 700;
 }
+
+.calendarFooter {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--green-soft);
+  color: var(--green);
+  font-weight: 600;
+}
+
+/* ===================================================================
+   Nepali Date Picker — Library Component Styles
+   (preserved from original — do not modify)
+   =================================================================== */
 
 .nepali-date-picker {
   position: relative;
@@ -594,6 +913,7 @@ pre {
   --nepali-date-picker-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   --nepali-date-picker-cell-spacing-x: 2px;
   --nepali-date-picker-cell-spacing-y: 2px;
+  --nepali-date-picker-popover-z-index: 20;
 }
 
 .nepali-date-picker--inline {
@@ -618,10 +938,12 @@ pre {
 }
 
 .nepali-date-picker__input-shell {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
+  display: flex;
+  gap: 2px;
   align-items: center;
   min-height: 44px;
+  padding-left: 6px;
+  padding-right: 6px;
   border: 1px solid var(--nepali-date-picker-input-border);
   border-radius: var(--nepali-date-picker-input-radius);
   background: var(--nepali-date-picker-input-bg);
@@ -629,6 +951,7 @@ pre {
 }
 
 .nepali-date-picker__input {
+  flex: 1;
   width: 100%;
   min-height: 42px;
   border: 0;
@@ -657,11 +980,10 @@ pre {
 .nepali-date-picker__clear-button {
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
+  width: 28px;
+  height: 28px;
   margin-right: 0;
   border: 0;
-  border-left: 1px solid color-mix(in srgb, var(--nepali-date-picker-input-border) 85%, #ffffff);
   border-radius: 0;
   color: var(--muted);
   background: transparent;
@@ -679,7 +1001,7 @@ pre {
 
 .nepali-date-picker__popper {
   position: absolute;
-  z-index: 20;
+  z-index: var(--nepali-date-picker-popover-z-index);
   top: calc(100% + 6px);
   left: 0;
   width: min(
@@ -936,7 +1258,7 @@ pre {
 
 .nepali-time-picker__dropdown {
   position: absolute;
-  z-index: 30;
+  z-index: var(--nepali-date-picker-popover-z-index);
   top: calc(100% + 8px);
   left: 0;
   border: 1px solid var(--nepali-date-picker-calendar-border);
@@ -1046,6 +1368,8 @@ pre {
   padding: 0 4px;
 }
 
+/* ===== Holiday & weekend demo styles ===== */
+
 .docsHolidayAccent {
   color: var(--red);
   font-weight: 700;
@@ -1083,6 +1407,8 @@ pre {
   box-shadow: inset 0 0 0 1px #cf3f34;
 }
 
+/* ===== Styled demo ===== */
+
 .docsStyledCalendar {
   background:
     linear-gradient(180deg, rgba(255, 249, 241, 0.92), rgba(255, 253, 248, 0.96)),
@@ -1105,6 +1431,8 @@ pre {
   box-shadow: 0 10px 22px rgba(201, 112, 18, 0.22);
 }
 
+/* ===== Responsive ===== */
+
 @media (max-width: 980px) {
   .docsShell {
     grid-template-columns: 1fr;
@@ -1124,13 +1452,8 @@ pre {
   }
 
   .content {
-    width: min(100% - 28px, 1080px);
-    padding-top: 34px;
-  }
-
-  .heroStats,
-  .calloutGrid {
-    grid-template-columns: 1fr;
+    width: min(100% - 28px, 960px);
+    padding-top: 32px;
   }
 
   .docsInlinePlayground {
@@ -1144,16 +1467,33 @@ pre {
 }
 
 @media (max-width: 640px) {
+  .pageHeader {
+    flex-direction: column;
+  }
+
   .pageHeader h1 {
-    font-size: 44px;
+    font-size: 26px;
   }
 
   .docsSection {
     padding-top: 40px;
   }
 
-  .demoStage,
-  .calloutGrid article {
-    padding: 22px;
+  .demoStage {
+    padding: 20px;
+  }
+
+  .playgroundPreview {
+    padding: 18px;
+  }
+
+  .installRow {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+  }
+
+  .installLabel {
+    width: auto;
   }
 }

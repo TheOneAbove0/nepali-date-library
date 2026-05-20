@@ -572,6 +572,7 @@ export function DateTimePicker({
   return (
     <DatePickerInput
       {...dateProps}
+      shouldCloseOnSelect={false}
       typeable={resolvedTypeable}
       value={currentValue.date}
       onChange={handleDateChange}
@@ -580,6 +581,8 @@ export function DateTimePicker({
           <TimePicker
             className={timePickerProps?.className ?? 'nepali-date-time-picker__time'}
             description={timePickerProps?.description}
+            disabled={dateProps.disabled}
+            readOnly={dateProps.readOnly}
             format={resolvedFormat}
             label={resolvedTimeLabel}
             mt={timePickerProps?.mt}

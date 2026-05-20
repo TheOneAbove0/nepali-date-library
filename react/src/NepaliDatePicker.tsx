@@ -1,8 +1,9 @@
 import { CalendarView } from './NepaliDatePickerCalendar';
-import { ChevronDownIcon, ClearIcon } from './NepaliDatePicker.icons';
+import { ClearIcon } from './NepaliDatePicker.icons';
 import { PickerInputControl } from './NepaliDatePickerInput';
 import type {
   CalendarProps,
+  ClearSectionMode,
   DateInputProps,
   DatePickerInputProps,
   DatePickerProps,
@@ -31,6 +32,7 @@ import { useNepaliDatePickerController } from './useNepaliDatePickerController';
 
 export type {
   CalendarProps,
+  ClearSectionMode,
   DateInputProps,
   DatePickerInputProps,
   DatePickerProps,
@@ -57,6 +59,12 @@ export type {
 
 export function NepaliDatePicker(props: NepaliDatePickerProps) {
   const controller = useNepaliDatePickerController(props);
+  const shouldRenderLeftSection = Boolean(props.leftSection);
+  const clearSectionMode: ClearSectionMode = props.clearSectionMode ?? 'both';
+  const shouldRenderClearButton =
+    clearSectionMode !== 'rightSection' && controller.isClearable && controller.selectedDate;
+  const rightSectionContent = props.rightSection;
+  const shouldRenderRightSection = clearSectionMode !== 'clear' && Boolean(rightSectionContent);
 
   const calendar = (
     <CalendarView
@@ -145,16 +153,7 @@ export function NepaliDatePicker(props: NepaliDatePickerProps) {
         className={getSlotClassName(props, 'inputShell', 'nepali-date-picker__input-shell')}
         style={getSlotStyle(props, 'inputShell')}
       >
-        <PickerInputControl
-          inputValue={controller.inputValue}
-          isInputTypeable={controller.isInputTypeable}
-          onInputBlur={controller.onInputBlur}
-          onInputKeyDown={controller.onInputKeyDown}
-          onInputValueChange={controller.onInputValueChange}
-          openCalendar={controller.openCalendar}
-          props={props}
-        />
-        {(props.showIcon || controller.pickerType !== 'date') && (
+        {shouldRenderLeftSection && (
           <button
             aria-label="Open calendar"
             className={getSlotClassName(props, 'iconButton', 'nepali-date-picker__icon-button')}
@@ -165,14 +164,19 @@ export function NepaliDatePicker(props: NepaliDatePickerProps) {
             style={getSlotStyle(props, 'iconButton')}
             type="button"
           >
-            {typeof props.icon === 'string' ? (
-              <span aria-hidden="true" className={props.icon} />
-            ) : (
-              (props.icon ?? <ChevronDownIcon />)
-            )}
+            {props.leftSection}
           </button>
         )}
-        {controller.isClearable && controller.selectedDate && (
+        <PickerInputControl
+          inputValue={controller.inputValue}
+          isInputTypeable={controller.isInputTypeable}
+          onInputBlur={controller.onInputBlur}
+          onInputKeyDown={controller.onInputKeyDown}
+          onInputValueChange={controller.onInputValueChange}
+          openCalendar={controller.openCalendar}
+          props={props}
+        />
+        {shouldRenderClearButton && (
           <button
             aria-label="Clear selected date"
             className={getSlotClassName(props, 'clearButton', 'nepali-date-picker__clear-button')}
@@ -182,6 +186,20 @@ export function NepaliDatePicker(props: NepaliDatePickerProps) {
             type="button"
           >
             <ClearIcon />
+          </button>
+        )}
+        {shouldRenderRightSection && (
+          <button
+            aria-label="Open calendar"
+            className={getSlotClassName(props, 'iconButton', 'nepali-date-picker__icon-button')}
+            disabled={props.disabled || props.readOnly}
+            onClick={
+              props.toggleCalendarOnIconClick ? controller.toggleCalendar : controller.openCalendar
+            }
+            style={getSlotStyle(props, 'iconButton')}
+            type="button"
+          >
+            {rightSectionContent}
           </button>
         )}
       </div>

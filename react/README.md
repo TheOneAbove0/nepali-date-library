@@ -15,6 +15,7 @@ npm i nepali-date-library-react nepali-date-library react react-dom
 ## Usage
 
 ```tsx
+import { CalendarDays, ChevronDown } from 'lucide-react';
 import { DatePickerInput } from 'nepali-date-library-react';
 import { useState } from 'react';
 
@@ -25,7 +26,8 @@ export function App() {
     <DatePickerInput
       label="Pick date"
       placeholderText="Pick date"
-      showIcon
+      leftSection={<CalendarDays size={16} />}
+      rightSection={<ChevronDown size={16} />}
       value={value}
       onChange={setValue}
       min="2082-01-01"
@@ -91,8 +93,10 @@ Common customization props:
 - `monthNames`
 - `weekdayNames`
 - `weekdayShortNames`
-- `showIcon`
+- `leftSection`
+- `rightSection`
 - `clearable` / `isClearable`
+- `clearSectionMode` (`"both" | "rightSection" | "clear"`)
 - `includeDates`
 - `excludeDates`
 - `holidays`
@@ -104,13 +108,17 @@ Common customization props:
 - `numeralSystem`
 
 ```tsx
+import { CalendarDays, ChevronDown } from 'lucide-react';
+
 <DatePickerInput
   value={value}
   onChange={setValue}
   label="Holiday dates"
   placeholderText="Pick date"
-  showIcon
+  leftSection={<CalendarDays size={16} />}
+  rightSection={<ChevronDown size={16} />}
   clearable
+  clearSectionMode="both"
   holidays={[
     { date: '2083-01-01', label: 'New year', className: 'holiday-accent' },
     { date: '2083-01-15', label: 'Office closed', disabled: true },

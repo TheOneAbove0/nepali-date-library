@@ -9,22 +9,8 @@ export const sampleAd = '2026-05-13';
 export const sampleBs = toBS(sampleAd);
 
 export const sharedPickerProps = {
-  monthNames: [
-    'Baisakh',
-    'Jestha',
-    'Ashadh',
-    'Shrawan',
-    'Bhadra',
-    'Ashwin',
-    'Kartik',
-    'Mangsir',
-    'Poush',
-    'Magh',
-    'Falgun',
-    'Chaitra',
-  ],
-  weekdayShortNames: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-} as const;
+  numeralSystem: 'nepali' as const,
+};
 
 export const brandedVariables: NepaliDatePickerVariables = {
   '--nepali-date-picker-accent': '#c97012',

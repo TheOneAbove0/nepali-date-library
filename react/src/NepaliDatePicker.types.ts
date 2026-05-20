@@ -40,6 +40,7 @@ export type NepaliDatePickerLevel = 'day' | 'month' | 'year';
 export type NepaliDatePickerSelectionType = 'default' | 'range';
 export type NepaliNumeralSystem = 'latin' | 'nepali';
 export type NepaliDatePickerSize = 'sm' | 'md' | 'lg' | 'xl' | number;
+export type ClearSectionMode = 'both' | 'rightSection' | 'clear';
 export type NepaliDatePickerSlot =
   | 'root'
   | 'label'
@@ -152,8 +153,9 @@ export interface NepaliDatePickerProps {
   pickerType?: NepaliDatePickerType;
   numeralSystem?: NepaliNumeralSystem;
   dateFormat?: DateFormatter;
-  showIcon?: boolean;
-  icon?: ReactNode;
+  leftSection?: ReactNode;
+  rightSection?: ReactNode;
+  clearSectionMode?: ClearSectionMode;
   toggleCalendarOnIconClick?: boolean;
   customInput?: ReactElement<NepaliDatePickerCustomInputProps>;
   style?: StyleObject;
