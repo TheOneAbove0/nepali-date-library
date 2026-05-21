@@ -179,7 +179,12 @@ export function findFirstSelectableDateInMonth(
   month: number,
   isDateDisabled: (date: BsDate) => boolean,
 ): BsDate | null {
-  for (let day = 1; day <= daysInMonth(year, month); day += 1) {
+  const monthDayCount = getSupportedDaysInMonth(year, month);
+  if (monthDayCount === null) {
+    return null;
+  }
+
+  for (let day = 1; day <= monthDayCount; day += 1) {
     const date = { year, month, day };
     if (!isDateDisabled(date)) {
       return date;
@@ -303,6 +308,18 @@ export function normalizeYearMonth(year: number, month: number): Pick<BsDate, 'y
   }
 
   return { year: nextYear, month: nextMonth };
+}
+
+export function getSupportedDaysInMonth(year: number, month: number): number | null {
+  try {
+    return daysInMonth(year, month);
+  } catch {
+    return null;
+  }
+}
+
+export function isYearSupportedByData(year: number): boolean {
+  return getSupportedDaysInMonth(year, 1) !== null;
 }
 
 export function getRootStyle(props: NepaliDatePickerProps): StyleObject | undefined {

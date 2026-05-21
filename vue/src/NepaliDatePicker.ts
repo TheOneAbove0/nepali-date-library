@@ -16,7 +16,21 @@ const MONTH_NAMES = [
   'फाल्गुन',
   'चैत',
 ];
+const NAVIGATION_KEYS = new Set([
+  'ArrowLeft',
+  'ArrowRight',
+  'ArrowUp',
+  'ArrowDown',
+  'Home',
+  'End',
+  'PageUp',
+  'PageDown',
+]);
 
+/**
+ * A basic Vue 3 wrapper for the Nepali Date Library core datepicker state.
+ * This component provides a raw, unstyled grid to pick dates.
+ */
 export const NepaliDatePicker = defineComponent({
   name: 'NepaliDatePicker',
   props: {
@@ -48,16 +62,16 @@ export const NepaliDatePicker = defineComponent({
   emits: ['update:modelValue', 'change'],
   setup(props, { emit }) {
     const picker = useNepaliDatePicker({
-      modelValue: props.modelValue,
-      defaultValue: props.defaultValue,
-      min: props.min,
-      max: props.max,
-      weekStartsOn: props.weekStartsOn,
-      isDateDisabled: props.isDateDisabled,
+      modelValue: () => props.modelValue,
+      defaultValue: () => props.defaultValue,
+      min: () => props.min,
+      max: () => props.max,
+      weekStartsOn: () => props.weekStartsOn,
+      isDateDisabled: () => props.isDateDisabled,
     });
 
     const selectDate = (date: BsDate): void => {
-      if (props.isDateDisabled && props.isDateDisabled(date)) {
+      if (picker.isDisabled(date)) {
         return;
       }
 
@@ -98,18 +112,11 @@ export const NepaliDatePicker = defineComponent({
                         },
                         onKeydown: (event: KeyboardEvent) => {
                           const key = event.key;
-                          if (
-                            key === 'ArrowLeft' ||
-                            key === 'ArrowRight' ||
-                            key === 'ArrowUp' ||
-                            key === 'ArrowDown' ||
-                            key === 'Home' ||
-                            key === 'End' ||
-                            key === 'PageUp' ||
-                            key === 'PageDown'
-                          ) {
+                          if (NAVIGATION_KEYS.has(key)) {
                             event.preventDefault();
-                            picker.navigate(key, { shiftKey: event.shiftKey });
+                            picker.navigate(key as Parameters<typeof picker.navigate>[0], {
+                              shiftKey: event.shiftKey,
+                            });
                           }
 
                           if ((key === 'Enter' || key === ' ') && !cell.isDisabled) {

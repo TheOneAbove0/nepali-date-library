@@ -154,7 +154,7 @@ function getTypedCursorPart(
   const end = Math.min(Math.max(cursorPosition, 0), value.length);
 
   for (let index = 0; index < end; index += 1) {
-    const char = value[index];
+    const char = value[index] ?? '';
     if (/[-/.]/.test(char)) {
       partIndex += 1;
       digitOffset = 0;
@@ -187,7 +187,7 @@ function normalizeTypedParts(
   const parts: string[] = [];
 
   for (let index = 0; index < pendingParts.length; index += 1) {
-    const maxLength = partLengths[index];
+    const maxLength = partLengths[index] ?? 2;
     const digits = extractDigits(pendingParts[index] ?? '');
 
     if (

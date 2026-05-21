@@ -26,3 +26,14 @@ const picker = new NepaliDatePicker('#date-picker', {
 picker.setValue('2083-02-01');
 picker.destroy();
 ```
+
+## Wrapper Boundary
+
+`nepali-date-library-vanilla` is a DOM adapter only:
+
+- calendar state is created via `createDatePickerState()`
+- month cells are derived via `generateMonthGrid()`
+- keyboard movement uses `navigateByKey()`
+- min/max/disabled checks are delegated to core constraints
+
+No conversion logic is duplicated in this package.

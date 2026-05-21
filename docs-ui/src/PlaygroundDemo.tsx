@@ -11,15 +11,44 @@ import { useNumeralSystem } from './NumeralSystemContext';
 function PlaygroundTabContent({ tab }: { tab: PlaygroundTab }) {
   const [value, setValue] = useState(tab.defaultValue);
   const { numeralSystem } = useNumeralSystem();
+  const [disabled, setDisabled] = useState(false);
+  const [readOnly, setReadOnly] = useState(false);
 
   return (
     <>
       <div className="playgroundPreview">
         <p className="playgroundDesc">{tab.description}</p>
 
+        <div
+          style={{
+            display: 'flex',
+            gap: '16px',
+            marginBottom: '16px',
+            fontSize: '14px',
+            color: 'var(--nepali-date-picker-text)',
+          }}
+        >
+          <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
+            <input
+              type="checkbox"
+              checked={disabled}
+              onChange={(e) => setDisabled(e.target.checked)}
+            />
+            Disabled
+          </label>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
+            <input
+              type="checkbox"
+              checked={readOnly}
+              onChange={(e) => setReadOnly(e.target.checked)}
+            />
+            Read Only
+          </label>
+        </div>
+
         <div className="playgroundDemoArea">
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          {tab.render(value as never, setValue as any, numeralSystem)}
+          {tab.render(value as never, setValue as any, numeralSystem, disabled, readOnly)}
         </div>
 
         <div className="playgroundValue">

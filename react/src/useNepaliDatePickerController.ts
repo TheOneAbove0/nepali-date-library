@@ -126,15 +126,25 @@ export function useNepaliDatePickerController(
 
   const selectedDate =
     selectionType === 'range' ? (rangeDraft[1] ?? rangeDraft[0]) : picker.state.selectedDate;
-  const displayValue = useMemo(
-    () =>
-      selectionType === 'range'
-        ? formatRangeValue(rangeDraft, pickerType, props.dateFormat, numeralSystem)
-        : selectedDate
-          ? formatPickerValue(selectedDate, pickerType, props.dateFormat, numeralSystem)
-          : '',
-    [numeralSystem, pickerType, props.dateFormat, rangeDraft, selectedDate, selectionType],
-  );
+  const displayValue = useMemo(() => {
+    if (props.valueFormatter) {
+      return props.valueFormatter(selectionType === 'range' ? rangeDraft : (selectedDate ?? null));
+    }
+
+    return selectionType === 'range'
+      ? formatRangeValue(rangeDraft, pickerType, props.dateFormat, numeralSystem)
+      : selectedDate
+        ? formatPickerValue(selectedDate, pickerType, props.dateFormat, numeralSystem)
+        : '';
+  }, [
+    numeralSystem,
+    pickerType,
+    props.dateFormat,
+    props.valueFormatter,
+    rangeDraft,
+    selectedDate,
+    selectionType,
+  ]);
   const isInputTypeable =
     Boolean(props.typeable) && selectionType === 'default' && !inline && !disabled && !readOnly;
 

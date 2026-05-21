@@ -71,15 +71,11 @@ function AppInner() {
             <button
               aria-label={`Switch numerals to ${numeralSystem === 'nepali' ? 'Latin (English)' : 'Nepali (देवनागरी)'}`}
               className="numeralToggle"
-              onClick={() =>
-                setNumeralSystem(numeralSystem === 'nepali' ? 'latin' : 'nepali')
-              }
+              onClick={() => setNumeralSystem(numeralSystem === 'nepali' ? 'latin' : 'nepali')}
               title={`Currently: ${numeralSystem === 'nepali' ? 'नेपाली' : 'English'} numerals`}
               type="button"
             >
-              <span className="numeralToggleLabel">
-                {numeralSystem === 'nepali' ? 'क' : 'A'}
-              </span>
+              <span className="numeralToggleLabel">{numeralSystem === 'nepali' ? 'क' : 'A'}</span>
               <span className="numeralToggleHint">
                 {numeralSystem === 'nepali' ? 'नेपाली' : 'English'}
               </span>

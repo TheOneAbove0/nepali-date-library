@@ -1,4 +1,5 @@
 export type { AdDate, AdDateInput, BsDate, BsDateInput, DevanagariDateParts } from './types';
+export { BS_MAX_YEAR, BS_YEAR_ZERO } from './data';
 
 export { parseAdDate, parseBsDate } from './parsers';
 export { isValidBsDate } from './validators';

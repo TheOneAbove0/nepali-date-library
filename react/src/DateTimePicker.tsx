@@ -11,65 +11,110 @@ import {
   type ReactNode,
 } from 'react';
 import { DatePickerInput } from './NepaliDatePicker';
-import { ClockIcon } from './NepaliDatePicker.icons';
-import type { NepaliDatePickerProps, NepaliDatePickerValue } from './NepaliDatePicker.types';
-import { joinClassNames } from './NepaliDatePicker.utils';
+import { ClockIcon, CheckIcon } from './NepaliDatePicker.icons';
+import { normalizeNumerals } from './NepaliDatePicker.typeable';
+import type {
+  NepaliDatePickerProps,
+  NepaliDatePickerValue,
+  NepaliNumeralSystem,
+} from './NepaliDatePicker.types';
+import { formatNumericString, joinClassNames, formatPickerValue } from './NepaliDatePicker.utils';
 
+/** Supported time formats. */
 export type TimeFormat = '12h' | '24h';
 
+/** Props for the base TimeInput component. */
 export interface TimeInputProps {
+  /** The controlled time value (e.g. "14:30"). */
   value?: string;
+  /** The uncontrolled default time value. */
   defaultValue?: string;
+  /** Callback fired when the input changes. */
   onChange?: (value: string, event: ChangeEvent<HTMLInputElement>) => void;
+  /** Label for the time input. */
   label?: ReactNode;
+  /** Description text displayed below the label. */
   description?: ReactNode;
+  /** Placeholder text. */
   placeholder?: string;
+  /** Disables the input. */
   disabled?: boolean;
+  /** Makes the input read-only. */
   readOnly?: boolean;
+  /** Minimum selectable time. */
   min?: string;
+  /** Maximum selectable time. */
   max?: string;
+  /** Step increment for the time input (in seconds). */
   step?: number;
+  /** Whether to show and allow selecting seconds. */
   withSeconds?: boolean;
+  /** Whether to show a button that opens a time picker dropdown. */
   showPickerButton?: boolean;
+  /** Class name for the root element. */
   className?: string;
+  /** Class name for the input element. */
   inputClassName?: string;
+  /** Numeral system used for display: 'latin' (0-9) or 'nepali' (०-९). */
+  numeralSystem?: NepaliNumeralSystem;
 }
 
+/** Props for the TimePicker dropdown component. */
 export interface TimePickerProps {
+  /** The controlled time value. */
   value?: string;
+  /** The uncontrolled default time value. */
   defaultValue?: string;
+  /** Callback fired when the time changes. */
   onChange?: (value: string) => void;
+  /** Label for the picker. */
   label?: ReactNode;
+  /** Description text. */
   description?: ReactNode;
+  /** Disables the picker. */
   disabled?: boolean;
+  /** Makes the picker read-only. */
   readOnly?: boolean;
+  /** Time format: 12-hour or 24-hour. */
   format?: TimeFormat;
+  /** Whether to include a seconds column. */
   withSeconds?: boolean;
+  /** Whether to render the picker inside a dropdown/popover. */
   withDropdown?: boolean;
+  /** Margin top spacing. */
   mt?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | number;
+  /** Class name for the root element. */
   className?: string;
+  /** Numeral system used for display. */
+  numeralSystem?: NepaliNumeralSystem;
 }
 
+/** Output value emitted by DateTimePicker. */
 export interface DateTimeValue {
+  /** The selected BS date. */
   date: BsDate | null;
+  /** The selected time string (e.g. "14:30"). */
   time: string;
 }
 
-export type DateTimeInputValue =
-  | {
-      date?: BsDateInput | null;
-      time?: string | null;
-    }
-  | null;
+/** Input value accepted by DateTimePicker. */
+export type DateTimeInputValue = {
+  date?: BsDateInput | null;
+  time?: string | null;
+} | null;
 
-export interface DateTimePickerProps
-  extends Omit<
-    NepaliDatePickerProps,
-    'pickerType' | 'type' | 'value' | 'defaultValue' | 'selected' | 'onChange'
-  > {
+/** Properties for the combined Date and Time Picker component. */
+export interface DateTimePickerProps extends Omit<
+  NepaliDatePickerProps,
+  'pickerType' | 'type' | 'value' | 'defaultValue' | 'selected' | 'onChange'
+> {
+  /** The controlled date and time value. */
   value?: DateTimeInputValue;
+  /** The uncontrolled default date and time value. */
   defaultValue?: DateTimeInputValue;
+  /** Callback fired when the date or time changes. */
   onChange?: (value: DateTimeValue) => void;
+  /** Specific props to pass down to the inner TimePicker. */
   timePickerProps?: {
     format?: TimeFormat;
     withSeconds?: boolean;
@@ -81,9 +126,13 @@ export interface DateTimePickerProps
     popoverProps?: {
       withinPortal?: boolean;
     };
+    numeralSystem?: NepaliNumeralSystem;
   };
+  /** Alias for `timePickerProps.format`. */
   timeFormat?: TimeFormat;
+  /** Alias for `timePickerProps.withSeconds`. */
   withSeconds?: boolean;
+  /** Alias for `timePickerProps.label`. */
   timeLabel?: ReactNode;
 }
 
@@ -186,6 +235,7 @@ export function TimePicker({
   withDropdown = false,
   mt,
   className,
+  numeralSystem = 'latin',
 }: TimePickerProps) {
   const [uncontrolledValue, setUncontrolledValue] = useState<string>(() => {
     if (!defaultValue?.trim()) {
@@ -293,16 +343,19 @@ export function TimePicker({
   };
 
   const onMeridiemChange = (nextMeridiem: 'AM' | 'PM'): void => {
-    commit(formatTime24(from12h(hour12, nextMeridiem), parsed.minutes, parsed.seconds, withSeconds));
+    commit(
+      formatTime24(from12h(hour12, nextMeridiem), parsed.minutes, parsed.seconds, withSeconds),
+    );
   };
 
-  const displayValue = formatTimeDisplay(hasValue, parsed, format, withSeconds);
+  const displayValue = formatTimeDisplay(hasValue, parsed, format, withSeconds, numeralSystem);
   const selectedHours = hasValue ? (format === '12h' ? hour12 : parsed.hours24) : null;
   const selectedMinutes = hasValue ? parsed.minutes : null;
   const selectedSeconds = hasValue ? parsed.seconds : null;
   const selectedMeridiem = hasValue ? meridiem : null;
   const hoursOptions = createHourOptions(format);
   const minuteSecondOptions = createMinuteSecondOptions();
+  const padNs = (v: number): string => formatNumericString(pad(v), numeralSystem);
 
   return (
     <div
@@ -358,7 +411,7 @@ export function TimePicker({
                         onClick={() => onHoursChange(String(option))}
                         type="button"
                       >
-                        {pad(option)}
+                        {padNs(option)}
                       </button>
                     );
                   })}
@@ -384,7 +437,7 @@ export function TimePicker({
                         onClick={() => onMinutesChange(String(option))}
                         type="button"
                       >
-                        {pad(option)}
+                        {padNs(option)}
                       </button>
                     );
                   })}
@@ -411,7 +464,7 @@ export function TimePicker({
                           onClick={() => onSecondsChange(String(option))}
                           type="button"
                         >
-                          {pad(option)}
+                          {padNs(option)}
                         </button>
                       );
                     })}
@@ -440,7 +493,7 @@ export function TimePicker({
                           onClick={() => onMeridiemChange(option)}
                           type="button"
                         >
-                          {option}
+                          {formatMeridiemLabel(option, numeralSystem)}
                         </button>
                       );
                     })}
@@ -452,52 +505,40 @@ export function TimePicker({
         </div>
       ) : (
         <div className="nepali-time-picker__row">
-          <select
+          <TimeSegmentInput
             aria-label="Hours"
-            className="nepali-time-picker__select"
             disabled={disabled || readOnly}
-            onChange={(event) => onHoursChange(event.currentTarget.value)}
-            value={format === '12h' ? String(hour12) : String(parsed.hours24)}
-          >
-            {createHourOptions(format).map((option) => (
-              <option key={option} value={option}>
-                {pad(option)}
-              </option>
-            ))}
-          </select>
+            max={format === '12h' ? 12 : 23}
+            min={format === '12h' ? 1 : 0}
+            numeralSystem={numeralSystem}
+            onCommit={onHoursChange}
+            value={format === '12h' ? hour12 : parsed.hours24}
+          />
 
           <span className="nepali-time-picker__separator">:</span>
 
-          <select
+          <TimeSegmentInput
             aria-label="Minutes"
-            className="nepali-time-picker__select"
             disabled={disabled || readOnly}
-            onChange={(event) => onMinutesChange(event.currentTarget.value)}
-            value={String(parsed.minutes)}
-          >
-            {createMinuteSecondOptions().map((option) => (
-              <option key={option} value={option}>
-                {pad(option)}
-              </option>
-            ))}
-          </select>
+            max={59}
+            min={0}
+            numeralSystem={numeralSystem}
+            onCommit={onMinutesChange}
+            value={parsed.minutes}
+          />
 
           {withSeconds && (
             <>
               <span className="nepali-time-picker__separator">:</span>
-              <select
+              <TimeSegmentInput
                 aria-label="Seconds"
-                className="nepali-time-picker__select"
                 disabled={disabled || readOnly}
-                onChange={(event) => onSecondsChange(event.currentTarget.value)}
-                value={String(parsed.seconds)}
-              >
-                {createMinuteSecondOptions().map((option) => (
-                  <option key={option} value={option}>
-                    {pad(option)}
-                  </option>
-                ))}
-              </select>
+                max={59}
+                min={0}
+                numeralSystem={numeralSystem}
+                onCommit={onSecondsChange}
+                value={parsed.seconds}
+              />
             </>
           )}
 
@@ -509,13 +550,92 @@ export function TimePicker({
               onChange={(event) => onMeridiemChange(event.currentTarget.value as 'AM' | 'PM')}
               value={meridiem}
             >
-              <option value="AM">AM</option>
-              <option value="PM">PM</option>
+              <option value="AM">{formatMeridiemLabel('AM', numeralSystem)}</option>
+              <option value="PM">{formatMeridiemLabel('PM', numeralSystem)}</option>
             </select>
           )}
         </div>
       )}
     </div>
+  );
+}
+
+interface TimeSegmentInputProps {
+  'aria-label': string;
+  value: number;
+  min: number;
+  max: number;
+  disabled?: boolean;
+  numeralSystem: NepaliNumeralSystem;
+  onCommit: (value: string) => void;
+}
+
+function TimeSegmentInput({
+  'aria-label': ariaLabel,
+  value,
+  min,
+  max,
+  disabled,
+  numeralSystem,
+  onCommit,
+}: TimeSegmentInputProps) {
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState('');
+
+  const displayValue = formatNumericString(pad(value), numeralSystem);
+
+  return (
+    <input
+      aria-label={ariaLabel}
+      className="nepali-time-picker__input"
+      disabled={disabled}
+      inputMode="numeric"
+      maxLength={2}
+      onBlur={() => {
+        const raw = normalizeNumerals(draft).replace(/\D/g, '');
+        const n = Number(raw);
+        if (raw && !Number.isNaN(n)) {
+          onCommit(String(clamp(n, min, max)));
+        }
+        setEditing(false);
+      }}
+      onChange={(event) => {
+        const raw = normalizeNumerals(event.currentTarget.value).replace(/\D/g, '');
+        if (raw.length <= 2) {
+          setDraft(formatNumericString(raw, numeralSystem));
+          const n = Number(raw);
+          if (raw && !Number.isNaN(n)) {
+            onCommit(String(clamp(n, min, max)));
+          }
+        }
+      }}
+      onFocus={(event) => {
+        setEditing(true);
+        setDraft(displayValue);
+        requestAnimationFrame(() => event.target.select());
+      }}
+      onKeyDown={(event) => {
+        if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+          event.preventDefault();
+          const next =
+            event.key === 'ArrowUp'
+              ? value >= max
+                ? min
+                : value + 1
+              : value <= min
+                ? max
+                : value - 1;
+          onCommit(String(next));
+          setDraft(formatNumericString(pad(next), numeralSystem));
+        }
+        if (event.key === 'Enter') {
+          event.currentTarget.blur();
+        }
+      }}
+      placeholder={formatNumericString(pad(min), numeralSystem)}
+      type="text"
+      value={editing ? draft : displayValue}
+    />
   );
 }
 
@@ -534,15 +654,15 @@ export function DateTimePicker({
   const resolvedWithSeconds = timePickerProps?.withSeconds ?? withSeconds ?? false;
   const resolvedTimeLabel = timePickerProps?.label ?? timeLabel;
   const resolvedTypeable = dateProps.typeable ?? true;
+  const resolvedNumeralSystem: NepaliNumeralSystem =
+    timePickerProps?.numeralSystem ?? dateProps.numeralSystem ?? 'latin';
 
   const [uncontrolledValue, setUncontrolledValue] = useState<DateTimeValue>(() =>
     normalizeDateTimeValue(defaultValue, resolvedWithSeconds),
   );
 
   const currentValue =
-    value === undefined
-      ? uncontrolledValue
-      : normalizeDateTimeValue(value, resolvedWithSeconds);
+    value === undefined ? uncontrolledValue : normalizeDateTimeValue(value, resolvedWithSeconds);
 
   const commit = useCallback(
     (nextValue: DateTimeValue): void => {
@@ -569,15 +689,49 @@ export function DateTimePicker({
     });
   };
 
+  const valueFormatter = useCallback(
+    (v: NepaliDatePickerValue | null): string => {
+      if (!v) return '';
+      const singleDate = toSingleDate(v);
+      if (!singleDate) return '';
+      const dateStr = formatPickerValue(
+        singleDate,
+        'date',
+        dateProps.dateFormat,
+        resolvedNumeralSystem,
+      );
+      const parsed = parseTime(currentValue.time ?? '', resolvedWithSeconds);
+      const hasValue = Boolean(currentValue.time?.trim());
+      const timeStr = hasValue
+        ? formatTimeDisplay(
+            true,
+            parsed,
+            resolvedFormat,
+            resolvedWithSeconds,
+            resolvedNumeralSystem,
+          )
+        : '';
+      return timeStr ? `${dateStr} ${timeStr}` : dateStr;
+    },
+    [
+      currentValue.time,
+      dateProps.dateFormat,
+      resolvedFormat,
+      resolvedNumeralSystem,
+      resolvedWithSeconds,
+    ],
+  );
+
   return (
     <DatePickerInput
       {...dateProps}
       shouldCloseOnSelect={false}
       typeable={resolvedTypeable}
       value={currentValue.date}
+      valueFormatter={valueFormatter}
       onChange={handleDateChange}
-      children={
-        <>
+      children={({ closeCalendar }) => (
+        <div className="nepali-date-time-picker__footer">
           <TimePicker
             className={timePickerProps?.className ?? 'nepali-date-time-picker__time'}
             description={timePickerProps?.description}
@@ -586,14 +740,23 @@ export function DateTimePicker({
             format={resolvedFormat}
             label={resolvedTimeLabel}
             mt={timePickerProps?.mt}
+            numeralSystem={resolvedNumeralSystem}
             value={currentValue.time}
             withDropdown={timePickerProps?.withDropdown}
             withSeconds={resolvedWithSeconds}
             onChange={handleTimeChange}
           />
-          {children}
-        </>
-      }
+          <button
+            aria-label="Confirm time selection"
+            className="nepali-date-time-picker__submit"
+            onClick={closeCalendar}
+            type="button"
+          >
+            <CheckIcon />
+          </button>
+          {typeof children === 'function' ? children({ closeCalendar }) : children}
+        </div>
+      )}
     />
   );
 }
@@ -709,25 +872,45 @@ function formatTimeDisplay(
   parsed: ParsedTime,
   format: TimeFormat,
   withSeconds: boolean,
+  numeralSystem: NepaliNumeralSystem = 'latin',
 ): string {
+  const ns = (s: string): string => formatNumericString(s, numeralSystem);
+
   if (!hasValue) {
     if (format === '12h') {
-      return withSeconds ? '--:--:-- --' : '--:-- --';
+      return withSeconds ? `${ns('--')}:${ns('--')}:${ns('--')} --` : `${ns('--')}:${ns('--')} --`;
     }
 
-    return withSeconds ? '--:--:--' : '--:--';
+    return withSeconds ? `${ns('--')}:${ns('--')}:${ns('--')}` : `${ns('--')}:${ns('--')}`;
   }
 
   if (format === '12h') {
     const { hour12, meridiem } = to12h(parsed.hours24);
+    const meridiemLabel = formatMeridiemLabel(meridiem, numeralSystem);
     if (withSeconds) {
-      return `${pad(hour12)}:${pad(parsed.minutes)}:${pad(parsed.seconds)} ${meridiem}`;
+      return `${ns(pad(hour12))}:${ns(pad(parsed.minutes))}:${ns(pad(parsed.seconds))} ${meridiemLabel}`;
     }
 
-    return `${pad(hour12)}:${pad(parsed.minutes)} ${meridiem}`;
+    return `${ns(pad(hour12))}:${ns(pad(parsed.minutes))} ${meridiemLabel}`;
   }
 
-  return formatTime24(parsed.hours24, parsed.minutes, parsed.seconds, withSeconds);
+  const h = clamp(parsed.hours24, 0, 23);
+  const m = clamp(parsed.minutes, 0, 59);
+  const s = clamp(parsed.seconds, 0, 59);
+
+  if (withSeconds) {
+    return `${ns(pad(h))}:${ns(pad(m))}:${ns(pad(s))}`;
+  }
+
+  return `${ns(pad(h))}:${ns(pad(m))}`;
+}
+
+function formatMeridiemLabel(meridiem: 'AM' | 'PM', numeralSystem: NepaliNumeralSystem): string {
+  if (numeralSystem === 'nepali') {
+    return meridiem === 'AM' ? 'पूर्वाह्न' : 'अपराह्न';
+  }
+
+  return meridiem;
 }
 
 function resolveMarginTop(mt: TimePickerProps['mt']): number | undefined {
@@ -765,8 +948,7 @@ function scrollSelectedOptionIntoView(column: HTMLDivElement | null): void {
     return;
   }
 
-  const offset =
-    selected.offsetTop - column.clientHeight * 0.62 + selected.clientHeight / 2;
+  const offset = selected.offsetTop - column.clientHeight * 0.62 + selected.clientHeight / 2;
   const maxScroll = Math.max(0, column.scrollHeight - column.clientHeight);
   const target = Math.max(0, Math.min(maxScroll, offset));
 

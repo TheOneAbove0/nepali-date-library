@@ -3,10 +3,17 @@
   "private": true,
   "scripts": {
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
-    "prettier": "^3.6.2"
+    "@eslint/js": "^10.0.1",
+    "@typescript-eslint/eslint-plugin": "^8.59.4",
+    "@typescript-eslint/parser": "^8.59.4",
+    "eslint": "^10.4.0",
+    "prettier": "^3.6.2",
+    "typescript-eslint": "^8.59.4"
   },
   "dependencies": {
     "puppeteer": "^24.43.1"

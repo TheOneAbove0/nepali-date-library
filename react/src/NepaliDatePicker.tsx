@@ -9,21 +9,7 @@ import type {
   DatePickerProps,
   MonthPickerInputProps,
   MonthPickerProps,
-  NepaliDatePickerClassNames,
-  NepaliDatePickerCustomInputProps,
-  NepaliDatePickerDayNameProps,
-  NepaliDatePickerHeaderProps,
-  NepaliDateHoliday,
-  NepaliDateHolidayInput,
-  NepaliDatePickerLevel,
   NepaliDatePickerProps,
-  NepaliDatePickerSlot,
-  NepaliDatePickerStyles,
-  NepaliDatePickerSize,
-  NepaliDatePickerType,
-  NepaliDatePickerValue,
-  NepaliDatePickerVariables,
-  NepaliNumeralSystem,
   YearPickerInputProps,
   YearPickerProps,
 } from './NepaliDatePicker.types';
@@ -81,6 +67,7 @@ export function NepaliDatePicker(props: NepaliDatePickerProps) {
       props={props}
       rangeValue={controller.rangeDraft}
       selectionType={controller.selectionType}
+      closeCalendar={controller.closeCalendar}
     />
   );
 

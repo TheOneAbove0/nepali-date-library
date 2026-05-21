@@ -123,7 +123,7 @@ import { CalendarDays, ChevronDown } from 'lucide-react';
     { date: '2083-01-01', label: 'New year', className: 'holiday-accent' },
     { date: '2083-01-15', label: 'Office closed', disabled: true },
   ]}
-/>
+/>;
 ```
 
 Styling API:

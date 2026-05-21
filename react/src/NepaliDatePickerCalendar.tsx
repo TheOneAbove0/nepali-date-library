@@ -1,4 +1,4 @@
-import { daysInMonth, formatBsDate, type BsDate } from 'nepali-date-library';
+import { formatBsDate, type BsDate } from 'nepali-date-library';
 import type { MonthGridCell } from 'nepali-date-library/datepicker-core';
 import type { KeyboardEvent } from 'react';
 import type { UseNepaliDatePickerResult } from './useNepaliDatePicker';
@@ -25,8 +25,10 @@ import {
   formatNumericValue,
   getDecadeBounds,
   getOrderedWeekdays,
+  getSupportedDaysInMonth,
   getSlotClassName,
   getSlotStyle,
+  isYearSupportedByData,
   isDateWithinRange,
   isDecadeOutsideRange,
   isMonthOutsideRange,
@@ -53,6 +55,7 @@ interface CalendarViewProps {
   rangeValue: RangeValue;
   onSelectDate: (date: BsDate) => void;
   onChangeLevel: (level: NepaliDatePickerLevel) => void;
+  closeCalendar: () => void;
 }
 
 export function CalendarView({
@@ -69,6 +72,7 @@ export function CalendarView({
   rangeValue,
   onSelectDate,
   onChangeLevel,
+  closeCalendar,
 }: CalendarViewProps) {
   const monthNames = props.monthNames ?? MONTH_NAMES;
   const weekdayNames = props.weekdayNames ?? WEEKDAY_NAMES;
@@ -304,39 +308,41 @@ export function CalendarView({
           )}
           style={getSlotStyle(props, 'yearGrid')}
         >
-          {createDecadeYears(picker.state.viewYear).map((year) => {
-            const isSelected = isSameYear(picker.state.selectedDate, year);
-            const yearDisabled = !canSelectYear(year, isDateDisabled);
+          {createDecadeYears(picker.state.viewYear)
+            .filter((year) => isYearSupportedByData(year))
+            .map((year) => {
+              const isSelected = isSameYear(picker.state.selectedDate, year);
+              const yearDisabled = !canSelectYear(year, isDateDisabled);
 
-            return (
-              <button
-                className={joinClassNames(
-                  getSlotClassName(props, 'tile', 'nepali-date-picker__tile'),
-                  isSelected && 'nepali-date-picker__tile--selected',
-                  yearDisabled && 'nepali-date-picker__tile--disabled',
-                )}
-                data-disabled={yearDisabled || undefined}
-                data-level="year"
-                data-selected={isSelected || undefined}
-                disabled={disabled || yearDisabled}
-                key={year}
-                onClick={() =>
-                  handleYearPick({
-                    picker,
-                    pickerType,
-                    year,
-                    isDateDisabled,
-                    onSelectDate,
-                    onChangeLevel,
-                  })
-                }
-                style={getSlotStyle(props, 'tile')}
-                type="button"
-              >
-                {formatNumericValue(year, numeralSystem)}
-              </button>
-            );
-          })}
+              return (
+                <button
+                  className={joinClassNames(
+                    getSlotClassName(props, 'tile', 'nepali-date-picker__tile'),
+                    isSelected && 'nepali-date-picker__tile--selected',
+                    yearDisabled && 'nepali-date-picker__tile--disabled',
+                  )}
+                  data-disabled={yearDisabled || undefined}
+                  data-level="year"
+                  data-selected={isSelected || undefined}
+                  disabled={disabled || yearDisabled}
+                  key={year}
+                  onClick={() =>
+                    handleYearPick({
+                      picker,
+                      pickerType,
+                      year,
+                      isDateDisabled,
+                      onSelectDate,
+                      onChangeLevel,
+                    })
+                  }
+                  style={getSlotStyle(props, 'tile')}
+                  type="button"
+                >
+                  {formatNumericValue(year, numeralSystem)}
+                </button>
+              );
+            })}
         </div>
       )}
 
@@ -345,7 +351,9 @@ export function CalendarView({
           className={getSlotClassName(props, 'children', 'nepali-date-picker__children')}
           style={getSlotStyle(props, 'children')}
         >
-          {props.children}
+          {typeof props.children === 'function'
+            ? props.children({ closeCalendar })
+            : props.children}
         </div>
       )}
     </div>
@@ -386,18 +394,32 @@ function createHeaderProps({
       viewMonth: picker.state.viewMonth,
       monthName,
       decadeLabel,
-      decrease: () =>
-        picker.focusDate({
-          year: picker.state.viewYear - 1,
-          month: picker.state.viewMonth,
-          day: 1,
-        }),
-      increase: () =>
-        picker.focusDate({
-          year: picker.state.viewYear + 1,
-          month: picker.state.viewMonth,
-          day: 1,
-        }),
+      decrease: () => {
+        const targetYear = picker.state.viewYear - 1;
+        const fallbackDate = findFirstSelectableDateInYear(targetYear, isDateDisabled);
+        if (fallbackDate) {
+          picker.focusDate({
+            year: targetYear,
+            month: canSelectMonth(targetYear, picker.state.viewMonth, isDateDisabled)
+              ? picker.state.viewMonth
+              : fallbackDate.month,
+            day: 1,
+          });
+        }
+      },
+      increase: () => {
+        const targetYear = picker.state.viewYear + 1;
+        const fallbackDate = findFirstSelectableDateInYear(targetYear, isDateDisabled);
+        if (fallbackDate) {
+          picker.focusDate({
+            year: targetYear,
+            month: canSelectMonth(targetYear, picker.state.viewMonth, isDateDisabled)
+              ? picker.state.viewMonth
+              : fallbackDate.month,
+            day: 1,
+          });
+        }
+      },
       openMonthLevel: () => onChangeLevel('month'),
       openYearLevel: () => onChangeLevel('year'),
       changeYear: (year) => picker.focusDate({ year, month: picker.state.viewMonth, day: 1 }),
@@ -417,18 +439,44 @@ function createHeaderProps({
       viewMonth: picker.state.viewMonth,
       monthName,
       decadeLabel,
-      decrease: () =>
-        picker.focusDate({
-          year: picker.state.viewYear - DEFAULT_DECADE_SIZE,
-          month: picker.state.viewMonth,
-          day: 1,
-        }),
-      increase: () =>
-        picker.focusDate({
-          year: picker.state.viewYear + DEFAULT_DECADE_SIZE,
-          month: picker.state.viewMonth,
-          day: 1,
-        }),
+      decrease: () => {
+        const prevDecadeStart = decade.start - DEFAULT_DECADE_SIZE;
+        const validYears = createDecadeYears(prevDecadeStart).filter((y) =>
+          canSelectYear(y, isDateDisabled),
+        );
+        if (validYears.length > 0) {
+          const targetYear = validYears[validYears.length - 1] ?? picker.state.viewYear;
+          const fallbackDate = findFirstSelectableDateInYear(targetYear, isDateDisabled);
+          if (fallbackDate) {
+            picker.focusDate({
+              year: targetYear,
+              month: canSelectMonth(targetYear, picker.state.viewMonth, isDateDisabled)
+                ? picker.state.viewMonth
+                : fallbackDate.month,
+              day: 1,
+            });
+          }
+        }
+      },
+      increase: () => {
+        const nextDecadeStart = decade.start + DEFAULT_DECADE_SIZE;
+        const validYears = createDecadeYears(nextDecadeStart).filter((y) =>
+          canSelectYear(y, isDateDisabled),
+        );
+        if (validYears.length > 0) {
+          const targetYear = validYears[0] ?? picker.state.viewYear;
+          const fallbackDate = findFirstSelectableDateInYear(targetYear, isDateDisabled);
+          if (fallbackDate) {
+            picker.focusDate({
+              year: targetYear,
+              month: canSelectMonth(targetYear, picker.state.viewMonth, isDateDisabled)
+                ? picker.state.viewMonth
+                : fallbackDate.month,
+              day: 1,
+            });
+          }
+        }
+      },
       openMonthLevel: () => onChangeLevel('month'),
       openYearLevel: () => onChangeLevel('year'),
       changeYear: (year) => picker.focusDate({ year, month: picker.state.viewMonth, day: 1 }),
@@ -453,18 +501,30 @@ function createHeaderProps({
     increase: picker.goToNextMonth,
     openMonthLevel: () => (pickerType === 'year' ? onChangeLevel('year') : onChangeLevel('month')),
     openYearLevel: () => onChangeLevel('year'),
-    changeYear: (year) =>
+    changeYear: (year) => {
+      const monthDayCount = getSupportedDaysInMonth(year, picker.state.viewMonth);
+      if (monthDayCount === null) {
+        return;
+      }
+
       picker.focusDate({
         year,
         month: picker.state.viewMonth,
-        day: Math.min(picker.state.focusedDate.day, daysInMonth(year, picker.state.viewMonth)),
-      }),
-    changeMonth: (month) =>
+        day: Math.min(picker.state.focusedDate.day, monthDayCount),
+      });
+    },
+    changeMonth: (month) => {
+      const monthDayCount = getSupportedDaysInMonth(picker.state.viewYear, month);
+      if (monthDayCount === null) {
+        return;
+      }
+
       picker.focusDate({
         year: picker.state.viewYear,
         month,
-        day: Math.min(picker.state.focusedDate.day, daysInMonth(picker.state.viewYear, month)),
-      }),
+        day: Math.min(picker.state.focusedDate.day, monthDayCount),
+      });
+    },
     prevButtonDisabled:
       disabled ||
       isMonthOutsideRange(picker.state.viewYear, picker.state.viewMonth - 1, isDateDisabled),

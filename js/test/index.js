@@ -126,6 +126,14 @@ describe('nepali-date-library', function () {
     it('should return false for invalid BS date', function () {
       assert.equal(bs.isValidBsDate('2083-13-01'), false);
     });
+
+    it('should support verified BS data through 2200', function () {
+      assert.equal(bs.BS_MAX_YEAR, 2200);
+      assert.equal(bs.daysInMonth(2200, 12), 29);
+      assert.equal(bs.isValidBsDate('2200-12-29'), true);
+      assert.equal(bs.isValidBsDate('2200-12-30'), false);
+      assert.equal(bs.isValidBsDate('2201-01-01'), false);
+    });
   });
 
   describe('#formatBsDate()', function () {

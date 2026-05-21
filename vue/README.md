@@ -35,3 +35,14 @@ createApp(App).mount('#app');
 ## Note
 
 All grid/navigation/constraint logic is delegated to `nepali-date-library/datepicker-core`.
+
+## Wrapper Boundary
+
+`nepali-date-library-vue` only adapts Vue events/reactivity and rendering:
+
+- state creation and normalization come from `createDatePickerState()`
+- grid generation comes from `generateMonthGrid()`
+- keyboard navigation comes from `navigateByKey()`
+- date constraints/disabled rules come from core constraint utilities
+
+No BS conversion math or calendar algorithms are implemented in this wrapper.

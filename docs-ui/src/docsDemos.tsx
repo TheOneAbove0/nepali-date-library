@@ -7,12 +7,7 @@ import {
 import { CalendarDays, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { formatBsDateNepali, type BsDate } from 'nepali-date-library';
-import {
-  brandedStyles,
-  brandedVariables,
-  sampleBs,
-  toSingleDate,
-} from './docsShared';
+import { brandedStyles, brandedVariables, sampleBs, toSingleDate } from './docsShared';
 import { useNumeralSystem } from './NumeralSystemContext';
 
 /* ------------------------------------------------------------------ */
@@ -46,9 +41,22 @@ export function HolidayDemo() {
     <DatePickerInput
       numeralSystem={numeralSystem}
       holidays={[
-        { date: { year: 2083, month: 1, day: 1 }, label: 'New year', className: 'docsHolidayAccent' },
-        { date: { year: 2083, month: 1, day: 15 }, label: 'Office closed', className: 'docsHolidayAccent', disabled: true },
-        { date: { year: 2083, month: 1, day: 23 }, label: 'Festival release', className: 'docsHolidayMuted' },
+        {
+          date: { year: 2083, month: 1, day: 1 },
+          label: 'New year',
+          className: 'docsHolidayAccent',
+        },
+        {
+          date: { year: 2083, month: 1, day: 15 },
+          label: 'Office closed',
+          className: 'docsHolidayAccent',
+          disabled: true,
+        },
+        {
+          date: { year: 2083, month: 1, day: 23 },
+          label: 'Festival release',
+          className: 'docsHolidayMuted',
+        },
       ]}
       leftSection={icons.left}
       label="Holiday dates"
@@ -142,8 +150,18 @@ export function CustomHeaderDemo() {
 }
 
 const englishMonthNames = [
-  'Baisakh', 'Jestha', 'Asar', 'Shrawan', 'Bhadra', 'Ashwin',
-  'Kartik', 'Mangsir', 'Poush', 'Magh', 'Falgun', 'Chaitra',
+  'Baisakh',
+  'Jestha',
+  'Asar',
+  'Shrawan',
+  'Bhadra',
+  'Ashwin',
+  'Kartik',
+  'Mangsir',
+  'Poush',
+  'Magh',
+  'Falgun',
+  'Chaitra',
 ] as const;
 
 const englishWeekdayShort = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'] as const;
@@ -277,12 +295,7 @@ function Demo() {
         )}
       </div>
 
-      <DatePicker
-        numeralSystem={numeralSystem}
-        size={size}
-        value={value}
-        onChange={handleChange}
-      />
+      <DatePicker numeralSystem={numeralSystem} size={size} value={value} onChange={handleChange} />
     </div>
   );
 }

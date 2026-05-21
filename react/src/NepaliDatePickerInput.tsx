@@ -97,7 +97,8 @@ function removePreviousSeparator(
     return null;
   }
 
-  if (!/[-/.]/.test(input.value[start - 1])) {
+  const prevChar = input.value[start - 1] ?? '';
+  if (!/[-/.]/.test(prevChar)) {
     return null;
   }
 

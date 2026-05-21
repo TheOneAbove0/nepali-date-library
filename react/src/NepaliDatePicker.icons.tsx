@@ -73,4 +73,19 @@ function ClockIcon() {
   );
 }
 
-export { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ClearIcon, ClockIcon };
+function CheckIcon() {
+  return (
+    <svg aria-hidden="true" className="nepali-date-picker__icon" viewBox="0 0 16 16">
+      <path
+        d="M3 8.5l3.5 3.5L13 4"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      />
+    </svg>
+  );
+}
+
+export { CheckIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ClearIcon, ClockIcon };

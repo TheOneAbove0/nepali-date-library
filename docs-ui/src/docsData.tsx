@@ -84,7 +84,7 @@ export const sections: DocSection[] = [
     id: 'playground',
     title: 'Playground',
     summary:
-      'Try every picker and input variant in one place. All demos use `numeralSystem=\"nepali\"` — switch to `\"latin\"` for English digits. Each tab shows the live component, its value type, and a copy-paste code example.',
+      'Try every picker and input variant in one place. All demos use `numeralSystem="nepali"` — switch to `"latin"` for English digits. Each tab shows the live component, its value type, and a copy-paste code example.',
     Demo: PlaygroundDemo,
     bare: true,
   },
@@ -244,8 +244,7 @@ function Demo() {
   {
     id: 'constraints',
     title: 'Constraints',
-    summary:
-      'Limit the selectable window with `min`, `max`, `excludeDates`, or a custom filter.',
+    summary: 'Limit the selectable window with `min`, `max`, `excludeDates`, or a custom filter.',
     Demo: ConstraintsDemo,
     code: `import { CalendarDays, ChevronDown } from 'lucide-react';
 import { DatePickerInput } from 'nepali-date-library-react';

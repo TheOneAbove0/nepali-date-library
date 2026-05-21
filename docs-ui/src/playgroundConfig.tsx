@@ -14,7 +14,7 @@ import {
 import type { BsDate } from 'nepali-date-library';
 import type { NepaliNumeralSystem } from 'nepali-date-library-react';
 import { CalendarDays, ChevronDown } from 'lucide-react';
-import { sampleBs, toDateRange, toSingleDate } from './docsShared';
+import { toDateRange, toSingleDate } from './docsShared';
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
@@ -26,7 +26,13 @@ export interface PlaygroundTab {
   description: string;
   valueType: string;
   defaultValue: unknown;
-  render: (value: never, setValue: (v: never) => void, numeralSystem: NepaliNumeralSystem) => ReactNode;
+  render: (
+    value: never,
+    setValue: (v: never) => void,
+    numeralSystem: NepaliNumeralSystem,
+    disabled: boolean,
+    readOnly: boolean,
+  ) => ReactNode;
   formatValue: (value: never) => string;
   code: string;
 }
@@ -57,17 +63,24 @@ function formatDateTimeValue(value: { date: BsDate | null; time: string }): stri
 /*  Tab definitions                                                    */
 /* ------------------------------------------------------------------ */
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const playgroundTabs: PlaygroundTab[] = ([
+export const playgroundTabs: PlaygroundTab[] = [
   {
     id: 'date-picker-input',
     label: 'DatePickerInput',
     description: 'Input field with a dropdown calendar for picking a single BS date.',
     valueType: 'BsDate | null',
-    defaultValue: { ...sampleBs },
-    render: (value: BsDate | null, setValue: (v: BsDate | null) => void, numeralSystem: NepaliNumeralSystem) => (
+    defaultValue: null,
+    render: (
+      value: BsDate | null,
+      setValue: (v: BsDate | null) => void,
+      numeralSystem: NepaliNumeralSystem,
+      disabled: boolean,
+      readOnly: boolean,
+    ) => (
       <DatePickerInput
         numeralSystem={numeralSystem}
+        disabled={disabled}
+        readOnly={readOnly}
         label="Pick date"
         placeholderText="Pick date"
         leftSection={inputIcons.left}
@@ -80,11 +93,10 @@ export const playgroundTabs: PlaygroundTab[] = ([
     code: `import { useState } from 'react';
 import { DatePickerInput } from 'nepali-date-library-react';
 import type { BsDate } from 'nepali-date-library';
+import { CalendarDays, ChevronDown } from 'lucide-react';
 
 function Demo() {
-  const [value, setValue] = useState<BsDate | null>({
-    year: 2083, month: 1, day: 30,
-  });
+  const [value, setValue] = useState<BsDate | null>(null);
 
   return (
     <>
@@ -92,6 +104,8 @@ function Demo() {
         label="Pick date"
         placeholderText="Pick date"
         numeralSystem="nepali"
+        leftSection={<CalendarDays size={16} strokeWidth={1.8} />}
+        rightSection={<ChevronDown size={16} strokeWidth={1.8} />}
         value={value}
         onChange={setValue}
       />
@@ -105,10 +119,18 @@ function Demo() {
     label: 'DateInput',
     description: 'Clearable input alias with the same dropdown calendar surface.',
     valueType: 'BsDate | null',
-    defaultValue: { ...sampleBs },
-    render: (value: BsDate | null, setValue: (v: BsDate | null) => void, numeralSystem: NepaliNumeralSystem) => (
+    defaultValue: null,
+    render: (
+      value: BsDate | null,
+      setValue: (v: BsDate | null) => void,
+      numeralSystem: NepaliNumeralSystem,
+      disabled: boolean,
+      readOnly: boolean,
+    ) => (
       <DateInput
         numeralSystem={numeralSystem}
+        disabled={disabled}
+        readOnly={readOnly}
         clearable
         label="Pick date"
         placeholderText="Pick date"
@@ -122,11 +144,10 @@ function Demo() {
     code: `import { useState } from 'react';
 import { DateInput } from 'nepali-date-library-react';
 import type { BsDate } from 'nepali-date-library';
+import { CalendarDays, ChevronDown } from 'lucide-react';
 
 function Demo() {
-  const [value, setValue] = useState<BsDate | null>({
-    year: 2083, month: 1, day: 30,
-  });
+  const [value, setValue] = useState<BsDate | null>(null);
 
   return (
     <>
@@ -135,6 +156,8 @@ function Demo() {
         label="Pick date"
         placeholderText="Pick date"
         numeralSystem="nepali"
+        leftSection={<CalendarDays size={16} strokeWidth={1.8} />}
+        rightSection={<ChevronDown size={16} strokeWidth={1.8} />}
         value={value}
         onChange={setValue}
       />
@@ -148,10 +171,18 @@ function Demo() {
     label: 'Typeable',
     description: 'Type a BS date directly into the input, then press Enter or blur to commit.',
     valueType: 'BsDate | null',
-    defaultValue: { ...sampleBs },
-    render: (value: BsDate | null, setValue: (v: BsDate | null) => void, numeralSystem: NepaliNumeralSystem) => (
+    defaultValue: null,
+    render: (
+      value: BsDate | null,
+      setValue: (v: BsDate | null) => void,
+      numeralSystem: NepaliNumeralSystem,
+      disabled: boolean,
+      readOnly: boolean,
+    ) => (
       <DatePickerInput
         numeralSystem={numeralSystem}
+        disabled={disabled}
+        readOnly={readOnly}
         label="Typeable date input"
         placeholderText="YYYY-MM-DD"
         leftSection={inputIcons.left}
@@ -165,11 +196,10 @@ function Demo() {
     code: `import { useState } from 'react';
 import { DatePickerInput } from 'nepali-date-library-react';
 import type { BsDate } from 'nepali-date-library';
+import { CalendarDays, ChevronDown } from 'lucide-react';
 
 function Demo() {
-  const [value, setValue] = useState<BsDate | null>({
-    year: 2083, month: 1, day: 30,
-  });
+  const [value, setValue] = useState<BsDate | null>(null);
 
   return (
     <>
@@ -178,6 +208,8 @@ function Demo() {
         placeholderText="YYYY-MM-DD"
         typeable
         numeralSystem="nepali"
+        leftSection={<CalendarDays size={16} strokeWidth={1.8} />}
+        rightSection={<ChevronDown size={16} strokeWidth={1.8} />}
         value={value}
         onChange={setValue}
       />
@@ -189,12 +221,21 @@ function Demo() {
   {
     id: 'date-picker',
     label: 'DatePicker',
-    description: 'Inline day picker for dashboards, forms, and embedded calendar panels. Calendar is an alias for this component.',
+    description:
+      'Inline day picker for dashboards, forms, and embedded calendar panels. Calendar is an alias for this component.',
     valueType: 'BsDate | null',
-    defaultValue: { ...sampleBs },
-    render: (value: BsDate | null, setValue: (v: BsDate | null) => void, numeralSystem: NepaliNumeralSystem) => (
+    defaultValue: null,
+    render: (
+      value: BsDate | null,
+      setValue: (v: BsDate | null) => void,
+      numeralSystem: NepaliNumeralSystem,
+      disabled: boolean,
+      readOnly: boolean,
+    ) => (
       <DatePicker
         numeralSystem={numeralSystem}
+        disabled={disabled}
+        readOnly={readOnly}
         value={value}
         onChange={(next) => setValue(toSingleDate(next))}
       />
@@ -205,9 +246,7 @@ import { DatePicker } from 'nepali-date-library-react';
 import type { BsDate } from 'nepali-date-library';
 
 function Demo() {
-  const [value, setValue] = useState<BsDate | null>({
-    year: 2083, month: 1, day: 30,
-  });
+  const [value, setValue] = useState<BsDate | null>(null);
 
   return (
     <>
@@ -222,17 +261,18 @@ function Demo() {
     label: 'Date Range',
     description: 'Set type="range" to pick a start and end date from the same calendar.',
     valueType: '[BsDate | null, BsDate | null]',
-    defaultValue: [
-      { year: sampleBs.year, month: sampleBs.month, day: 6 },
-      { year: sampleBs.year, month: sampleBs.month, day: 14 },
-    ],
+    defaultValue: [null, null],
     render: (
       value: [BsDate | null, BsDate | null],
       setValue: (v: [BsDate | null, BsDate | null]) => void,
       numeralSystem: NepaliNumeralSystem,
+      disabled: boolean,
+      readOnly: boolean,
     ) => (
       <DatePicker
         numeralSystem={numeralSystem}
+        disabled={disabled}
+        readOnly={readOnly}
         type="range"
         value={value}
         onChange={(next) => setValue(toDateRange(next))}
@@ -244,10 +284,7 @@ import { DatePicker } from 'nepali-date-library-react';
 import type { BsDate } from 'nepali-date-library';
 
 function Demo() {
-  const [value, setValue] = useState<[BsDate | null, BsDate | null]>([
-    { year: 2083, month: 1, day: 6 },
-    { year: 2083, month: 1, day: 14 },
-  ]);
+  const [value, setValue] = useState<[BsDate | null, BsDate | null]>([null, null]);
 
   return (
     <>
@@ -268,20 +305,24 @@ function Demo() {
     label: 'DateTimePicker',
     description: 'Combined BS date + time picker with 12h/24h format support.',
     valueType: '{ date: BsDate | null; time: string }',
-    defaultValue: { date: { ...sampleBs }, time: '15:22' },
+    defaultValue: { date: null, time: '' },
     render: (
       value: { date: BsDate | null; time: string },
       setValue: (v: { date: BsDate | null; time: string }) => void,
       numeralSystem: NepaliNumeralSystem,
+      disabled: boolean,
+      readOnly: boolean,
     ) => (
       <DateTimePicker
         numeralSystem={numeralSystem}
+        disabled={disabled}
+        readOnly={readOnly}
         clearable
         label="Pick date and time"
         placeholderText="Pick date and time"
         leftSection={inputIcons.left}
         rightSection={inputIcons.right}
-        timePickerProps={{ format: '12h', withDropdown: true }}
+        timePickerProps={{ format: '24h', withDropdown: false }}
         timeLabel="Time"
         value={value}
         onChange={setValue}
@@ -291,23 +332,27 @@ function Demo() {
     code: `import { useState } from 'react';
 import { DateTimePicker } from 'nepali-date-library-react';
 import type { BsDate } from 'nepali-date-library';
+import { CalendarDays, ChevronDown } from 'lucide-react';
 
 function Demo() {
   const [value, setValue] = useState<{
     date: BsDate | null;
     time: string;
   }>({
-    date: { year: 2083, month: 1, day: 30 },
-    time: '15:22',
+    date: null,
+    time: '',
   });
 
   return (
     <>
       <DateTimePicker
+        clearable
         label="Pick date and time"
         placeholderText="Pick date and time"
         numeralSystem="nepali"
-        timePickerProps={{ format: '12h', withDropdown: true }}
+        leftSection={<CalendarDays size={16} strokeWidth={1.8} />}
+        rightSection={<ChevronDown size={16} strokeWidth={1.8} />}
+        timePickerProps={{ format: '24h', withDropdown: false }}
         value={value}
         onChange={setValue}
       />
@@ -322,12 +367,21 @@ function Demo() {
     label: 'TimeInput',
     description: 'Native browser time input with an optional clock trigger button.',
     valueType: 'string',
-    defaultValue: '15:22',
-    render: (value: string, setValue: (v: string) => void) => (
+    defaultValue: '',
+    render: (
+      value: string,
+      setValue: (v: string) => void,
+      numeralSystem: NepaliNumeralSystem,
+      disabled: boolean,
+      readOnly: boolean,
+    ) => (
       <TimeInput
         label="Pick time"
         description="Uses the browser's native time picker."
         showPickerButton
+        numeralSystem={numeralSystem}
+        disabled={disabled}
+        readOnly={readOnly}
         value={value}
         onChange={setValue}
       />
@@ -338,7 +392,7 @@ import { TimeInput } from 'nepali-date-library-react';
 
 function Demo() {
   const ref = useRef<HTMLInputElement | null>(null);
-  const [value, setValue] = useState('15:22');
+  const [value, setValue] = useState('');
 
   return (
     <>
@@ -360,18 +414,27 @@ function Demo() {
     description: 'Custom select-based time picker with 12h/24h format and optional seconds.',
     valueType: 'string',
     defaultValue: '',
-    render: (value: string, setValue: (v: string) => void) => (
+    render: (
+      value: string,
+      setValue: (v: string) => void,
+      numeralSystem: NepaliNumeralSystem,
+      disabled: boolean,
+      readOnly: boolean,
+    ) => (
       <div style={{ width: '100%', maxWidth: 420 }}>
         <TimePicker
           label="Pick time"
           withSeconds
           withDropdown
+          numeralSystem={numeralSystem}
+          disabled={disabled}
+          readOnly={readOnly}
           value={value}
           onChange={setValue}
         />
       </div>
     ),
-    formatValue: (v: string) => v ? `"${v}"` : '""',
+    formatValue: (v: string) => (v ? `"${v}"` : '""'),
     code: `import { useState } from 'react';
 import { TimePicker } from 'nepali-date-library-react';
 
@@ -397,10 +460,18 @@ function Demo() {
     label: 'MonthPickerInput',
     description: 'Dropdown month selector with the same compact input shell.',
     valueType: 'BsDate | null',
-    defaultValue: { year: 2083, month: 1, day: 1 },
-    render: (value: BsDate | null, setValue: (v: BsDate | null) => void, numeralSystem: NepaliNumeralSystem) => (
+    defaultValue: null,
+    render: (
+      value: BsDate | null,
+      setValue: (v: BsDate | null) => void,
+      numeralSystem: NepaliNumeralSystem,
+      disabled: boolean,
+      readOnly: boolean,
+    ) => (
       <MonthPickerInput
         numeralSystem={numeralSystem}
+        disabled={disabled}
+        readOnly={readOnly}
         label="Pick month"
         placeholderText="Pick month"
         value={value}
@@ -411,11 +482,10 @@ function Demo() {
     code: `import { useState } from 'react';
 import { MonthPickerInput } from 'nepali-date-library-react';
 import type { BsDate } from 'nepali-date-library';
+import { CalendarDays, ChevronDown } from 'lucide-react';
 
 function Demo() {
-  const [value, setValue] = useState<BsDate | null>({
-    year: 2083, month: 1, day: 1,
-  });
+  const [value, setValue] = useState<BsDate | null>(null);
 
   return (
     <>
@@ -423,6 +493,8 @@ function Demo() {
         label="Pick month"
         placeholderText="Pick month"
         numeralSystem="nepali"
+        leftSection={<CalendarDays size={16} strokeWidth={1.8} />}
+        rightSection={<ChevronDown size={16} strokeWidth={1.8} />}
         value={value}
         onChange={setValue}
       />
@@ -436,10 +508,18 @@ function Demo() {
     label: 'MonthPicker',
     description: 'Inline month grid with year navigation.',
     valueType: 'BsDate | null',
-    defaultValue: { year: 2083, month: 1, day: 1 },
-    render: (value: BsDate | null, setValue: (v: BsDate | null) => void, numeralSystem: NepaliNumeralSystem) => (
+    defaultValue: null,
+    render: (
+      value: BsDate | null,
+      setValue: (v: BsDate | null) => void,
+      numeralSystem: NepaliNumeralSystem,
+      disabled: boolean,
+      readOnly: boolean,
+    ) => (
       <MonthPicker
         numeralSystem={numeralSystem}
+        disabled={disabled}
+        readOnly={readOnly}
         value={value}
         onChange={(next) => setValue(toSingleDate(next))}
       />
@@ -450,9 +530,7 @@ import { MonthPicker } from 'nepali-date-library-react';
 import type { BsDate } from 'nepali-date-library';
 
 function Demo() {
-  const [value, setValue] = useState<BsDate | null>({
-    year: 2083, month: 1, day: 1,
-  });
+  const [value, setValue] = useState<BsDate | null>(null);
 
   return (
     <>
@@ -467,10 +545,18 @@ function Demo() {
     label: 'YearPickerInput',
     description: 'Input and dropdown decade view for year selection.',
     valueType: 'BsDate | null',
-    defaultValue: { year: 2083, month: 1, day: 1 },
-    render: (value: BsDate | null, setValue: (v: BsDate | null) => void, numeralSystem: NepaliNumeralSystem) => (
+    defaultValue: null,
+    render: (
+      value: BsDate | null,
+      setValue: (v: BsDate | null) => void,
+      numeralSystem: NepaliNumeralSystem,
+      disabled: boolean,
+      readOnly: boolean,
+    ) => (
       <YearPickerInput
         numeralSystem={numeralSystem}
+        disabled={disabled}
+        readOnly={readOnly}
         label="Pick year"
         placeholderText="Pick year"
         value={value}
@@ -481,11 +567,10 @@ function Demo() {
     code: `import { useState } from 'react';
 import { YearPickerInput } from 'nepali-date-library-react';
 import type { BsDate } from 'nepali-date-library';
+import { CalendarDays, ChevronDown } from 'lucide-react';
 
 function Demo() {
-  const [value, setValue] = useState<BsDate | null>({
-    year: 2083, month: 1, day: 1,
-  });
+  const [value, setValue] = useState<BsDate | null>(null);
 
   return (
     <>
@@ -493,6 +578,8 @@ function Demo() {
         label="Pick year"
         placeholderText="Pick year"
         numeralSystem="nepali"
+        leftSection={<CalendarDays size={16} strokeWidth={1.8} />}
+        rightSection={<ChevronDown size={16} strokeWidth={1.8} />}
         value={value}
         onChange={setValue}
       />
@@ -506,10 +593,18 @@ function Demo() {
     label: 'YearPicker',
     description: 'Inline year picker with decade navigation.',
     valueType: 'BsDate | null',
-    defaultValue: { year: 2083, month: 1, day: 1 },
-    render: (value: BsDate | null, setValue: (v: BsDate | null) => void, numeralSystem: NepaliNumeralSystem) => (
+    defaultValue: null,
+    render: (
+      value: BsDate | null,
+      setValue: (v: BsDate | null) => void,
+      numeralSystem: NepaliNumeralSystem,
+      disabled: boolean,
+      readOnly: boolean,
+    ) => (
       <YearPicker
         numeralSystem={numeralSystem}
+        disabled={disabled}
+        readOnly={readOnly}
         value={value}
         onChange={(next) => setValue(toSingleDate(next))}
       />
@@ -520,9 +615,7 @@ import { YearPicker } from 'nepali-date-library-react';
 import type { BsDate } from 'nepali-date-library';
 
 function Demo() {
-  const [value, setValue] = useState<BsDate | null>({
-    year: 2083, month: 1, day: 1,
-  });
+  const [value, setValue] = useState<BsDate | null>(null);
 
   return (
     <>
@@ -532,4 +625,4 @@ function Demo() {
   );
 }`,
   },
-] as const) as unknown as PlaygroundTab[];
+] as const as unknown as PlaygroundTab[];

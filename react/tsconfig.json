@@ -6,6 +6,8 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
     "jsx": "react-jsx",
     "noEmit": true
   },

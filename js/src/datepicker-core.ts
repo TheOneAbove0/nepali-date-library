@@ -5,8 +5,13 @@ import type { BsDate, BsDateInput } from './types';
 
 export { addBsDays, addBsMonths, compareBsDate } from './manipulation';
 
+/** Represents a 0-indexed day of the week (0 = Sunday, 6 = Saturday). */
 export type WeekdayIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
+/** Indicates whether a day in the calendar grid belongs to the previous, current, or next month. */
 export type DayOwner = 'prev' | 'current' | 'next';
+
+/** Allowed keyboard navigation keys for the date picker grid. */
 export type DatePickerKey =
   | 'ArrowLeft'
   | 'ArrowRight'
@@ -19,26 +24,43 @@ export type DatePickerKey =
   | 'Enter'
   | ' ';
 
+/**
+ * Configuration options for restricting selectable dates.
+ */
 export interface DateConstraints {
+  /** The minimum selectable date (inclusive). */
   min?: BsDateInput;
+  /** The maximum selectable date (inclusive). */
   max?: BsDateInput;
+  /** A predicate function to dynamically disable specific dates. */
   isDisabled?: (date: BsDate) => boolean;
 }
 
+/**
+ * Internal representation of DateConstraints with fully parsed BsDate objects.
+ */
 export interface NormalizedDateConstraints {
   min?: BsDate;
   max?: BsDate;
   isDisabled?: (date: BsDate) => boolean;
 }
 
+/**
+ * Options to configure how the month grid is generated.
+ */
 export interface MonthGridOptions {
+  /** The starting day of the week (default is 0 for Sunday). */
   weekStartsOn?: WeekdayIndex;
   constraints?: DateConstraints;
   selectedDate?: BsDateInput | null;
   focusedDate?: BsDateInput | null;
+  /** The date to consider as 'today'. Defaults to the current system date converted to BS. */
   today?: BsDateInput;
 }
 
+/**
+ * Represents a single day cell within a calendar month grid.
+ */
 export interface MonthGridCell {
   date: BsDate;
   owner: DayOwner;
@@ -50,6 +72,9 @@ export interface MonthGridCell {
   isDisabled: boolean;
 }
 
+/**
+ * Represents a full month grid, including leading/trailing days from adjacent months to complete weeks.
+ */
 export interface MonthGrid {
   year: number;
   month: number;
@@ -57,6 +82,9 @@ export interface MonthGrid {
   weeks: MonthGridCell[][];
 }
 
+/**
+ * Encapsulates the complete state required to render and navigate a date picker.
+ */
 export interface DatePickerState {
   viewYear: number;
   viewMonth: number;
@@ -66,6 +94,9 @@ export interface DatePickerState {
   constraints: NormalizedDateConstraints;
 }
 
+/**
+ * Options to initialize the date picker state.
+ */
 export interface CreateDatePickerStateOptions {
   weekStartsOn?: WeekdayIndex;
   constraints?: DateConstraints;
@@ -76,10 +107,19 @@ export interface CreateDatePickerStateOptions {
   today?: BsDateInput;
 }
 
+/** Keyboard navigation behavior modifiers. */
 export interface KeyNavigationOptions {
+  /** If true, certain navigation keys (like PageUp/PageDown) might jump by larger increments (e.g., a year). */
   shiftKey?: boolean;
 }
 
+/**
+ * Parses raw `DateConstraints` inputs into fully parsed `BsDate` objects.
+ * Ensures the `min` date is not after the `max` date.
+ * @param constraints - The constraints to normalize.
+ * @returns A normalized object of parsed constraints.
+ * @throws Error if min date is after max date.
+ */
 export function normalizeConstraints(constraints?: DateConstraints): NormalizedDateConstraints {
   if (!constraints) {
     return {};
@@ -99,6 +139,12 @@ export function normalizeConstraints(constraints?: DateConstraints): NormalizedD
   };
 }
 
+/**
+ * Checks if a given BS date falls outside the min/max bounds.
+ * @param date - The date to check.
+ * @param constraints - The parsed constraints.
+ * @returns True if out of bounds, false otherwise.
+ */
 export function isDateOutOfRange(date: BsDate, constraints?: NormalizedDateConstraints): boolean {
   if (!constraints) return false;
   if (constraints.min && compareBsDate(date, constraints.min) < 0) return true;
@@ -106,12 +152,24 @@ export function isDateOutOfRange(date: BsDate, constraints?: NormalizedDateConst
   return false;
 }
 
+/**
+ * Checks if a given BS date is completely disabled (either out of bounds or failing the predicate).
+ * @param date - The date to check.
+ * @param constraints - The parsed constraints.
+ * @returns True if disabled, false otherwise.
+ */
 export function isDateDisabled(date: BsDate, constraints?: NormalizedDateConstraints): boolean {
   if (!constraints) return false;
   if (isDateOutOfRange(date, constraints)) return true;
   return Boolean(constraints.isDisabled && constraints.isDisabled(date));
 }
 
+/**
+ * Clamps a given BS date to ensure it falls within the given min and max constraints.
+ * @param date - The raw input date.
+ * @param constraints - The parsed constraints.
+ * @returns A parsed BsDate constrained to the bounds.
+ */
 export function clampBsDate(date: BsDateInput, constraints?: NormalizedDateConstraints): BsDate {
   const parsed = parseBsDate(date);
   if (!constraints) return parsed;
@@ -127,6 +185,14 @@ export function clampBsDate(date: BsDateInput, constraints?: NormalizedDateConst
   return parsed;
 }
 
+/**
+ * Generates a full month calendar grid, including the leading and trailing days required
+ * to form complete weeks.
+ * @param year - The BS year for the grid.
+ * @param month - The BS month for the grid.
+ * @param options - Additional options like start day of the week, constraints, and selected state.
+ * @returns A structured `MonthGrid` object containing rows of weeks.
+ */
 export function generateMonthGrid(
   year: number,
   month: number,
@@ -190,6 +256,11 @@ export function generateMonthGrid(
   return { year, month, weekStartsOn, weeks };
 }
 
+/**
+ * Initializes the date picker core state engine.
+ * @param options - Initialization options including constraints, default values, and focus preferences.
+ * @returns A complete `DatePickerState`.
+ */
 export function createDatePickerState(options: CreateDatePickerStateOptions = {}): DatePickerState {
   const constraints = normalizeConstraints(options.constraints);
   const weekStartsOn = normalizeWeekday(options.weekStartsOn);
@@ -214,6 +285,14 @@ export function createDatePickerState(options: CreateDatePickerStateOptions = {}
   };
 }
 
+/**
+ * Handles keyboard navigation within a date picker grid, computing the next state based on the pressed key.
+ * Resolves the next valid focusable date, skipping disabled dates.
+ * @param state - The current `DatePickerState`.
+ * @param key - The navigation key pressed (e.g. 'ArrowRight', 'PageDown').
+ * @param options - Additional modifiers like `shiftKey`.
+ * @returns The computed next `DatePickerState`.
+ */
 export function navigateByKey(
   state: DatePickerState,
   key: DatePickerKey,

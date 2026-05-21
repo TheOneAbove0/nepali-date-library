@@ -3,7 +3,9 @@ import {
   createDatePickerState,
   generateMonthGrid,
   navigateByKey,
+  normalizeConstraints,
   type DatePickerKey,
+  type DateConstraints,
   type DatePickerState,
 } from 'nepali-date-library/datepicker-core';
 
@@ -33,20 +35,35 @@ const NAVIGATION_KEYS = new Set<string>([
   'PageDown',
 ]);
 
+/**
+ * Options for the Vanilla JS Nepali Date Picker adapter.
+ */
 export interface NepaliDatePickerOptions {
+  /** The controlled date value. */
   value?: BsDateInput | null;
+  /** The uncontrolled default date value. */
   defaultValue?: BsDateInput | null;
+  /** Minimum selectable date (inclusive). */
   min?: BsDateInput;
+  /** Maximum selectable date (inclusive). */
   max?: BsDateInput;
+  /** Predicate function to dynamically disable specific dates. */
   isDateDisabled?: (date: BsDate) => boolean;
+  /** The starting day of the week (0 = Sunday, 6 = Saturday). */
   weekStartsOn?: WeekdayIndex;
+  /** Custom class name for the root element. */
   className?: string;
+  /** Callback fired when the selected date changes. */
   onChange?: (value: BsDate | null) => void;
 }
 
+/**
+ * A Vanilla DOM adapter for the Nepali Date Library core datepicker state.
+ */
 export class NepaliDatePicker {
   private readonly root: HTMLElement;
   private readonly options: NepaliDatePickerOptions;
+  private readonly constraints: DateConstraints;
   private state: DatePickerState;
 
   constructor(target: string | HTMLElement, options: NepaliDatePickerOptions = {}) {
@@ -58,16 +75,17 @@ export class NepaliDatePicker {
 
     this.root = element;
     this.options = options;
+    this.constraints = {
+      min: options.min,
+      max: options.max,
+      isDisabled: options.isDateDisabled,
+    };
     const initialValue = options.value ?? options.defaultValue ?? undefined;
     this.state = createDatePickerState({
       selectedDate: initialValue ?? undefined,
       focusedDate: initialValue ?? undefined,
       weekStartsOn: options.weekStartsOn,
-      constraints: {
-        min: options.min,
-        max: options.max,
-        isDisabled: options.isDateDisabled,
-      },
+      constraints: this.constraints,
     });
 
     this.render();
@@ -86,15 +104,16 @@ export class NepaliDatePicker {
     }
 
     const selected = parseBsDate(value);
-    this.state = {
-      ...this.state,
+    this.state = createDatePickerState({
       selectedDate: selected,
       focusedDate: selected,
+      constraints: this.constraints,
+      weekStartsOn: this.state.weekStartsOn,
       viewYear: selected.year,
       viewMonth: selected.month,
-    };
+    });
     this.render();
-    this.options.onChange?.(selected);
+    this.options.onChange?.(this.state.selectedDate);
   }
 
   destroy(): void {
@@ -107,9 +126,10 @@ export class NepaliDatePicker {
   }
 
   private render(): void {
+    const constraints = normalizeConstraints(this.constraints);
     const grid = generateMonthGrid(this.state.viewYear, this.state.viewMonth, {
       weekStartsOn: this.state.weekStartsOn,
-      constraints: this.state.constraints,
+      constraints,
       selectedDate: this.state.selectedDate,
       focusedDate: this.state.focusedDate,
     });
