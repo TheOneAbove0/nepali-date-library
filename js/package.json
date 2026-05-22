@@ -1,6 +1,6 @@
 {
   "name": "@theoneabove0/nepalidatepicker",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "Lightweight TypeScript utilities for Nepali BS and Gregorian date conversion, validation, and datepicker state.",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -80,7 +80,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/TheOneAbove0/nepali-date-library.git"
+    "url": "https://github.com/TheOneAbove0/nepali-date-library.git"
   },
   "keywords": [
     "bikram",
@@ -95,7 +95,7 @@
   "bugs": {
     "url": "https://github.com/TheOneAbove0/nepali-date-library/issues"
   },
-  "homepage": "https://github.com/TheOneAbove0/nepali-date-library#readme",
+  "homepage": "https://nepali-date-library-ewoc-a0iyair2h-theoneabove0s-projects.vercel.app/",
   "devDependencies": {
     "tsup": "^8.5.1",
     "typescript": "^5.9.3"

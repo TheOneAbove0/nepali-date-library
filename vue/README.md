@@ -1,48 +1,86 @@
-# nepalidatepicker-vue
+# @theoneabove0/nepalidatepicker-vue
 
-Thin Vue 3 wrapper around `nepalidatepicker/datepicker-core`.
+[![npm version](https://img.shields.io/npm/v/@theoneabove0/nepalidatepicker-vue.svg)](https://www.npmjs.com/package/@theoneabove0/nepalidatepicker-vue)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-## Install
+A simple, highly customizable, and reusable Nepali Datepicker component for Vue 3. Backed by the robust `nepalidatepicker/datepicker-core`.
+
+**[View Live Demo & Documentation](https://nepali-date-library-ewoc-a0iyair2h-theoneabove0s-projects.vercel.app/)**
+
+![Vue Nepali Date Picker Demo](./demo.png)
+
+## Installation
+
+The package can be installed via npm:
 
 ```bash
-npm i nepalidatepicker-vue nepalidatepicker vue
+npm install @theoneabove0/nepalidatepicker-vue @theoneabove0/nepalidatepicker vue
 ```
 
-## Usage
+Or via yarn:
 
-```ts
-import { createApp, ref } from 'vue';
-import { NepaliDatePicker } from 'nepalidatepicker-vue';
+```bash
+yarn add @theoneabove0/nepalidatepicker-vue @theoneabove0/nepalidatepicker vue
+```
 
-const App = {
+You'll need to install Vue separately since it isn't included in the package.
+
+## Basic Configuration
+
+Below is a simple example of how to use the DatePicker in a Vue 3 component. The most basic use of the DatePicker can be described with:
+
+```html
+<template>
+  <NepaliDatePicker
+    v-model="value"
+    min="2082-01-01"
+    max="2084-12-30"
+  />
+</template>
+
+<script>
+import { ref } from 'vue';
+import { NepaliDatePicker } from '@theoneabove0/nepalidatepicker-vue';
+
+export default {
   components: { NepaliDatePicker },
   setup() {
     const value = ref(null);
     return { value };
   },
-  template: `
-    <NepaliDatePicker
-      v-model="value"
-      min="2082-01-01"
-      max="2084-12-30"
-    />
-  `,
 };
-
-createApp(App).mount('#app');
+</script>
 ```
 
-## Note
+The base `NepaliDatePicker` supports input popup mode by default and inline calendar mode with the `inline` prop. 
 
-All grid/navigation/constraint logic is delegated to `nepalidatepicker/datepicker-core`.
+See the [main website](https://nepali-date-library-ewoc-a0iyair2h-theoneabove0s-projects.vercel.app/) for a full list of props that may be passed to the component.
 
-## Wrapper Boundary
+## Customization & Styling API
 
-`nepalidatepicker-vue` only adapts Vue events/reactivity and rendering:
+Easily customize the look and feel using CSS variables:
 
-- state creation and normalization come from `createDatePickerState()`
-- grid generation comes from `generateMonthGrid()`
-- keyboard navigation comes from `navigateByKey()`
-- date constraints/disabled rules come from core constraint utilities
+```html
+<template>
+  <NepaliDatePicker
+    v-model="value"
+    :variables="{
+      '--nepali-date-picker-accent': '#c97012',
+      '--nepali-date-picker-input-radius': '18px',
+      '--nepali-date-picker-calendar-radius': '22px',
+    }"
+  />
+</template>
+```
 
-No BS conversion math or calendar algorithms are implemented in this wrapper.
+You can also pass in custom properties like `holidays`, `min`, `max`, and change the `numeralSystem`.
+
+## Browser Support & Note
+
+All grid/navigation/constraint logic is delegated to `@theoneabove0/nepalidatepicker/datepicker-core`.
+`@theoneabove0/nepalidatepicker-vue` only adapts Vue events/reactivity and rendering.
+No BS conversion math or calendar algorithms are implemented in this wrapper, ensuring consistent and bug-free date math across environments!
+
+## License
+
+Copyright (c) 2024-Present and individual contributors. Licensed under Apache-2.0 license.
