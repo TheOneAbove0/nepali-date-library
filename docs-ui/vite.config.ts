@@ -7,15 +7,15 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: 'nepalidatepicker-react',
+        find: '@theoneabove0/nepalidatepicker-react',
         replacement: path.resolve(__dirname, '../react/src/index.ts'),
       },
       {
-        find: /^nepalidatepicker$/,
+        find: /^@theoneabove0\/nepalidatepicker$/,
         replacement: path.resolve(__dirname, '../js/src/index.ts'),
       },
       {
-        find: /^nepalidatepicker\/(.+)$/,
+        find: /^@theoneabove0\/nepalidatepicker\/(.+)$/,
         replacement: path.resolve(__dirname, '../js/src/$1.ts'),
       },
     ],

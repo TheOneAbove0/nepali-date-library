@@ -10,9 +10,9 @@ import {
   TimePicker,
   YearPicker,
   YearPickerInput,
-} from 'nepalidatepicker-react';
-import type { BsDate } from 'nepalidatepicker';
-import type { NepaliNumeralSystem } from 'nepalidatepicker-react';
+} from '@theoneabove0/nepalidatepicker-react';
+import type { BsDate } from '@theoneabove0/nepalidatepicker';
+import type { NepaliNumeralSystem } from '@theoneabove0/nepalidatepicker-react';
 import { CalendarDays, ChevronDown } from 'lucide-react';
 import { toDateRange, toSingleDate } from './docsShared';
 
@@ -91,8 +91,8 @@ export const playgroundTabs: PlaygroundTab[] = [
     ),
     formatValue: (v: BsDate | null) => formatBsValue(v),
     code: `import { useState } from 'react';
-import { DatePickerInput } from 'nepalidatepicker-react';
-import type { BsDate } from 'nepalidatepicker';
+import { DatePickerInput } from '@theoneabove0/nepalidatepicker-react';
+import type { BsDate } from '@theoneabove0/nepalidatepicker';
 import { CalendarDays, ChevronDown } from 'lucide-react';
 
 function Demo() {
@@ -142,8 +142,8 @@ function Demo() {
     ),
     formatValue: (v: BsDate | null) => formatBsValue(v),
     code: `import { useState } from 'react';
-import { DateInput } from 'nepalidatepicker-react';
-import type { BsDate } from 'nepalidatepicker';
+import { DateInput } from '@theoneabove0/nepalidatepicker-react';
+import type { BsDate } from '@theoneabove0/nepalidatepicker';
 import { CalendarDays, ChevronDown } from 'lucide-react';
 
 function Demo() {
@@ -194,8 +194,8 @@ function Demo() {
     ),
     formatValue: (v: BsDate | null) => formatBsValue(v),
     code: `import { useState } from 'react';
-import { DatePickerInput } from 'nepalidatepicker-react';
-import type { BsDate } from 'nepalidatepicker';
+import { DatePickerInput } from '@theoneabove0/nepalidatepicker-react';
+import type { BsDate } from '@theoneabove0/nepalidatepicker';
 import { CalendarDays, ChevronDown } from 'lucide-react';
 
 function Demo() {
@@ -242,8 +242,8 @@ function Demo() {
     ),
     formatValue: (v: BsDate | null) => formatBsValue(v),
     code: `import { useState } from 'react';
-import { DatePicker } from 'nepalidatepicker-react';
-import type { BsDate } from 'nepalidatepicker';
+import { DatePicker } from '@theoneabove0/nepalidatepicker-react';
+import type { BsDate } from '@theoneabove0/nepalidatepicker';
 
 function Demo() {
   const [value, setValue] = useState<BsDate | null>(null);
@@ -280,8 +280,8 @@ function Demo() {
     ),
     formatValue: (v: [BsDate | null, BsDate | null]) => formatRangeValue(v),
     code: `import { useState } from 'react';
-import { DatePicker } from 'nepalidatepicker-react';
-import type { BsDate } from 'nepalidatepicker';
+import { DatePicker } from '@theoneabove0/nepalidatepicker-react';
+import type { BsDate } from '@theoneabove0/nepalidatepicker';
 
 function Demo() {
   const [value, setValue] = useState<[BsDate | null, BsDate | null]>([null, null]);
@@ -330,8 +330,8 @@ function Demo() {
     ),
     formatValue: (v: { date: BsDate | null; time: string }) => formatDateTimeValue(v),
     code: `import { useState } from 'react';
-import { DateTimePicker } from 'nepalidatepicker-react';
-import type { BsDate } from 'nepalidatepicker';
+import { DateTimePicker } from '@theoneabove0/nepalidatepicker-react';
+import type { BsDate } from '@theoneabove0/nepalidatepicker';
 import { CalendarDays, ChevronDown } from 'lucide-react';
 
 function Demo() {
@@ -388,7 +388,7 @@ function Demo() {
     ),
     formatValue: (v: string) => `"${v}"`,
     code: `import { useState, useRef } from 'react';
-import { TimeInput } from 'nepalidatepicker-react';
+import { TimeInput } from '@theoneabove0/nepalidatepicker-react';
 
 function Demo() {
   const ref = useRef<HTMLInputElement | null>(null);
@@ -436,7 +436,7 @@ function Demo() {
     ),
     formatValue: (v: string) => (v ? `"${v}"` : '""'),
     code: `import { useState } from 'react';
-import { TimePicker } from 'nepalidatepicker-react';
+import { TimePicker } from '@theoneabove0/nepalidatepicker-react';
 
 function Demo() {
   const [value, setValue] = useState('');
@@ -480,8 +480,8 @@ function Demo() {
     ),
     formatValue: (v: BsDate | null) => formatBsValue(v),
     code: `import { useState } from 'react';
-import { MonthPickerInput } from 'nepalidatepicker-react';
-import type { BsDate } from 'nepalidatepicker';
+import { MonthPickerInput } from '@theoneabove0/nepalidatepicker-react';
+import type { BsDate } from '@theoneabove0/nepalidatepicker';
 import { CalendarDays, ChevronDown } from 'lucide-react';
 
 function Demo() {
@@ -526,8 +526,8 @@ function Demo() {
     ),
     formatValue: (v: BsDate | null) => formatBsValue(v),
     code: `import { useState } from 'react';
-import { MonthPicker } from 'nepalidatepicker-react';
-import type { BsDate } from 'nepalidatepicker';
+import { MonthPicker } from '@theoneabove0/nepalidatepicker-react';
+import type { BsDate } from '@theoneabove0/nepalidatepicker';
 
 function Demo() {
   const [value, setValue] = useState<BsDate | null>(null);
@@ -565,8 +565,8 @@ function Demo() {
     ),
     formatValue: (v: BsDate | null) => formatBsValue(v),
     code: `import { useState } from 'react';
-import { YearPickerInput } from 'nepalidatepicker-react';
-import type { BsDate } from 'nepalidatepicker';
+import { YearPickerInput } from '@theoneabove0/nepalidatepicker-react';
+import type { BsDate } from '@theoneabove0/nepalidatepicker';
 import { CalendarDays, ChevronDown } from 'lucide-react';
 
 function Demo() {
@@ -611,8 +611,8 @@ function Demo() {
     ),
     formatValue: (v: BsDate | null) => formatBsValue(v),
     code: `import { useState } from 'react';
-import { YearPicker } from 'nepalidatepicker-react';
-import type { BsDate } from 'nepalidatepicker';
+import { YearPicker } from '@theoneabove0/nepalidatepicker-react';
+import type { BsDate } from '@theoneabove0/nepalidatepicker';
 
 function Demo() {
   const [value, setValue] = useState<BsDate | null>(null);
