@@ -13,7 +13,9 @@
     "moduleResolution": "Bundler",
     "baseUrl": ".",
     "paths": {
-      "nepali-date-library-react": ["../react/src/index.ts"]
+      "nepali-date-library-react": ["../react/src/index.ts"],
+      "nepali-date-library": ["../js/src/index.ts"],
+      "nepali-date-library/*": ["../js/src/*.ts"]
     },
     "resolveJsonModule": true,
     "isolatedModules": true,
