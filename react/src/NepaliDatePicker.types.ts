@@ -6,8 +6,8 @@ import type {
   ReactElement,
   ReactNode,
 } from 'react';
-import type { BsDate, BsDateFormat, BsDateInput, WeekdayIndex } from 'nepali-date-library';
-import type { MonthGridCell } from 'nepali-date-library/datepicker-core';
+import type { BsDate, BsDateFormat, BsDateInput, WeekdayIndex } from '@theoneabove0/nepalidatepicker';
+import type { MonthGridCell } from '@theoneabove0/nepalidatepicker/datepicker-core';
 
 export const MONTH_NAMES = [
   'बैशाख',

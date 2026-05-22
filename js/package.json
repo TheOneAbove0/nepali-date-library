@@ -1,10 +1,14 @@
 {
-  "name": "nepali-date-library",
+  "name": "@theoneabove0/nepalidatepicker",
   "version": "1.8.0",
   "description": "Lightweight TypeScript utilities for Nepali BS and Gregorian date conversion, validation, and datepicker state.",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "sideEffects": false,
   "typesVersions": {
     "*": {
@@ -70,6 +74,7 @@
   },
   "scripts": {
     "build": "tsup",
+    "prepack": "npm run build",
     "test": "npm run build && node --test test/*.js",
     "verify:references": "npm run build && node ../scripts/validate-reference-dates.mjs"
   },
@@ -85,7 +90,7 @@
     "nepali",
     "calendar"
   ],
-  "author": "TheOneAbove0",
+  "author": "TheOneAbove0 <manishthapaliya8888@gmail.com>",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/TheOneAbove0/nepali-date-library/issues"

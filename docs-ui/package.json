@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "lucide-react": "^0.468.0",
-    "nepali-date-library": "file:../js",
-    "nepali-date-library-react": "file:../react",
+    "nepalidatepicker": "file:../js",
+    "nepalidatepicker-react": "file:../react",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

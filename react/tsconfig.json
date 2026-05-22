@@ -2,6 +2,11 @@
   "compilerOptions": {
     "target": "ES2019",
     "moduleResolution": "Bundler",
+    "baseUrl": ".",
+    "paths": {
+      "nepalidatepicker": ["../js/src/index.ts"],
+      "nepalidatepicker/*": ["../js/src/*.ts"]
+    },
     "strict": true,
     "skipLibCheck": true,
     "esModuleInterop": true,

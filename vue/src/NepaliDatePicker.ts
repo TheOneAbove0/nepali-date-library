@@ -1,5 +1,5 @@
 import { defineComponent, h, type PropType } from 'vue';
-import { type BsDate, type BsDateInput, type WeekdayIndex } from 'nepali-date-library';
+import { type BsDate, type BsDateInput, type WeekdayIndex } from '@theoneabove0/nepalidatepicker';
 import { useNepaliDatePicker } from './useNepaliDatePicker';
 
 const MONTH_NAMES = [

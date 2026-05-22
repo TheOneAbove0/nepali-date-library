@@ -1,4 +1,4 @@
-import { compareBsDate, daysInMonth, parseBsDate, type BsDate } from 'nepali-date-library';
+import { compareBsDate, daysInMonth, parseBsDate, type BsDate } from '@theoneabove0/nepalidatepicker';
 import type { NepaliDatePickerProps } from './NepaliDatePicker.types';
 
 type PickerType = NonNullable<NepaliDatePickerProps['pickerType']>;

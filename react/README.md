@@ -1,22 +1,22 @@
-# nepali-date-library-react
+# nepalidatepicker-react
 
-React date, month, and year pickers for Nepali BS dates, backed by `nepali-date-library/datepicker-core`.
+React date, month, and year pickers for Nepali BS dates, backed by `nepalidatepicker/datepicker-core`.
 
 ## Install
 
 ```bash
-yarn add nepali-date-library-react nepali-date-library react react-dom
+yarn add nepalidatepicker-react nepalidatepicker react react-dom
 ```
 
 ```bash
-npm i nepali-date-library-react nepali-date-library react react-dom
+npm i nepalidatepicker-react nepalidatepicker react react-dom
 ```
 
 ## Usage
 
 ```tsx
 import { CalendarDays, ChevronDown } from 'lucide-react';
-import { DatePickerInput } from 'nepali-date-library-react';
+import { DatePickerInput } from 'nepalidatepicker-react';
 import { useState } from 'react';
 
 export function App() {
@@ -38,7 +38,7 @@ export function App() {
 ```
 
 ```tsx
-import { DateTimePicker, TimePicker } from 'nepali-date-library-react';
+import { DateTimePicker, TimePicker } from 'nepalidatepicker-react';
 import { useState } from 'react';
 
 export function DateTimeExample() {
@@ -148,4 +148,4 @@ Styling API:
 
 ## Note
 
-All grid/navigation/constraint logic is delegated to `nepali-date-library/datepicker-core`.
+All grid/navigation/constraint logic is delegated to `nepalidatepicker/datepicker-core`.

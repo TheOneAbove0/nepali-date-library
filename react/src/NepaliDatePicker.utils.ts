@@ -6,7 +6,7 @@ import {
   type BsDate,
   type BsDateInput,
   type WeekdayIndex,
-} from 'nepali-date-library';
+} from '@theoneabove0/nepalidatepicker';
 import type {
   DateFormatter,
   HolidayMeta,

@@ -1,5 +1,5 @@
-import { formatBsDate, type BsDate } from 'nepali-date-library';
-import type { MonthGridCell } from 'nepali-date-library/datepicker-core';
+import { formatBsDate, type BsDate } from '@theoneabove0/nepalidatepicker';
+import type { MonthGridCell } from '@theoneabove0/nepalidatepicker/datepicker-core';
 import type { KeyboardEvent } from 'react';
 import type { UseNepaliDatePickerResult } from './useNepaliDatePicker';
 import { ChevronLeftIcon, ChevronRightIcon } from './NepaliDatePicker.icons';

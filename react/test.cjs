@@ -1,4 +1,4 @@
-const { parseBsDate } = require('nepali-date-library');
+const { parseBsDate } = require('@theoneabove0/nepalidatepicker');
 
 try {
   parseBsDate({ year: 2093, month: 1, day: 1 });

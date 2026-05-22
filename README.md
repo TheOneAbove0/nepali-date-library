@@ -6,10 +6,10 @@ Lightweight TypeScript utilities for Nepali BS and Gregorian date conversion, st
 
 | Package                       | Purpose                                                                             |
 | ----------------------------- | ----------------------------------------------------------------------------------- |
-| `nepali-date-library`         | Core conversion, formatting, manipulation, validation, and datepicker state engine. |
-| `nepali-date-library-vanilla` | Framework-free DOM datepicker adapter.                                              |
-| `nepali-date-library-react`   | Thin React wrapper around the shared datepicker core.                               |
-| `nepali-date-library-vue`     | Thin Vue 3 wrapper around the shared datepicker core.                               |
+| `nepalidatepicker`         | Core conversion, formatting, manipulation, validation, and datepicker state engine. |
+| `nepalidatepicker-vanilla` | Framework-free DOM datepicker adapter.                                              |
+| `nepalidatepicker-react`   | Thin React wrapper around the shared datepicker core.                               |
+| `nepalidatepicker-vue`     | Thin Vue 3 wrapper around the shared datepicker core.                               |
 
 ## Developer Docs
 
@@ -38,7 +38,7 @@ npm run build
 ## Core Install
 
 ```bash
-npm install nepali-date-library
+npm install nepalidatepicker
 ```
 
 ## Core Usage
@@ -52,7 +52,7 @@ import {
   formatBsDateNepali,
   toBS,
   toAD,
-} from 'nepali-date-library';
+} from 'nepalidatepicker';
 
 const bs = toBS('2026-05-13');
 const ad = toAD(2083, 1, 30);
@@ -68,12 +68,12 @@ formatBsDateNepali(addBsDays('2083-01-30', 1));
 Use subpath imports when you only need one part of the library.
 
 ```ts
-import { parseBsDate } from 'nepali-date-library/parsers';
-import { isValidBsDate } from 'nepali-date-library/validators';
-import { toBS } from 'nepali-date-library/conversion';
-import { formatBsDateNepali } from 'nepali-date-library/formatting';
-import { addBsDays } from 'nepali-date-library/manipulation';
-import { generateMonthGrid } from 'nepali-date-library/datepicker-core';
+import { parseBsDate } from 'nepalidatepicker/parsers';
+import { isValidBsDate } from 'nepalidatepicker/validators';
+import { toBS } from 'nepalidatepicker/conversion';
+import { formatBsDateNepali } from 'nepalidatepicker/formatting';
+import { addBsDays } from 'nepalidatepicker/manipulation';
+import { generateMonthGrid } from 'nepalidatepicker/datepicker-core';
 ```
 
 ## Core API
@@ -115,7 +115,7 @@ import {
   createDatePickerState,
   generateMonthGrid,
   navigateByKey,
-} from 'nepali-date-library/datepicker-core';
+} from 'nepalidatepicker/datepicker-core';
 
 const state = createDatePickerState({
   selectedDate: '2083-01-30',
@@ -145,12 +145,12 @@ The core exposes:
 ## Vanilla Wrapper
 
 ```bash
-npm install nepali-date-library-vanilla nepali-date-library
+npm install nepalidatepicker-vanilla nepalidatepicker
 ```
 
 ```ts
-import { NepaliDatePicker } from 'nepali-date-library-vanilla';
-import 'nepali-date-library-vanilla/styles.css';
+import { NepaliDatePicker } from 'nepalidatepicker-vanilla';
+import 'nepalidatepicker-vanilla/styles.css';
 
 const picker = new NepaliDatePicker('#date-picker', {
   defaultValue: '2083-01-30',
@@ -167,12 +167,12 @@ picker.setValue('2083-02-01');
 ## React Wrapper
 
 ```bash
-npm install nepali-date-library-react nepali-date-library react react-dom
+npm install nepalidatepicker-react nepalidatepicker react react-dom
 ```
 
 ```tsx
 import { useState } from 'react';
-import { NepaliDatePicker } from 'nepali-date-library-react';
+import { NepaliDatePicker } from 'nepalidatepicker-react';
 
 export function App() {
   const [value, setValue] = useState<string | null>(null);
@@ -185,12 +185,12 @@ export function App() {
 - BS to AD with `toAD()`.
 
 ```bash
-npm install nepali-date-library-vue nepali-date-library vue
+npm install nepalidatepicker-vue nepalidatepicker vue
 ```
 
 ```ts
 import { createApp, ref } from 'vue';
-import { NepaliDatePicker } from 'nepali-date-library-vue';
+import { NepaliDatePicker } from 'nepalidatepicker-vue';
 
 const App = {
   components: { NepaliDatePicker },

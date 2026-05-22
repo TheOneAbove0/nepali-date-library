@@ -2,8 +2,8 @@ import type {
   NepaliDatePickerStyles,
   NepaliDatePickerValue,
   NepaliDatePickerVariables,
-} from 'nepali-date-library-react';
-import { toBS, type BsDate } from 'nepali-date-library';
+} from 'nepalidatepicker-react';
+import { toBS, type BsDate } from 'nepalidatepicker';
 
 export const sampleAd = '2026-05-13';
 export const sampleBs = toBS(sampleAd);

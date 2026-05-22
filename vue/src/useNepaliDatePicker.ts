@@ -9,8 +9,8 @@ import {
   type MonthGrid,
   type DatePickerState,
   type WeekdayIndex,
-} from 'nepali-date-library/datepicker-core';
-import { parseBsDate, type BsDate, type BsDateInput } from 'nepali-date-library';
+} from '@theoneabove0/nepalidatepicker/datepicker-core';
+import { parseBsDate, type BsDate, type BsDateInput } from '@theoneabove0/nepalidatepicker';
 
 /**
  * Options for the useNepaliDatePicker composition API hook.

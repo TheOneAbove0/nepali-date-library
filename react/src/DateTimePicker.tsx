@@ -1,4 +1,4 @@
-import { parseBsDate, type BsDate, type BsDateInput } from 'nepali-date-library';
+import { parseBsDate, type BsDate, type BsDateInput } from '@theoneabove0/nepalidatepicker';
 import {
   forwardRef,
   useCallback,

@@ -1,11 +1,15 @@
 {
-  "name": "nepali-date-library-vue",
-  "version": "0.1.0",
-  "description": "Thin Vue wrappers for nepali-date-library datepicker core.",
+  "name": "@theoneabove0/nepalidatepicker-vue",
+  "version": "0.1.2",
+  "description": "Thin Vue wrappers for nepalidatepicker datepicker core.",
   "type": "module",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "sideEffects": false,
   "exports": {
     ".": {
@@ -16,13 +20,14 @@
   },
   "scripts": {
     "build": "tsup",
+    "prepack": "npm run build",
     "test": "vitest run"
   },
   "peerDependencies": {
     "vue": "^3.4.0"
   },
   "dependencies": {
-    "nepali-date-library": "file:../js"
+    "@theoneabove0/nepalidatepicker": "^1.8.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.7",

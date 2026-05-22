@@ -13,9 +13,9 @@
     "moduleResolution": "Bundler",
     "baseUrl": ".",
     "paths": {
-      "nepali-date-library-react": ["../react/src/index.ts"],
-      "nepali-date-library": ["../js/src/index.ts"],
-      "nepali-date-library/*": ["../js/src/*.ts"]
+      "nepalidatepicker-react": ["../react/src/index.ts"],
+      "nepalidatepicker": ["../js/src/index.ts"],
+      "nepalidatepicker/*": ["../js/src/*.ts"]
     },
     "resolveJsonModule": true,
     "isolatedModules": true,

@@ -7,7 +7,7 @@ export default defineConfig({
   clean: true,
   outDir: 'dist',
   target: 'es2019',
-  external: ['react', 'react-dom', 'nepali-date-library', 'nepali-date-library/datepicker-core'],
+  external: ['react', 'react-dom', '@theoneabove0/nepalidatepicker', '@theoneabove0/nepalidatepicker/datepicker-core'],
   outExtension({ format }) {
     return {
       js: format === 'cjs' ? '.cjs' : '.mjs',

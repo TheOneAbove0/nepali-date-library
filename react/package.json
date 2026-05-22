@@ -1,11 +1,15 @@
 {
-  "name": "nepali-date-library-react",
-  "version": "0.1.0",
-  "description": "Thin React wrappers for nepali-date-library datepicker core.",
+  "name": "@theoneabove0/nepalidatepicker-react",
+  "version": "0.1.2",
+  "description": "Thin React wrappers for nepalidatepicker datepicker core.",
   "type": "module",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "sideEffects": false,
   "exports": {
     ".": {
@@ -17,6 +21,7 @@
   },
   "scripts": {
     "build": "tsup",
+    "prepack": "npm run build",
     "test": "vitest run"
   },
   "peerDependencies": {
@@ -24,7 +29,7 @@
     "react-dom": "^18.2.0 || ^19.0.0"
   },
   "dependencies": {
-    "nepali-date-library": "file:../js"
+    "@theoneabove0/nepalidatepicker": "^1.8.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",

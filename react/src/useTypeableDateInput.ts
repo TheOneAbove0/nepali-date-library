@@ -1,4 +1,4 @@
-import type { BsDate, BsDateInput } from 'nepali-date-library';
+import type { BsDate, BsDateInput } from '@theoneabove0/nepalidatepicker';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { NepaliDatePickerProps, NepaliDatePickerType } from './NepaliDatePicker.types';
 import { formatPickerValue } from './NepaliDatePicker.utils';

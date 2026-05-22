@@ -1,4 +1,4 @@
-import { parseBsDate, type BsDate } from 'nepali-date-library';
+import { parseBsDate, type BsDate } from '@theoneabove0/nepalidatepicker';
 import { useCallback, useEffect, useId, useMemo, useRef, useState, type RefObject } from 'react';
 import type { NepaliDatePickerLevel, NepaliDatePickerProps } from './NepaliDatePicker.types';
 import {

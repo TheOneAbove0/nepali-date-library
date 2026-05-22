@@ -3,10 +3,10 @@ import {
   DatePickerInput,
   type NepaliDatePickerSize,
   type NepaliDatePickerValue,
-} from 'nepali-date-library-react';
+} from 'nepalidatepicker-react';
 import { CalendarDays, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { formatBsDateNepali, type BsDate } from 'nepali-date-library';
+import { formatBsDateNepali, type BsDate } from 'nepalidatepicker';
 import { brandedStyles, brandedVariables, sampleBs, toSingleDate } from './docsShared';
 import { useNumeralSystem } from './NumeralSystemContext';
 
@@ -246,7 +246,7 @@ export function SizeDemo({ onCodeChange }: DemoProps) {
 
   useEffect(() => {
     const sizeStr = typeof size === 'number' ? `size={${size}}` : `size="${size}"`;
-    onCodeChange?.(`import { DatePicker } from 'nepali-date-library-react';
+    onCodeChange?.(`import { DatePicker } from 'nepalidatepicker-react';
 
 function Demo() {
   return <DatePicker ${sizeStr} />;

@@ -1,18 +1,18 @@
-# nepali-date-library-vue
+# nepalidatepicker-vue
 
-Thin Vue 3 wrapper around `nepali-date-library/datepicker-core`.
+Thin Vue 3 wrapper around `nepalidatepicker/datepicker-core`.
 
 ## Install
 
 ```bash
-npm i nepali-date-library-vue nepali-date-library vue
+npm i nepalidatepicker-vue nepalidatepicker vue
 ```
 
 ## Usage
 
 ```ts
 import { createApp, ref } from 'vue';
-import { NepaliDatePicker } from 'nepali-date-library-vue';
+import { NepaliDatePicker } from 'nepalidatepicker-vue';
 
 const App = {
   components: { NepaliDatePicker },
@@ -34,11 +34,11 @@ createApp(App).mount('#app');
 
 ## Note
 
-All grid/navigation/constraint logic is delegated to `nepali-date-library/datepicker-core`.
+All grid/navigation/constraint logic is delegated to `nepalidatepicker/datepicker-core`.
 
 ## Wrapper Boundary
 
-`nepali-date-library-vue` only adapts Vue events/reactivity and rendering:
+`nepalidatepicker-vue` only adapts Vue events/reactivity and rendering:
 
 - state creation and normalization come from `createDatePickerState()`
 - grid generation comes from `generateMonthGrid()`

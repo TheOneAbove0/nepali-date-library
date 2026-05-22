@@ -1,18 +1,18 @@
-# nepali-date-library-vanilla
+# nepalidatepicker-vanilla
 
-Framework-free datepicker adapter powered by `nepali-date-library/datepicker-core`.
+Framework-free datepicker adapter powered by `nepalidatepicker/datepicker-core`.
 
 ## Install
 
 ```bash
-npm i nepali-date-library-vanilla nepali-date-library
+npm i nepalidatepicker-vanilla nepalidatepicker
 ```
 
 ## Usage
 
 ```ts
-import { NepaliDatePicker } from 'nepali-date-library-vanilla';
-import 'nepali-date-library-vanilla/styles.css';
+import { NepaliDatePicker } from 'nepalidatepicker-vanilla';
+import 'nepalidatepicker-vanilla/styles.css';
 
 const picker = new NepaliDatePicker('#date-picker', {
   defaultValue: '2083-01-30',
@@ -29,7 +29,7 @@ picker.destroy();
 
 ## Wrapper Boundary
 
-`nepali-date-library-vanilla` is a DOM adapter only:
+`nepalidatepicker-vanilla` is a DOM adapter only:
 
 - calendar state is created via `createDatePickerState()`
 - month cells are derived via `generateMonthGrid()`

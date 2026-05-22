@@ -1,10 +1,14 @@
 {
-  "name": "nepali-date-library-vanilla",
-  "version": "0.1.0",
-  "description": "Framework-free Nepali date picker adapter for nepali-date-library.",
+  "name": "@theoneabove0/nepalidatepicker-vanilla",
+  "version": "0.1.2",
+  "description": "Framework-free Nepali date picker adapter for nepalidatepicker.",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "style": "dist/styles.css",
   "sideEffects": [
     "*.css"
@@ -18,10 +22,11 @@
     "./styles.css": "./dist/styles.css"
   },
   "scripts": {
-    "build": "tsup && cp src/styles.css dist/styles.css"
+    "build": "tsup && cp src/styles.css dist/styles.css",
+    "prepack": "npm run build"
   },
   "dependencies": {
-    "nepali-date-library": "file:../js"
+    "@theoneabove0/nepalidatepicker": "^1.8.0"
   },
   "devDependencies": {
     "tsup": "^8.5.1",

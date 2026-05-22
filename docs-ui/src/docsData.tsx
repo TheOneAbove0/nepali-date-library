@@ -39,37 +39,37 @@ export const sections: DocSection[] = [
     id: 'getting-started',
     title: 'Getting started',
     summary:
-      'Install the React package — the core nepali-date-library is included as a dependency automatically.',
+      'Install the React package — the core nepalidatepicker is included as a dependency automatically.',
     content: (
       <>
         <div className="installBlock">
           <div className="installRow">
             <span className="installLabel">npm</span>
             <pre className="installCode">
-              <code>npm install nepali-date-library-react</code>
+              <code>npm install nepalidatepicker-react</code>
             </pre>
-            <CopyButton text="npm install nepali-date-library-react" />
+            <CopyButton text="npm install nepalidatepicker-react" />
           </div>
           <div className="installRow">
             <span className="installLabel">yarn</span>
             <pre className="installCode">
-              <code>yarn add nepali-date-library-react</code>
+              <code>yarn add nepalidatepicker-react</code>
             </pre>
-            <CopyButton text="yarn add nepali-date-library-react" />
+            <CopyButton text="yarn add nepalidatepicker-react" />
           </div>
           <div className="installRow">
             <span className="installLabel">pnpm</span>
             <pre className="installCode">
-              <code>pnpm add nepali-date-library-react</code>
+              <code>pnpm add nepalidatepicker-react</code>
             </pre>
-            <CopyButton text="pnpm add nepali-date-library-react" />
+            <CopyButton text="pnpm add nepalidatepicker-react" />
           </div>
           <div className="installRow">
             <span className="installLabel">bun</span>
             <pre className="installCode">
-              <code>bun add nepali-date-library-react</code>
+              <code>bun add nepalidatepicker-react</code>
             </pre>
-            <CopyButton text="bun add nepali-date-library-react" />
+            <CopyButton text="bun add nepalidatepicker-react" />
           </div>
         </div>
         <p className="sectionNote">
@@ -94,7 +94,7 @@ export const sections: DocSection[] = [
     summary:
       'Use CSS variables for color and radius, `styles` for slot spacing, and `classNames` for state-aware custom CSS.',
     Demo: StylingDemo,
-    code: `import { DatePickerInput } from 'nepali-date-library-react';
+    code: `import { DatePickerInput } from 'nepalidatepicker-react';
 
 const variables = {
   '--nepali-date-picker-accent': '#c97012',
@@ -133,7 +133,7 @@ function Demo() {
     summary:
       'Control calendar scale directly from props with preset sizes or a numeric scale value.',
     Demo: SizeDemo,
-    code: `import { DatePicker } from 'nepali-date-library-react';
+    code: `import { DatePicker } from 'nepalidatepicker-react';
 
 function Demo() {
   return <DatePicker size="lg" />;
@@ -147,8 +147,8 @@ function Demo() {
     title: 'Custom input',
     summary: 'Replace the default input shell while keeping the same picker state and dropdown.',
     Demo: CustomInputDemo,
-    code: `import { DatePickerInput } from 'nepali-date-library-react';
-import { formatBsDateNepali } from 'nepali-date-library';
+    code: `import { DatePickerInput } from 'nepalidatepicker-react';
+import { formatBsDateNepali } from 'nepalidatepicker';
 
 function Demo() {
   return (
@@ -171,7 +171,7 @@ function Demo() {
     title: 'Custom header',
     summary: 'Override the navigation header when you need branded controls or a different layout.',
     Demo: CustomHeaderDemo,
-    code: `import { DatePicker } from 'nepali-date-library-react';
+    code: `import { DatePicker } from 'nepalidatepicker-react';
 
 function Demo() {
   return (
@@ -202,7 +202,7 @@ function Demo() {
     summary:
       'Override month and weekday labels with `monthNames`, `weekdayShortNames`, and `weekdayNames`. Useful for English transliterations or any locale.',
     Demo: CustomNamesDemo,
-    code: `import { DatePicker } from 'nepali-date-library-react';
+    code: `import { DatePicker } from 'nepalidatepicker-react';
 
 const monthNames = [
   'Baisakh', 'Jestha', 'Asar', 'Shrawan', 'Bhadra', 'Ashwin',
@@ -227,7 +227,7 @@ function Demo() {
     summary:
       'Style specific dates with `dayClassName` while keeping the base picker layout intact.',
     Demo: DayClassDemo,
-    code: `import { DatePicker } from 'nepali-date-library-react';
+    code: `import { DatePicker } from 'nepalidatepicker-react';
 
 function Demo() {
   return (
@@ -247,7 +247,7 @@ function Demo() {
     summary: 'Limit the selectable window with `min`, `max`, `excludeDates`, or a custom filter.',
     Demo: ConstraintsDemo,
     code: `import { CalendarDays, ChevronDown } from 'lucide-react';
-import { DatePickerInput } from 'nepali-date-library-react';
+import { DatePickerInput } from 'nepalidatepicker-react';
 
 function Demo() {
   return (
@@ -270,7 +270,7 @@ function Demo() {
       'Festival dates can be highlighted or disabled with the `holidays` prop. Use column-based CSS to style weekends.',
     Demo: HolidayDemo,
     code: `import { CalendarDays, ChevronDown } from 'lucide-react';
-import { DatePickerInput } from 'nepali-date-library-react';
+import { DatePickerInput } from 'nepalidatepicker-react';
 
 function Demo() {
   return (
@@ -292,7 +292,7 @@ function Demo() {
           <WeekendHolidayDemo />
         </div>
         <CodePanel
-          code={`import { DatePickerInput } from 'nepali-date-library-react';
+          code={`import { DatePickerInput } from 'nepalidatepicker-react';
 
 function Demo() {
   return (
@@ -321,7 +321,7 @@ function Demo() {
       'Set `numeralSystem="nepali"` to render input values, headers, year lists, and day numbers with Nepali digits.',
     Demo: NepaliNumeralsDemo,
     code: `import { CalendarDays, ChevronDown } from 'lucide-react';
-import { DatePickerInput } from 'nepali-date-library-react';
+import { DatePickerInput } from 'nepalidatepicker-react';
 
 function Demo() {
   return (

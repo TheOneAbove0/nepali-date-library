@@ -6,7 +6,7 @@ var it = test.it;
 
 var core = require('../dist/datepicker-core.cjs');
 
-describe('nepali-date-library datepicker-core', function () {
+describe('nepalidatepicker datepicker-core', function () {
   describe('#generateMonthGrid()', function () {
     it('should generate full calendar weeks for a month', function () {
       var grid = core.generateMonthGrid(2083, 1, { weekStartsOn: 0 });

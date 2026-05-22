@@ -15,7 +15,7 @@ function test_data_for(forFn) {
   return require(`../../test-data/${fixtureMap[forFn] || forFn}`);
 }
 
-describe('nepali-date-library', function () {
+describe('nepalidatepicker', function () {
   describe('#toBik_dev()', function () {
     Object.entries({
       // gregorian -> bikram

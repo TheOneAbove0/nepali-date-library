@@ -1,4 +1,4 @@
-import { parseBsDate, type BsDate, type BsDateInput, type WeekdayIndex } from 'nepali-date-library';
+import { parseBsDate, type BsDate, type BsDateInput, type WeekdayIndex } from '@theoneabove0/nepalidatepicker';
 import {
   createDatePickerState,
   generateMonthGrid,
@@ -7,7 +7,7 @@ import {
   type DatePickerKey,
   type DateConstraints,
   type DatePickerState,
-} from 'nepali-date-library/datepicker-core';
+} from '@theoneabove0/nepalidatepicker/datepicker-core';
 
 const MONTH_NAMES = [
   'बैशाख',
