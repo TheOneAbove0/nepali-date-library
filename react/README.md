@@ -7,7 +7,7 @@ A simple, highly customizable, and reusable Nepali Datepicker component for Reac
 
 **[View Live Demo & Documentation](https://nepali-date-library-ewoc-a0iyair2h-theoneabove0s-projects.vercel.app/)**
 
-![React Nepali Date Picker Demo](./demo.png)
+![React Nepali Date Picker Demo](https://raw.githubusercontent.com/TheOneAbove0/nepali-date-library/main/react/demo.svg)
 
 ## Installation
 
