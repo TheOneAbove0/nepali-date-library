@@ -15,6 +15,16 @@ import { PlaygroundDemo } from './PlaygroundDemo';
 import { CopyButton } from './CopyButton';
 import { CodePanel } from './CodePanel';
 
+const reactPackageName = '@theoneabove0/nepalidatepicker-react';
+const corePackageName = '@theoneabove0/nepalidatepicker';
+const installPackages = `${reactPackageName} ${corePackageName} react react-dom`;
+const installCommands = [
+  ['npm', `npm install ${installPackages}`],
+  ['yarn', `yarn add ${installPackages}`],
+  ['pnpm', `pnpm add ${installPackages}`],
+  ['bun', `bun add ${installPackages}`],
+] as const;
+
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
 /* ------------------------------------------------------------------ */
@@ -39,43 +49,37 @@ export const sections: DocSection[] = [
     id: 'getting-started',
     title: 'Getting started',
     summary:
-      'Install the React package — the core nepalidatepicker is included as a dependency automatically.',
+      'Install the scoped React package with the core date utilities and React peer dependencies.',
     content: (
       <>
+        <div className="packageCallout">
+          <div>
+            <span className="packageEyebrow">Published package</span>
+            <code>{reactPackageName}</code>
+          </div>
+          <a
+            href="https://www.npmjs.com/package/@theoneabove0/nepalidatepicker-react"
+            rel="noreferrer"
+            target="_blank"
+          >
+            View on npm
+          </a>
+        </div>
         <div className="installBlock">
-          <div className="installRow">
-            <span className="installLabel">npm</span>
-            <pre className="installCode">
-              <code>npm install @theoneabove0/nepalidatepicker-react</code>
-            </pre>
-            <CopyButton text="npm install @theoneabove0/nepalidatepicker-react" />
-          </div>
-          <div className="installRow">
-            <span className="installLabel">yarn</span>
-            <pre className="installCode">
-              <code>yarn add @theoneabove0/nepalidatepicker-react</code>
-            </pre>
-            <CopyButton text="yarn add @theoneabove0/nepalidatepicker-react" />
-          </div>
-          <div className="installRow">
-            <span className="installLabel">pnpm</span>
-            <pre className="installCode">
-              <code>pnpm add @theoneabove0/nepalidatepicker-react</code>
-            </pre>
-            <CopyButton text="pnpm add @theoneabove0/nepalidatepicker-react" />
-          </div>
-          <div className="installRow">
-            <span className="installLabel">bun</span>
-            <pre className="installCode">
-              <code>bun add @theoneabove0/nepalidatepicker-react</code>
-            </pre>
-            <CopyButton text="bun add @theoneabove0/nepalidatepicker-react" />
-          </div>
+          {installCommands.map(([label, command]) => (
+            <div className="installRow" key={label}>
+              <span className="installLabel">{label}</span>
+              <pre className="installCode">
+                <code>{command}</code>
+              </pre>
+              <CopyButton text={command} />
+            </div>
+          ))}
         </div>
         <p className="sectionNote">
-          Start with the shipped day, month, and year picker variants, then override visuals with{' '}
-          <code>variables</code>, <code>styles</code>, <code>classNames</code>,{' '}
-          <code>dayClassName</code>, and <code>holidays</code> when you need a branded surface.
+          Import React components from <code>{reactPackageName}</code>. Use{' '}
+          <code>{corePackageName}</code> directly when you need BS date conversion, formatting, or
+          validation helpers outside the picker UI.
         </p>
       </>
     ),

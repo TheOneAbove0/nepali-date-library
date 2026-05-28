@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { CalendarDays, Moon, Sun } from 'lucide-react';
+import { CalendarDays, ExternalLink, Github, Moon, Sun } from 'lucide-react';
 import { DocsSection } from './DocsSection';
 import { sections } from './docsData';
 import { playgroundTabs } from './playgroundConfig';
@@ -26,7 +26,7 @@ function AppInner() {
       <aside className="sidebar">
         <div className="sidebarBrand">
           <CalendarDays size={18} />
-          <span>Nepali React Datepicker</span>
+          <span>@theoneabove0/nepalidatepicker-react</span>
         </div>
         <div className="sidebarGroupTitle">Documentation</div>
         <nav>
@@ -62,10 +62,32 @@ function AppInner() {
         <header className="pageHeader">
           <div>
             <h1>Nepali React Datepicker</h1>
+            <div className="packageMeta">
+              <code>@theoneabove0/nepalidatepicker-react</code>
+              <span>React wrapper for @theoneabove0/nepalidatepicker</span>
+            </div>
             <p className="lede">
               Day, month, year, time, and date-range pickers for Bikram Sambat interfaces.
               Lightweight, composable, and fully styleable.
             </p>
+            <div className="headerLinks" aria-label="Package links">
+              <a
+                href="https://www.npmjs.com/package/@theoneabove0/nepalidatepicker-react"
+                rel="noreferrer"
+                target="_blank"
+              >
+                <ExternalLink size={14} />
+                <span>npm package</span>
+              </a>
+              <a
+                href="https://github.com/TheOneAbove0/nepali-date-library"
+                rel="noreferrer"
+                target="_blank"
+              >
+                <Github size={14} />
+                <span>GitHub</span>
+              </a>
+            </div>
           </div>
           <div className="headerActions">
             <button
