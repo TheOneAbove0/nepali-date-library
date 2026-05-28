@@ -32,6 +32,7 @@ Below is a simple example of how to use the DatePicker in a React view. The most
 ```tsx
 import { useState } from 'react';
 import { DatePickerInput } from '@theoneabove0/nepalidatepicker-react';
+import '@theoneabove0/nepalidatepicker-react/style.css';
 import { CalendarDays, ChevronDown } from 'lucide-react';
 
 export function App() {

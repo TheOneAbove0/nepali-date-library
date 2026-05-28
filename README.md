@@ -6,10 +6,10 @@ Lightweight TypeScript utilities for Nepali BS and Gregorian date conversion, st
 
 | Package                       | Purpose                                                                             |
 | ----------------------------- | ----------------------------------------------------------------------------------- |
-| `nepalidatepicker`         | Core conversion, formatting, manipulation, validation, and datepicker state engine. |
-| `nepalidatepicker-vanilla` | Framework-free DOM datepicker adapter.                                              |
-| `nepalidatepicker-react`   | Thin React wrapper around the shared datepicker core.                               |
-| `nepalidatepicker-vue`     | Thin Vue 3 wrapper around the shared datepicker core.                               |
+| `@theoneabove0/nepalidatepicker`         | Core conversion, formatting, manipulation, validation, and datepicker state engine. |
+| `@theoneabove0/nepalidatepicker-vanilla` | Framework-free DOM datepicker adapter.                                              |
+| `@theoneabove0/nepalidatepicker-react`   | Thin React wrapper around the shared datepicker core.                               |
+| `@theoneabove0/nepalidatepicker-vue`     | Thin Vue 3 wrapper around the shared datepicker core.                               |
 
 ## Developer Docs
 
@@ -38,7 +38,7 @@ npm run build
 ## Core Install
 
 ```bash
-npm install nepalidatepicker
+npm install @theoneabove0/nepalidatepicker
 ```
 
 ## Core Usage
@@ -52,7 +52,7 @@ import {
   formatBsDateNepali,
   toBS,
   toAD,
-} from 'nepalidatepicker';
+} from '@theoneabove0/nepalidatepicker';
 
 const bs = toBS('2026-05-13');
 const ad = toAD(2083, 1, 30);
@@ -68,12 +68,12 @@ formatBsDateNepali(addBsDays('2083-01-30', 1));
 Use subpath imports when you only need one part of the library.
 
 ```ts
-import { parseBsDate } from 'nepalidatepicker/parsers';
-import { isValidBsDate } from 'nepalidatepicker/validators';
-import { toBS } from 'nepalidatepicker/conversion';
-import { formatBsDateNepali } from 'nepalidatepicker/formatting';
-import { addBsDays } from 'nepalidatepicker/manipulation';
-import { generateMonthGrid } from 'nepalidatepicker/datepicker-core';
+import { parseBsDate } from '@theoneabove0/nepalidatepicker/parsers';
+import { isValidBsDate } from '@theoneabove0/nepalidatepicker/validators';
+import { toBS } from '@theoneabove0/nepalidatepicker/conversion';
+import { formatBsDateNepali } from '@theoneabove0/nepalidatepicker/formatting';
+import { addBsDays } from '@theoneabove0/nepalidatepicker/manipulation';
+import { generateMonthGrid } from '@theoneabove0/nepalidatepicker/datepicker-core';
 ```
 
 ## Core API
@@ -115,7 +115,7 @@ import {
   createDatePickerState,
   generateMonthGrid,
   navigateByKey,
-} from 'nepalidatepicker/datepicker-core';
+} from '@theoneabove0/nepalidatepicker/datepicker-core';
 
 const state = createDatePickerState({
   selectedDate: '2083-01-30',
@@ -145,12 +145,12 @@ The core exposes:
 ## Vanilla Wrapper
 
 ```bash
-npm install nepalidatepicker-vanilla nepalidatepicker
+npm install @theoneabove0/nepalidatepicker-vanilla @theoneabove0/nepalidatepicker
 ```
 
 ```ts
-import { NepaliDatePicker } from 'nepalidatepicker-vanilla';
-import 'nepalidatepicker-vanilla/styles.css';
+import { NepaliDatePicker } from '@theoneabove0/nepalidatepicker-vanilla';
+import '@theoneabove0/nepalidatepicker-vanilla/styles.css';
 
 const picker = new NepaliDatePicker('#date-picker', {
   defaultValue: '2083-01-30',
@@ -167,12 +167,13 @@ picker.setValue('2083-02-01');
 ## React Wrapper
 
 ```bash
-npm install nepalidatepicker-react nepalidatepicker react react-dom
+npm install @theoneabove0/nepalidatepicker-react @theoneabove0/nepalidatepicker react react-dom
 ```
 
 ```tsx
 import { useState } from 'react';
-import { NepaliDatePicker } from 'nepalidatepicker-react';
+import { NepaliDatePicker } from '@theoneabove0/nepalidatepicker-react';
+import '@theoneabove0/nepalidatepicker-react/style.css';
 
 export function App() {
   const [value, setValue] = useState<string | null>(null);
@@ -185,12 +186,12 @@ export function App() {
 - BS to AD with `toAD()`.
 
 ```bash
-npm install nepalidatepicker-vue nepalidatepicker vue
+npm install @theoneabove0/nepalidatepicker-vue @theoneabove0/nepalidatepicker vue
 ```
 
 ```ts
 import { createApp, ref } from 'vue';
-import { NepaliDatePicker } from 'nepalidatepicker-vue';
+import { NepaliDatePicker } from '@theoneabove0/nepalidatepicker-vue';
 
 const App = {
   components: { NepaliDatePicker },

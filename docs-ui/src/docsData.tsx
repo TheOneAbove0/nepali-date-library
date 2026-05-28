@@ -81,6 +81,10 @@ export const sections: DocSection[] = [
           <code>{corePackageName}</code> directly when you need BS date conversion, formatting, or
           validation helpers outside the picker UI.
         </p>
+        <CodePanel
+          code={`import { DatePickerInput } from '${reactPackageName}';
+import '${reactPackageName}/style.css';`}
+        />
       </>
     ),
   },
@@ -99,6 +103,7 @@ export const sections: DocSection[] = [
       'Use CSS variables for color and radius, `styles` for slot spacing, and `classNames` for state-aware custom CSS.',
     Demo: StylingDemo,
     code: `import { DatePickerInput } from '@theoneabove0/nepalidatepicker-react';
+import '@theoneabove0/nepalidatepicker-react/style.css';
 
 const variables = {
   '--nepali-date-picker-accent': '#c97012',
